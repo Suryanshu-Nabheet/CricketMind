@@ -178,12 +178,10 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                           <span className="text-base font-extrabold text-foreground tracking-tight block">
                             {detail.teamA.name}
                           </span>
-                          {detail.runsA ? (
+                          {detail.runsA && (
                             <span className="font-mono font-black text-2xl text-foreground">
                               {detail.runsA}/{detail.wicketsA} <span className="text-xs text-muted-foreground font-normal">({detail.oversA} Ov)</span>
                             </span>
-                          ) : (
-                            <span className="text-xs text-muted-foreground">Yet to Bat</span>
                           )}
                         </div>
                       </div>
@@ -196,12 +194,10 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                           <span className="text-base font-extrabold text-foreground tracking-tight block">
                             {detail.teamB.name}
                           </span>
-                          {detail.runsB ? (
+                          {detail.runsB && (
                             <span className="font-mono font-black text-2xl text-foreground">
                               {detail.runsB}/{detail.wicketsB} <span className="text-xs text-muted-foreground font-normal">({detail.oversB} Ov)</span>
                             </span>
-                          ) : (
-                            <span className="text-xs text-muted-foreground">Yet to Bat</span>
                           )}
                         </div>
                       </div>

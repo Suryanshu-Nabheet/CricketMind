@@ -107,13 +107,13 @@ async function fetchMatchList(endpoint: string): Promise<Match[]> {
                   seriesName: info.seriesName || "",
                   teamA: {
                     id: String(info.team1?.teamId || ""),
-                    name: info.team1?.teamName || "Team A",
-                    shortName: info.team1?.teamSName || "TMA"
+                    name: info.team1?.teamName || "",
+                    shortName: info.team1?.teamSName || ""
                   },
                   teamB: {
                     id: String(info.team2?.teamId || ""),
-                    name: info.team2?.teamName || "Team B",
-                    shortName: info.team2?.teamSName || "TMB"
+                    name: info.team2?.teamName || "",
+                    shortName: info.team2?.teamSName || ""
                   },
                   status,
                   date: info.startDate ? new Date(Number(info.startDate)).toISOString() : new Date().toISOString(),
@@ -211,7 +211,11 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
     }
 
     // 2. Process Commentary for Ultra Real-Time Match State (CRR, RRR, Timeline, Targets)
-    let crr = "N/A", rrr = "N/A", target = "N/A", partnershipInfo = "", timeline: string[] = [];
+    let crr: string | undefined = undefined;
+    let rrr: string | undefined = undefined;
+    let target: string | undefined = undefined;
+    let partnershipInfo: string | undefined = undefined;
+    let timeline: string[] = [];
     
     if (commData && commData.miniscore) {
        const ms = commData.miniscore;
@@ -246,20 +250,20 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
     }
 
     const matchHeader = (commData && commData.matchheaders) || (scardData && scardData.matchHeader);
-    const seriesName = matchHeader?.seriesname || matchHeader?.seriesName || "Indian Premier League";
+    const seriesName = matchHeader?.seriesname || matchHeader?.seriesName || "";
 
     return {
       id: matchId,
       seriesName,
       teamA: {
         id: String(matchHeader?.team1?.id || matchHeader?.team1?.teamid || ""),
-        name: matchHeader?.team1?.name || matchHeader?.team1?.teamname || "Team A",
-        shortName: matchHeader?.team1?.shortName || matchHeader?.team1?.teamsname || "TMA"
+        name: matchHeader?.team1?.name || matchHeader?.team1?.teamname || "",
+        shortName: matchHeader?.team1?.shortName || matchHeader?.team1?.teamsname || ""
       },
       teamB: {
         id: String(matchHeader?.team2?.id || matchHeader?.team2?.teamid || ""),
-        name: matchHeader?.team2?.name || matchHeader?.team2?.teamname || "Team B",
-        shortName: matchHeader?.team2?.shortName || matchHeader?.team2?.teamsname || "TMB"
+        name: matchHeader?.team2?.name || matchHeader?.team2?.teamname || "",
+        shortName: matchHeader?.team2?.shortName || matchHeader?.team2?.teamsname || ""
       },
       status: matchHeader?.state === "Complete" ? "finished" : matchHeader?.state === "Upcoming" ? "upcoming" : "live",
       date: new Date().toISOString(),
