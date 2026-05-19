@@ -1,9 +1,6 @@
 # CricketMind - Fan Arena Dashboard
 
-![CricketMind Banner](apps/web/public/Banner.webp)
-
-Presented in association with **Google Developer Groups (GDG)**:
-<img src="apps/web/public/GDG.png" width="240" alt="GDG Logo" />
+![CricketMind Banner](apps/web/public/Banner.png)
 
 ---
 
