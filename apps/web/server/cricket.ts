@@ -503,77 +503,7 @@ ${matchDetail.scorecard?.map((inn: any) => `
 
   // If no Gemini key is provided, perform highly realistic local mock answering!
   if (!geminiKey) {
-    const query = userMessage.toLowerCase();
-    
-    if (query.includes("who is batting") || query.includes("batter") || query.includes("batsman")) {
-      if (matchDetail.activeBatters && matchDetail.activeBatters.length > 0) {
-        return `Right now in the middle, we have ${matchDetail.activeBatters.map((b: any) => `**${b.name}** batting on **${b.runs}** runs off ${b.ballsFaced || b.balls || 0} balls`).join(" and ")}. They are looking to push the scoring rate under pressure!`;
-      }
-      return `There are no active batters registered on the pitch right now. The innings might be completed, or the teams are in between sessions!`;
-    }
-    if (query.includes("who is bowling") || query.includes("bowler")) {
-      if (matchDetail.activeBowlers && matchDetail.activeBowlers.length > 0) {
-        return `Operating with the ball right now is ${matchDetail.activeBowlers.map((b: any) => `**${b.name}** who has bowled **${b.overs}** overs with a clean economy of **${b.economy}**`).join(" and ")}.`;
-      }
-      return `No active bowlers are registered right now. The game might be paused or in between innings!`;
-    }
-    if (query.includes("score") || query.includes("runs") || query.includes("wicket")) {
-      const scoreStr = [];
-      if (matchDetail.runsA) scoreStr.push(`${matchDetail.teamA.name}: **${matchDetail.runsA}/${matchDetail.wicketsA}** (${matchDetail.oversA} Ov)`);
-      if (matchDetail.runsB) scoreStr.push(`${matchDetail.teamB.name}: **${matchDetail.runsB}/${matchDetail.wicketsB}** (${matchDetail.oversB} Ov)`);
-      return `The current scoreboard reads:\n${scoreStr.join("\n")}\n\n*Status: ${matchDetail.statusDescription || matchDetail.result || "Active play"}.*`;
-    }
-    if (query.includes("toss")) {
-      return matchDetail.tossWinnerName 
-        ? `Toss update: **${matchDetail.tossWinnerName}** won the toss and elected to **${matchDetail.tossDecision?.toLowerCase() || "bat"}** first at ${matchDetail.venueGround || "the venue"}.`
-        : `Toss results are not available or haven't been resolved yet for this fixture.`;
-    }
-    if (query.includes("venue") || query.includes("stadium") || query.includes("ground")) {
-      return `This IPL match is being played at **${matchDetail.venueGround || matchDetail.venue || "IPL Stadium"}** located in **${matchDetail.venueCity || "India"}**.`;
-    }
-    if (query.includes("umpire") || query.includes("referee") || query.includes("official")) {
-      const ops = [];
-      if (matchDetail.umpires) ops.push(`Field Umpires: **${matchDetail.umpires}**`);
-      if (matchDetail.thirdUmpire) ops.push(`Third Umpire: **${matchDetail.thirdUmpire}**`);
-      if (matchDetail.referee) ops.push(`Match Referee: **${matchDetail.referee}**`);
-      return ops.length > 0 
-        ? `Here are the match officials for this clash:\n${ops.join("\n")}`
-        : `No official listings are currently resolved for this fixture.`;
-    }
-    if (query.includes("mvp") || query.includes("player of the match") || query.includes("pom")) {
-      return matchDetail.playerOfTheMatch
-        ? `The Player of the Match honors belong to **${matchDetail.playerOfTheMatch}** for an outstanding game-changing display!`
-        : `Player of the Match (MVP) honors haven't been decided yet as the game is still active or details are pending!`;
-    }
-    if (query.includes("playing xi") || query.includes("squad") || query.includes("players") || query.includes("lineup")) {
-      const xiA = matchDetail.playingXI_A?.length > 0 ? `\n* **${matchDetail.teamA.shortName}:** ${matchDetail.playingXI_A.join(", ")}` : "";
-      const xiB = matchDetail.playingXI_B?.length > 0 ? `\n* **${matchDetail.teamB.shortName}:** ${matchDetail.playingXI_B.join(", ")}` : "";
-      if (xiA || xiB) {
-        return `Here are the playing XIs for both sides:\n${xiA}${xiB}`;
-      }
-      return `Squad listings or playing XIs are not announced/available yet for this match.`;
-    }
-    if (query.includes("scorecard") || query.includes("stats") || query.includes("batsmen") || query.includes("bowlers")) {
-      if (matchDetail.scorecard && matchDetail.scorecard.length > 0) {
-        const scSummary = matchDetail.scorecard.map((inn: any) => {
-          const topBatsman = inn.batsmen?.reduce((max: any, b: any) => ((b.runs ?? 0) > (max?.runs ?? 0) ? b : max), null);
-          const topBowler = inn.bowlers?.reduce((max: any, bw: any) => ((bw.wickets ?? 0) > (max?.wickets ?? 0) ? bw : max), null);
-          
-          let text = `* **Innings #${inn.inningsId} (${inn.batTeamName}):** ${inn.runs}/${inn.wickets} in ${inn.overs} overs.`;
-          if (topBatsman && topBatsman.runs > 0) {
-            text += ` Top Batter: **${topBatsman.name}** (${topBatsman.runs} runs off ${topBatsman.ballsFaced} balls).`;
-          }
-          if (topBowler && topBowler.wickets > 0) {
-            text += ` Top Bowler: **${topBowler.name}** (${topBowler.wickets}/${topBowler.runsConceded}).`;
-          }
-          return text;
-        }).join("\n");
-        return `Here is a summary of the scorecard:\n\n${scSummary}\n\nFor the full ball-by-ball details, scroll down to the Innings Scorecards section below!`;
-      }
-      return `Full scorecard details are not registered yet for this match.`;
-    }
-
-    return `Hey! I have full visibility of this fixture. Here's a quick summary:\n\n* **Score:** ${matchDetail.teamA.shortName} (${matchDetail.runsA || 0}/${matchDetail.wicketsA || 0}) vs ${matchDetail.teamB.shortName} (${matchDetail.runsB || 0}/${matchDetail.wicketsB || 0})\n* **Venue:** ${matchDetail.venue}\n* **Status:** ${matchDetail.statusDescription || "Live play"}\n\n*(Note: To enable full open-ended chat queries via the Gemini LLM, make sure to add your \`GEMINI_API_KEY\` to the \`.env.local\` config file!)*`;
+    return getLocalFallbackAnswer(matchDetail, userMessage);
   }
 
   try {
@@ -583,7 +513,7 @@ ${matchDetail.scorecard?.map((inn: any) => `
     }));
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${geminiKey}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -608,15 +538,102 @@ ${matchDetail.scorecard?.map((inn: any) => `
 
     if (!response.ok) {
       const err = await response.text();
-      console.error("Gemini API call failed:", err);
-      return `I ran into an error connecting to my cognitive engine, but I can tell you the current score is ${matchDetail.teamA.shortName} (${matchDetail.runsA || 0}/${matchDetail.wicketsA || 0}) vs ${matchDetail.teamB.shortName} (${matchDetail.runsB || 0}/${matchDetail.wicketsB || 0}).`;
+      console.error("Gemini API call failed, falling back to local cognitive engine. Error:", err);
+      return getLocalFallbackAnswer(matchDetail, userMessage);
     }
 
     const data = await response.json();
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
     return reply || "I'm watching the game closely, but couldn't formulate a response. Ask me anything about the players or scores!";
   } catch (error) {
-    console.error("Gemini askMatchAI error:", error);
-    return "I had a minor connection hiccup! What was your question again?";
+    console.error("Gemini askMatchAI error, falling back to local cognitive engine. Error:", error);
+    return getLocalFallbackAnswer(matchDetail, userMessage);
   }
+}
+
+function getLocalFallbackAnswer(matchDetail: any, userMessage: string): string {
+  const query = userMessage.toLowerCase();
+  
+  if (query.includes("who won") || query.includes("result") || query.includes("winner") || query.includes("outcome")) {
+    if (matchDetail.result) {
+      let explanation = `Match result: **${matchDetail.result}**! What an absolute classic match it was between ${matchDetail.teamA.shortName} and ${matchDetail.teamB.shortName}.`;
+      if (matchDetail.playerOfTheMatch) {
+        explanation += ` **${matchDetail.playerOfTheMatch}** was crowned the Player of the Match for a phenomenal performance that secured the win!`;
+      }
+      if (matchDetail.tossWinnerName) {
+        explanation += ` Earlier, ${matchDetail.tossWinnerName} won the toss and elected to ${matchDetail.tossDecision || "bat"} first.`;
+      }
+      return explanation;
+    }
+    return `The match is still active or status is: **${matchDetail.statusDescription || "Live play"}**. No final winner has been declared yet!`;
+  }
+  if (query.includes("who is batting") || query.includes("batter") || query.includes("batsman")) {
+    if (matchDetail.activeBatters && matchDetail.activeBatters.length > 0) {
+      return `Right now in the middle, we have ${matchDetail.activeBatters.map((b: any) => `**${b.name}** batting on **${b.runs}** runs off ${b.ballsFaced || b.balls || 0} balls`).join(" and ")}. They are looking to push the scoring rate under pressure!`;
+    }
+    return `There are no active batters registered on the pitch right now. The innings might be completed, or the teams are in between sessions!`;
+  }
+  if (query.includes("who is bowling") || query.includes("bowler")) {
+    if (matchDetail.activeBowlers && matchDetail.activeBowlers.length > 0) {
+      return `Operating with the ball right now is ${matchDetail.activeBowlers.map((b: any) => `**${b.name}** who has bowled **${b.overs}** overs with a clean economy of **${b.economy}**`).join(" and ")}.`;
+    }
+    return `No active bowlers are registered right now. The game might be paused or in between innings!`;
+  }
+  if (query.includes("score") || query.includes("runs") || query.includes("wicket")) {
+    const scoreStr = [];
+    if (matchDetail.runsA) scoreStr.push(`${matchDetail.teamA.name}: **${matchDetail.runsA}/${matchDetail.wicketsA}** (${matchDetail.oversA} Ov)`);
+    if (matchDetail.runsB) scoreStr.push(`${matchDetail.teamB.name}: **${matchDetail.runsB}/${matchDetail.wicketsB}** (${matchDetail.oversB} Ov)`);
+    return `The current scoreboard reads:\n${scoreStr.join("\n")}\n\n*Status: ${matchDetail.statusDescription || matchDetail.result || "Active play"}.*`;
+  }
+  if (query.includes("toss")) {
+    return matchDetail.tossWinnerName 
+      ? `Toss update: **${matchDetail.tossWinnerName}** won the toss and elected to **${matchDetail.tossDecision?.toLowerCase() || "bat"}** first at ${matchDetail.venueGround || "the venue"}.`
+      : `Toss results are not available or haven't been resolved yet for this fixture.`;
+  }
+  if (query.includes("venue") || query.includes("stadium") || query.includes("ground")) {
+    return `This IPL match is being played at **${matchDetail.venueGround || matchDetail.venue || "IPL Stadium"}** located in **${matchDetail.venueCity || "India"}**.`;
+  }
+  if (query.includes("umpire") || query.includes("referee") || query.includes("official")) {
+    const ops = [];
+    if (matchDetail.umpires) ops.push(`Field Umpires: **${matchDetail.umpires}**`);
+    if (matchDetail.thirdUmpire) ops.push(`Third Umpire: **${matchDetail.thirdUmpire}**`);
+    if (matchDetail.referee) ops.push(`Match Referee: **${matchDetail.referee}**`);
+    return ops.length > 0 
+      ? `Here are the match officials for this clash:\n${ops.join("\n")}`
+      : `No official listings are currently resolved for this fixture.`;
+  }
+  if (query.includes("mvp") || query.includes("player of the match") || query.includes("pom")) {
+    return matchDetail.playerOfTheMatch
+      ? `The Player of the Match honors belong to **${matchDetail.playerOfTheMatch}** for an outstanding game-changing display!`
+      : `Player of the Match (MVP) honors haven't been decided yet as the game is still active or details are pending!`;
+  }
+  if (query.includes("playing xi") || query.includes("squad") || query.includes("players") || query.includes("lineup")) {
+    const xiA = matchDetail.playingXI_A?.length > 0 ? `\n* **${matchDetail.teamA.shortName}:** ${matchDetail.playingXI_A.join(", ")}` : "";
+    const xiB = matchDetail.playingXI_B?.length > 0 ? `\n* **${matchDetail.teamB.shortName}:** ${matchDetail.playingXI_B.join(", ")}` : "";
+    if (xiA || xiB) {
+      return `Here are the playing XIs for both sides:\n${xiA}${xiB}`;
+    }
+    return `Squad listings or playing XIs are not announced/available yet for this match.`;
+  }
+  if (query.includes("scorecard") || query.includes("stats") || query.includes("batsmen") || query.includes("bowlers")) {
+    if (matchDetail.scorecard && matchDetail.scorecard.length > 0) {
+      const scSummary = matchDetail.scorecard.map((inn: any) => {
+        const topBatsman = inn.batsmen?.reduce((max: any, b: any) => ((b.runs ?? 0) > (max?.runs ?? 0) ? b : max), null);
+        const topBowler = inn.bowlers?.reduce((max: any, bw: any) => ((bw.wickets ?? 0) > (max?.wickets ?? 0) ? bw : max), null);
+        
+        let text = `* **Innings #${inn.inningsId} (${inn.batTeamName}):** ${inn.runs}/${inn.wickets} in ${inn.overs} overs.`;
+        if (topBatsman && topBatsman.runs > 0) {
+          text += ` Top Batter: **${topBatsman.name}** (${topBatsman.runs} runs off ${topBatsman.ballsFaced} balls).`;
+        }
+        if (topBowler && topBowler.wickets > 0) {
+          text += ` Top Bowler: **${topBowler.name}** (${topBowler.wickets}/${topBowler.runsConceded}).`;
+        }
+        return text;
+      }).join("\n");
+      return `Here is a summary of the scorecard:\n\n${scSummary}\n\nFor the full ball-by-ball details, scroll down to the Innings Scorecards section below!`;
+    }
+    return `Full scorecard details are not registered yet for this match.`;
+  }
+
+  return `Hey! I have full visibility of this fixture. Here's a quick summary:\n\n* **Score:** ${matchDetail.teamA.shortName} (${matchDetail.runsA || 0}/${matchDetail.wicketsA || 0}) vs ${matchDetail.teamB.shortName} (${matchDetail.runsB || 0}/${matchDetail.wicketsB || 0})\n* **Venue:** ${matchDetail.venue}\n* **Status:** ${matchDetail.statusDescription || "Live play"}`;
 }
