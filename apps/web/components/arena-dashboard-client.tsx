@@ -1,9 +1,25 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Match, MatchDetail, getMatchDetail, PlayerStats } from "@/server/cricket";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
+import {
+  Sparkles,
+  Bot,
+  User,
+  ArrowUp,
+  Globe,
+  Mic,
+  MoreHorizontal,
+  Plus,
+  Copy,
+  ThumbsUp,
+  ThumbsDown,
+  Trash,
+  Pencil,
+  Send
+} from "lucide-react";
 
 export function getTeamLogo(name: string, shortName: string): string {
   const n = (name || "").toLowerCase();
@@ -35,6 +51,73 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
   const [detail, setDetail] = useState<MatchDetail | null>(null);
   const [loadingDetail, setLoadingDetail] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  // AI Chat Assistant State
+  const [chatMessages, setChatMessages] = useState<{ id: string; role: "user" | "assistant"; content: string }[]>([]);
+  const [chatInput, setChatInput] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll chat to bottom
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatMessages, aiLoading]);
+
+  // Seed welcome message when match changes
+  useEffect(() => {
+    if (detail) {
+      setChatMessages([
+        {
+          id: "welcome",
+          role: "assistant",
+          content: `Hey! I'm your live IPL Fan Arena AI Assistant. I'm fully synchronized with the live database for this clash between **${detail.teamA.name}** and **${detail.teamB.name}**. Ask me anything about scores, batters, active partnerships, match officials, or detailed scorecard statistics!`
+        }
+      ]);
+    }
+  }, [selectedMatchId, detail?.id]);
+
+  const handleSendChatMessage = async () => {
+    if (!chatInput.trim() || aiLoading || !detail) return;
+
+    const userText = chatInput.trim();
+    setChatInput("");
+    setAiLoading(true);
+
+    const newMsg = {
+      id: Math.random().toString(),
+      role: "user" as const,
+      content: userText
+    };
+
+    const updatedHistory = [...chatMessages, newMsg];
+    setChatMessages(updatedHistory);
+
+    try {
+      const { askMatchAI } = await import("@/server/cricket");
+      const reply = await askMatchAI(detail, userText, updatedHistory.map(m => ({ role: m.role, content: m.content })));
+      
+      setChatMessages(prev => [
+        ...prev,
+        {
+          id: Math.random().toString(),
+          role: "assistant" as const,
+          content: reply
+        }
+      ]);
+    } catch (err) {
+      console.error("AI Chat error:", err);
+      setChatMessages(prev => [
+        ...prev,
+        {
+          id: Math.random().toString(),
+          role: "assistant" as const,
+          content: "I had a minor issue connecting to my commentary engine. Let's try again!"
+        }
+      ]);
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const triggerRefresh = () => {
     if (!selectedMatchId || refreshing) return;
@@ -472,6 +555,82 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                       </div>
                     </div>
 
+                    {/* Compact Premium Match Information Card */}
+                    <div className="py-4 border-t border-b border-border/60 grid grid-cols-2 sm:grid-cols-4 gap-4 text-left">
+                      <div className="space-y-1">
+                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
+                          Venue
+                        </span>
+                        <p className="text-xs font-bold text-foreground leading-snug">
+                          {displayVenue}
+                        </p>
+                        {(displayVenueCity || displayVenueCountry) && (
+                          <p className="text-[10px] text-muted-foreground leading-tight">
+                            {displayVenueCity}{displayVenueCity && displayVenueCountry ? ", " : ""}{displayVenueCountry}
+                          </p>
+                        )}
+                        {detail.timezone && (
+                          <span className="text-[9px] font-mono text-muted-foreground/80 block mt-0.5">
+                            TZ: {detail.timezone}
+                          </span>
+                        )}
+                      </div>
+
+                      {displayToss && (
+                        <div className="space-y-1">
+                          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
+                            Toss Results
+                          </span>
+                          <p className="text-xs font-bold text-foreground leading-snug">
+                            {displayToss}
+                          </p>
+                        </div>
+                      )}
+
+                      {displayFormat && (
+                        <div className="space-y-1">
+                          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
+                            Format
+                          </span>
+                          <p className="text-xs font-bold text-primary font-mono uppercase tracking-wider">
+                            {displayFormat}
+                          </p>
+                        </div>
+                      )}
+
+                      {detail.playerOfTheMatch && (
+                        <div className="space-y-1">
+                          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
+                            Player Of The Match
+                          </span>
+                          <p className="text-xs font-bold text-foreground leading-snug bg-primary/5 px-2 py-1 rounded-md border border-primary/10 inline-block">
+                            ★ {detail.playerOfTheMatch}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Sleek Officials Row */}
+                    {(detail.umpires || detail.thirdUmpire || detail.referee) && (
+                      <div className="py-2.5 border-b border-border/40 flex flex-wrap gap-x-6 gap-y-2 text-[10px] text-muted-foreground text-left">
+                        {detail.umpires && (
+                          <span>
+                            <strong className="font-bold text-foreground">Umpires:</strong> {detail.umpires}
+                          </span>
+                        )}
+                        {detail.thirdUmpire && (
+                          <span>
+                            <strong className="font-bold text-foreground">Third Umpire:</strong> {detail.thirdUmpire}
+                          </span>
+                        )}
+                        {detail.referee && (
+                          <span>
+                            <strong className="font-bold text-foreground">Match Referee:</strong> {detail.referee}
+                          </span>
+                        )}
+                      </div>
+                    )}
+
                     {/* Partnership details (Live) */}
                     {detail.status === "live" && detail.partnershipInfo && (
                       <div className="pt-4 text-xs text-muted-foreground flex justify-between items-center">
@@ -682,108 +841,152 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
 
                 </div>
 
-                {/* 2. Right Match Info Metadata Panel (4 Cols) */}
-                <div className="lg:col-span-4 space-y-6">
+                {/* 2. State-of-the-Art Match AI Assistant Chat Sidebar (4 Cols) */}
+                <div className="lg:col-span-4 lg:sticky lg:top-24 h-[calc(100vh-140px)] min-h-[550px] flex flex-col border border-border rounded-2xl bg-card shadow-xs overflow-hidden">
                   
-                  {/* Player of the Match MVP Section */}
-                  {detail.playerOfTheMatch && (
-                    <div className="border border-amber-250 bg-amber-50/40 rounded-2xl p-5 shadow-xs flex flex-col items-center text-center select-none">
-                      <div className="size-10 rounded-full bg-amber-100 flex items-center justify-center mb-3">
-                        <svg className="size-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                        </svg>
+                  {/* AI Sidebar Header */}
+                  <div className="px-5 py-4 border-b border-border bg-background flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                        <Sparkles className="size-4 animate-pulse" />
                       </div>
-                      <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest block mb-1">
-                        Player Of The Match
-                      </span>
-                      <h4 className="text-base font-black text-foreground">{detail.playerOfTheMatch}</h4>
-                      {detail.statusDescription && (
-                        <p className="text-[10px] text-muted-foreground mt-1.5 max-w-[200px] leading-relaxed">
-                          Awarded for exceptional impact in this IPL fixture.
-                        </p>
-                      )}
+                      <div className="text-left">
+                        <h3 className="text-sm font-bold text-foreground tracking-tight">Match AI Assistant</h3>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <span className="relative flex size-1.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                          </span>
+                          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest font-mono">Live Match Context Synced</span>
+                        </div>
+                      </div>
                     </div>
-                  )}
+                  </div>
 
-                  {/* Comprehensive Match Info Cards */}
-                  <div className="border border-border rounded-2xl p-5 bg-background shadow-xs space-y-5 text-left">
-                    <h3 className="text-xs font-black text-foreground uppercase tracking-widest border-b border-border/60 pb-3">
-                      Match Information
-                    </h3>
+                  {/* AI Sidebar Messages Viewport */}
+                  <div className="flex-1 overflow-y-auto p-5 space-y-4 scrollbar-thin scrollbar-thumb-border">
+                    {chatMessages.map((msg) => {
+                      const isAssistant = msg.role === "assistant";
+                      return (
+                        <div
+                          key={msg.id}
+                          className={`flex flex-col gap-1.5 ${isAssistant ? "items-start" : "items-end"}`}
+                        >
+                          <div className={`flex items-center gap-1.5 text-[9px] font-bold text-muted-foreground uppercase font-mono tracking-wider ${isAssistant ? "pl-1" : "pr-1"}`}>
+                            {isAssistant ? (
+                              <>
+                                <Bot className="size-3 text-primary" />
+                                <span>Match AI</span>
+                              </>
+                            ) : (
+                              <>
+                                <span>You</span>
+                                <User className="size-3 text-muted-foreground" />
+                              </>
+                            )}
+                          </div>
+                          
+                          <div
+                            className={`text-xs px-4 py-2.5 rounded-2xl leading-relaxed text-left border ${
+                              isAssistant
+                                ? "bg-muted/40 text-foreground border-border/40 rounded-tl-xs max-w-[90%]"
+                                : "bg-primary text-primary-foreground border-primary rounded-tr-xs max-w-[85%]"
+                            }`}
+                          >
+                            {msg.content.split("\n").map((para, i) => (
+                              <p key={i} className={i > 0 ? "mt-1.5" : ""}>
+                                {para.split("**").map((chunk, idx) => 
+                                  idx % 2 === 1 ? <strong key={idx} className="font-extrabold">{chunk}</strong> : chunk
+                                )}
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
 
-                    {/* Venue Metadata */}
-                    <div className="space-y-1.5">
-                      <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
-                        Venue
-                      </span>
-                      <p className="text-xs font-bold text-foreground leading-snug">
-                        {displayVenue}
-                      </p>
-                      {(displayVenueCity || displayVenueCountry) && (
-                        <p className="text-[10px] text-muted-foreground">
-                          {displayVenueCity}{displayVenueCity && displayVenueCountry ? ", " : ""}{displayVenueCountry}
-                        </p>
-                      )}
-                      {detail.timezone && (
-                        <p className="text-[9px] font-mono text-muted-foreground/80">
-                          Timezone: {detail.timezone}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Toss Details */}
-                    {displayToss && (
-                      <div className="space-y-1.5 border-t border-border/40 pt-4">
-                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
-                          Toss Results
-                        </span>
-                        <p className="text-xs font-bold text-foreground leading-snug">
-                          {displayToss}
-                        </p>
+                    {aiLoading && (
+                      <div className="flex flex-col gap-1.5 items-start">
+                        <div className="flex items-center gap-1.5 text-[9px] font-bold text-muted-foreground uppercase font-mono tracking-wider pl-1">
+                          <Bot className="size-3 text-primary" />
+                          <span>Match AI is typing...</span>
+                        </div>
+                        <div className="bg-muted/40 border border-border/40 text-muted-foreground text-xs px-4 py-3 rounded-2xl rounded-tl-xs max-w-[90%] flex items-center gap-2">
+                          <svg className="size-3.5 animate-spin text-primary" viewBox="0 0 24 24" fill="none">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                          </svg>
+                          <span className="font-mono text-[10px]">Analyzing live match scorecard database...</span>
+                        </div>
                       </div>
                     )}
+                    <div ref={chatEndRef} />
+                  </div>
 
-                    {/* Match Format */}
-                    {displayFormat && (
-                      <div className="space-y-1.5 border-t border-border/40 pt-4">
-                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
-                          Format
-                        </span>
-                        <p className="text-xs font-bold text-primary font-mono uppercase tracking-wider">
-                          {displayFormat}
-                        </p>
+                  {/* AI Sidebar Input Footer (Symmetrical Prompt Input Style) */}
+                  <div className="p-4 border-t border-border bg-background">
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSendChatMessage();
+                      }}
+                      className="border border-border bg-popover rounded-2xl shadow-xs p-1 focus-within:ring-1 focus-within:ring-primary focus-within:border-primary transition-all duration-200"
+                    >
+                      <textarea
+                        value={chatInput}
+                        onChange={(e) => setChatInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            handleSendChatMessage();
+                          }
+                        }}
+                        placeholder="Ask anything about this match..."
+                        rows={2}
+                        className="w-full text-xs bg-transparent border-0 ring-0 outline-hidden resize-none px-3 py-2 text-foreground placeholder:text-muted-foreground"
+                      />
+
+                      <div className="flex items-center justify-between px-2 pb-2">
+                        {/* Prompt Input Auxiliary Actions */}
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            title="Live Search Match Context"
+                            className="size-7 rounded-full flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer transition-colors duration-200"
+                          >
+                            <Globe className="size-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            title="Add Context Parameter"
+                            className="size-7 rounded-full flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer transition-colors duration-200"
+                          >
+                            <Plus className="size-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            title="More Tools"
+                            className="size-7 rounded-full flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer transition-colors duration-200"
+                          >
+                            <MoreHorizontal className="size-3.5" />
+                          </button>
+                        </div>
+
+                        {/* Submit Button */}
+                        <Button
+                          type="submit"
+                          size="icon"
+                          disabled={!chatInput.trim() || aiLoading}
+                          className="size-7 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer transition-transform duration-200 active:scale-95"
+                        >
+                          {aiLoading ? (
+                            <span className="size-2 bg-primary-foreground rounded-xs animate-pulse" />
+                          ) : (
+                            <ArrowUp className="size-3.5" />
+                          )}
+                        </Button>
                       </div>
-                    )}
-
-                    {/* Umpires & Match Officials */}
-                    {(detail.umpires || detail.thirdUmpire || detail.referee) && (
-                      <div className="space-y-3.5 border-t border-border/40 pt-4">
-                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
-                          Match Officials
-                        </span>
-                        
-                        {detail.umpires && (
-                          <div className="text-[11px]">
-                            <span className="text-muted-foreground font-medium block">Umpires:</span>
-                            <span className="text-foreground font-bold">{detail.umpires}</span>
-                          </div>
-                        )}
-
-                        {detail.thirdUmpire && (
-                          <div className="text-[11px]">
-                            <span className="text-muted-foreground font-medium block">Third Umpire:</span>
-                            <span className="text-foreground font-bold">{detail.thirdUmpire}</span>
-                          </div>
-                        )}
-
-                        {detail.referee && (
-                          <div className="text-[11px]">
-                            <span className="text-muted-foreground font-medium block">Match Referee:</span>
-                            <span className="text-foreground font-bold">{detail.referee}</span>
-                          </div>
-                        )}
-                      </div>
-                    )}
+                    </form>
                   </div>
 
                 </div>

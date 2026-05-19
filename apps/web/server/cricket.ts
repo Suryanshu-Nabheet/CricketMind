@@ -484,3 +484,151 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
     return null;
   }
 }
+
+export async function askMatchAI(
+  matchDetail: any,
+  userMessage: string,
+  history: { role: "user" | "assistant"; content: string }[]
+): Promise<string> {
+  "use server";
+
+  const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || "";
+  
+  // Format the detailed match state into a robust context system prompt
+  const matchContext = `
+You are the Official Fan Arena AI Assistant, a world-class IPL expert, expert cricket coach, and human commentator.
+You have access to the COMPLETE, LIVE end-to-end match context from the Cricbuzz API database.
+Respond as a highly engaging, knowledgeable, friendly human fan. Keep your responses precise, conversational, and direct (do not use dry JSON, markdown headers, or excessive lists). Use a highly engaging commentary voice.
+
+MATCH DATABASE STATE:
+- Series: ${matchDetail.seriesName || "IPL 2026"}
+- Match Type: ${matchDetail.matchType || "T20"}
+- Venue: ${matchDetail.venue || "IPL Venue"} (Ground: ${matchDetail.venueGround || "N/A"}, City: ${matchDetail.venueCity || "N/A"}, Country: ${matchDetail.venueCountry || "N/A"})
+- Timezone: ${matchDetail.timezone || "N/A"}
+- Status: ${matchDetail.statusDescription || matchDetail.result || "Live Match"}
+- Toss Decision: ${matchDetail.tossWinnerName ? `${matchDetail.tossWinnerName} elected to ${matchDetail.tossDecision || "bat"} first` : "N/A"}
+- Match Result: ${matchDetail.result || "Active Match"}
+- Player of the Match: ${matchDetail.playerOfTheMatch || "Not announced yet"}
+
+TEAMS & CURRENT SCORE:
+- Team A: ${matchDetail.teamA.name} (${matchDetail.teamA.shortName})
+  Score: ${matchDetail.runsA ? `${matchDetail.runsA}/${matchDetail.wicketsA} in ${matchDetail.oversA} overs` : "Yet to bat"}
+- Team B: ${matchDetail.teamB.name} (${matchDetail.teamB.shortName})
+  Score: ${matchDetail.runsB ? `${matchDetail.runsB}/${matchDetail.wicketsB} in ${matchDetail.oversB} overs` : "Yet to bat"}
+
+LIVE STATS (If active):
+- Current Run Rate (CRR): ${matchDetail.crr || "N/A"}
+- Required Run Rate (RRR): ${matchDetail.rrr || "N/A"}
+- Target: ${matchDetail.target || "N/A"}
+- Active Partnership: ${matchDetail.partnershipInfo || "N/A"}
+- Recent Timeline: ${matchDetail.timeline?.join(" -> ") || "N/A"}
+
+OFFICIALS:
+- Umpires: ${matchDetail.umpires || "N/A"}
+- Third Umpire: ${matchDetail.thirdUmpire || "N/A"}
+- Match Referee: ${matchDetail.referee || "N/A"}
+
+ACTIVE BATTERS & BOWLERS:
+- Batting: ${matchDetail.activeBatters?.map((b: any) => `${b.name} (${b.runs} off ${b.balls} balls, ${b.fours}x4, ${b.sixes}x6, SR: ${b.strikeRate})`).join(", ") || "None"}
+- Bowling: ${matchDetail.activeBowlers?.map((bw: any) => `${bw.name} (${bw.overs} overs, ${bw.wickets} wickets, econ: ${bw.economy})`).join(", ") || "None"}
+
+INNINGS SCORECARD:
+${matchDetail.scorecard?.map((inn: any) => `
+* Innings: ${inn.inningsName} (Score: ${inn.runs}/${inn.wickets} in ${inn.overs} overs)
+  - Batters: ${inn.battingStats?.map((b: any) => `${b.playerName} (${b.runs} off ${b.balls}, SR: ${b.strikeRate}, Status: ${b.outDescription})`).join(", ")}
+  - Bowlers: ${inn.bowlingStats?.map((bw: any) => `${bw.playerName} (${bw.overs}-${bw.maidens}-${bw.runs}-${bw.wickets}, Econ: ${bw.economy})`).join(", ")}
+`).join("\n") || "No scorecard details registered."}
+`;
+
+  // If no Gemini key is provided, perform highly realistic local mock answering!
+  if (!geminiKey) {
+    const query = userMessage.toLowerCase();
+    
+    if (query.includes("who is batting") || query.includes("batter") || query.includes("batsman")) {
+      if (matchDetail.activeBatters && matchDetail.activeBatters.length > 0) {
+        return `Right now in the middle, we have ${matchDetail.activeBatters.map((b: any) => `**${b.name}** batting on **${b.runs}** runs off ${b.balls} balls`).join(" and ")}. They are looking to push the scoring rate under pressure!`;
+      }
+      return `There are no active batters registered on the pitch right now. The innings might be completed, or the teams are in between sessions!`;
+    }
+    if (query.includes("who is bowling") || query.includes("bowler")) {
+      if (matchDetail.activeBowlers && matchDetail.activeBowlers.length > 0) {
+        return `Operating with the ball right now is ${matchDetail.activeBowlers.map((b: any) => `**${b.name}** who has bowled **${b.overs}** overs with a clean economy of **${b.economy}**`).join(" and ")}.`;
+      }
+      return `No active bowlers are registered right now. The game might be paused or in between innings!`;
+    }
+    if (query.includes("score") || query.includes("runs") || query.includes("wicket")) {
+      const scoreStr = [];
+      if (matchDetail.runsA) scoreStr.push(`${matchDetail.teamA.name}: **${matchDetail.runsA}/${matchDetail.wicketsA}** (${matchDetail.oversA} Ov)`);
+      if (matchDetail.runsB) scoreStr.push(`${matchDetail.teamB.name}: **${matchDetail.runsB}/${matchDetail.wicketsB}** (${matchDetail.oversB} Ov)`);
+      return `The current scoreboard reads:\n${scoreStr.join("\n")}\n\n*Status: ${matchDetail.statusDescription || matchDetail.result || "Active play"}.*`;
+    }
+    if (query.includes("toss")) {
+      return matchDetail.tossWinnerName 
+        ? `Toss update: **${matchDetail.tossWinnerName}** won the toss and elected to **${matchDetail.tossDecision?.toLowerCase() || "bat"}** first at ${matchDetail.venueGround || "the venue"}.`
+        : `Toss results are not available or haven't been resolved yet for this fixture.`;
+    }
+    if (query.includes("venue") || query.includes("stadium") || query.includes("ground")) {
+      return `This IPL match is being played at **${matchDetail.venueGround || matchDetail.venue || "IPL Stadium"}** located in **${matchDetail.venueCity || "India"}**.`;
+    }
+    if (query.includes("umpire") || query.includes("referee") || query.includes("official")) {
+      const ops = [];
+      if (matchDetail.umpires) ops.push(`Field Umpires: **${matchDetail.umpires}**`);
+      if (matchDetail.thirdUmpire) ops.push(`Third Umpire: **${matchDetail.thirdUmpire}**`);
+      if (matchDetail.referee) ops.push(`Match Referee: **${matchDetail.referee}**`);
+      return ops.length > 0 
+        ? `Here are the match officials for this clash:\n${ops.join("\n")}`
+        : `No official listings are currently resolved for this fixture.`;
+    }
+    if (query.includes("mvp") || query.includes("player of the match") || query.includes("pom")) {
+      return matchDetail.playerOfTheMatch
+        ? `The Player of the Match honors belong to **${matchDetail.playerOfTheMatch}** for an outstanding game-changing display!`
+        : `Player of the Match (MVP) honors haven't been decided yet as the game is still active or details are pending!`;
+    }
+
+    return `Hey! I have full visibility of this fixture. Here's a quick summary:\n\n* **Score:** ${matchDetail.teamA.shortName} (${matchDetail.runsA || 0}/${matchDetail.wicketsA || 0}) vs ${matchDetail.teamB.shortName} (${matchDetail.runsB || 0}/${matchDetail.wicketsB || 0})\n* **Venue:** ${matchDetail.venue}\n* **Status:** ${matchDetail.statusDescription || "Live play"}\n\n*(Note: To enable full open-ended chat queries via the Gemini LLM, make sure to add your \`GEMINI_API_KEY\` to the \`.env.local\` config file!)*`;
+  }
+
+  try {
+    const geminiHistory = history.map((h) => ({
+      role: h.role === "user" ? "user" : "model",
+      parts: [{ text: h.content }]
+    }));
+
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            ...geminiHistory,
+            {
+              role: "user",
+              parts: [{ text: `User Question: ${userMessage}\n\nAnswer using the live database details context naturally like a human.` }]
+            }
+          ],
+          systemInstruction: {
+            parts: [{ text: matchContext }]
+          },
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 800
+          }
+        })
+      }
+    );
+
+    if (!response.ok) {
+      const err = await response.text();
+      console.error("Gemini API call failed:", err);
+      return `I ran into an error connecting to my cognitive engine, but I can tell you the current score is ${matchDetail.teamA.shortName} (${matchDetail.runsA || 0}/${matchDetail.wicketsA || 0}) vs ${matchDetail.teamB.shortName} (${matchDetail.runsB || 0}/${matchDetail.wicketsB || 0}).`;
+    }
+
+    const data = await response.json();
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    return reply || "I'm watching the game closely, but couldn't formulate a response. Ask me anything about the players or scores!";
+  } catch (error) {
+    console.error("Gemini askMatchAI error:", error);
+    return "I had a minor connection hiccup! What was your question again?";
+  }
+}
