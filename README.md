@@ -113,7 +113,7 @@ All updates must strictly adhere to the following coding guidelines:
 ## Watermark & GDPR Compliance
 
 This project is officially presented in association with Google Developer Groups (GDG). The GDG watermark is symmetrically integrated at the bottom of the arena dashboard at:
-`/public/GDG.png`
+[/public/GDG.png](/apps/web/public/GDG.png)
 
 No user-sensitive cookies or trackers are embedded.
 
