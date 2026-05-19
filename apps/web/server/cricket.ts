@@ -130,7 +130,7 @@ async function fetchMatchList(endpoint: string): Promise<Match[]> {
 
                 const seriesName = (info.seriesName || "").toLowerCase();
                 const isIPL = seriesName.includes("ipl") || seriesName.includes("indian premier league");
-                const status = info.state === "Complete" ? "finished" : info.state === "Upcoming" || info.state === "Preview" ? "upcoming" : "live";
+                const status = ((s) => s === "complete" ? "finished" : (s === "upcoming" || s === "preview") ? "upcoming" : "live")((info.state || "").toLowerCase());
                 
                 let runsA, wicketsA, oversA, runsB, wicketsB, oversB;
                 if (score) {
@@ -449,7 +449,10 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
         name: matchHeader?.team2?.name || matchHeader?.team2?.teamname || "",
         shortName: matchHeader?.team2?.shortName || matchHeader?.team2?.teamsname || ""
       },
-      status: matchHeader?.state === "Complete" ? "finished" : matchHeader?.state === "Upcoming" ? "upcoming" : "live",
+      status: (() => {
+        const matchState = (matchHeader?.state || "").toLowerCase();
+        return (matchState === "complete") ? "finished" : (matchState === "upcoming" || matchState === "preview") ? "upcoming" : "live";
+      })(),
       date: new Date().toISOString(),
       venue: venueFull,
       tossResult: matchHeader?.status || "",

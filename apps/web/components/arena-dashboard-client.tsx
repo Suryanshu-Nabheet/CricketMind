@@ -8,17 +8,7 @@ import {
   Sparkles,
   Bot,
   User,
-  ArrowUp,
-  Globe,
-  Mic,
-  MoreHorizontal,
-  Plus,
-  Copy,
-  ThumbsUp,
-  ThumbsDown,
-  Trash,
-  Pencil,
-  Send
+  ArrowUp
 } from "lucide-react";
 
 export function getTeamLogo(name: string, shortName: string): string {
@@ -182,6 +172,8 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
   const matchSummary = matches.find(m => m.id === selectedMatchId);
 
   // High-fidelity fallback computation for premium dashboard fields
+  const displayStatus = detail?.status || matchSummary?.status || "live";
+
   const displayVenue = (detail?.venueGround && detail.venueGround !== "Unknown Ground" && detail.venueGround.trim() !== "")
     ? detail.venueGround
     : (detail?.venue && detail.venue.trim() !== "")
@@ -466,7 +458,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                   <div className="border border-border rounded-2xl p-6 bg-background shadow-xs">
                     <div className="flex justify-between items-center mb-6">
                       <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest bg-muted px-2 py-0.5 rounded-sm">
-                        {detail.status === "finished" ? "Match Complete" : detail.status === "upcoming" ? "Pre-Match Info" : "Live Feed"}
+                        {displayStatus === "finished" ? "Match Complete" : displayStatus === "upcoming" ? "Pre-Match Info" : "Live Feed"}
                       </span>
                       <span className="text-xs font-mono text-muted-foreground truncate max-w-[200px]" title={displayVenue}>
                         {displayVenue}
@@ -529,19 +521,19 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                       </div>
 
                       <div className="flex flex-col justify-end md:items-end space-y-2 text-xs text-muted-foreground">
-                        {detail.status === "live" && detail.crr && (
+                        {displayStatus === "live" && detail.crr && (
                           <div>
                             <span className="font-medium mr-1.5">Current Run Rate:</span>
                             <strong className="font-mono text-foreground font-extrabold">{detail.crr}</strong>
                           </div>
                         )}
-                        {detail.status === "live" && detail.rrr && (
+                        {displayStatus === "live" && detail.rrr && (
                           <div>
                             <span className="font-medium mr-1.5">Required Run Rate:</span>
                             <strong className="font-mono text-foreground font-extrabold">{detail.rrr}</strong>
                           </div>
                         )}
-                        {detail.status === "live" && detail.target && (
+                        {displayStatus === "live" && detail.target && (
                           <div>
                             <span className="font-medium mr-1.5">Target Score:</span>
                             <strong className="font-mono text-primary font-black">{detail.target} Runs</strong>
@@ -632,7 +624,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                     )}
 
                     {/* Partnership details (Live) */}
-                    {detail.status === "live" && detail.partnershipInfo && (
+                    {displayStatus === "live" && detail.partnershipInfo && (
                       <div className="pt-4 text-xs text-muted-foreground flex justify-between items-center">
                         <span>Active Partnership: <strong className="text-foreground">{detail.partnershipInfo}</strong></span>
                         {detail.timeline.length > 0 && (
@@ -650,7 +642,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                   </div>
 
                   {/* 2. Active Batsmen Stats (Live Only) */}
-                  {detail.status === "live" && detail.activeBatters.length > 0 && (
+                  {displayStatus === "live" && detail.activeBatters.length > 0 && (
                     <div className="border border-border rounded-2xl overflow-hidden bg-background shadow-xs">
                       <div className="px-6 py-4 border-b border-border/60">
                         <h3 className="text-xs font-black text-muted-foreground uppercase tracking-widest text-left">
@@ -683,7 +675,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                   )}
 
                   {/* 3. Active Bowlers Stats (Live Only) */}
-                  {detail.status === "live" && detail.activeBowlers.length > 0 && (
+                  {displayStatus === "live" && detail.activeBowlers.length > 0 && (
                     <div className="border border-border rounded-2xl overflow-hidden bg-background shadow-xs">
                       <div className="px-6 py-4 border-b border-border/60">
                         <h3 className="text-xs font-black text-muted-foreground uppercase tracking-widest text-left">
@@ -946,32 +938,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                         className="w-full text-xs bg-transparent border-0 ring-0 outline-hidden resize-none px-3 py-2 text-foreground placeholder:text-muted-foreground"
                       />
 
-                      <div className="flex items-center justify-between px-2 pb-2">
-                        {/* Prompt Input Auxiliary Actions */}
-                        <div className="flex items-center gap-1">
-                          <button
-                            type="button"
-                            title="Live Search Match Context"
-                            className="size-7 rounded-full flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer transition-colors duration-200"
-                          >
-                            <Globe className="size-3.5" />
-                          </button>
-                          <button
-                            type="button"
-                            title="Add Context Parameter"
-                            className="size-7 rounded-full flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer transition-colors duration-200"
-                          >
-                            <Plus className="size-3.5" />
-                          </button>
-                          <button
-                            type="button"
-                            title="More Tools"
-                            className="size-7 rounded-full flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer transition-colors duration-200"
-                          >
-                            <MoreHorizontal className="size-3.5" />
-                          </button>
-                        </div>
-
+                      <div className="flex items-center justify-end px-2 pb-2">
                         {/* Submit Button */}
                         <Button
                           type="submit"
