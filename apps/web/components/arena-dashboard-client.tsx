@@ -44,6 +44,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
   const [loadingDetail, setLoadingDetail] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [isLocalDB, setIsLocalDB] = useState<boolean>(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     checkDatabaseSource().then((res) => {
@@ -123,9 +124,33 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
     }
   };
 
+  const startPolling = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    timerRef.current = setTimeout(() => {
+      if (!selectedMatchId) return;
+      getMatchDetail(selectedMatchId)
+        .then((res) => {
+          setDetail(res);
+          startPolling();
+        })
+        .catch((err) => {
+          console.error("Polling error:", err);
+          startPolling();
+        });
+    }, 120000); // 2 minutes wait time to preserve Cricbuzz API limits
+  };
+
   const triggerRefresh = () => {
     if (!selectedMatchId || refreshing) return;
     setRefreshing(true);
+
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
     getMatchDetail(selectedMatchId)
       .then((res) => {
         setDetail(res);
@@ -135,6 +160,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
       })
       .finally(() => {
         setRefreshing(false);
+        startPolling();
       });
   };
 
@@ -148,10 +174,14 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
     const fetchMatch = () => {
       getMatchDetail(selectedMatchId)
         .then((res) => {
-          if (isMounted) setDetail(res);
+          if (isMounted) {
+            setDetail(res);
+            startPolling();
+          }
         })
         .catch((err) => {
           console.error("Error fetching match details:", err);
+          if (isMounted) startPolling();
         })
         .finally(() => {
           if (isMounted) setLoadingDetail(false);
@@ -161,12 +191,11 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
     // Initial fetch
     fetchMatch();
 
-    // Poll every 90 seconds (90000ms)
-    const intervalId = setInterval(fetchMatch, 90000);
-
     return () => {
       isMounted = false;
-      clearInterval(intervalId);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
     };
   }, [selectedMatchId]);
 
