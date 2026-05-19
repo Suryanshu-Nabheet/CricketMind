@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/create-next-app).
+# CricketMind - Web Application Console
+
+This directory contains the main Next.js Next 16 web application for **CricketMind**, a premium real-time sports dashboard and second-screen companion, presented in association with Google Developer Groups (GDG).
+
+---
 
 ## Getting Started
 
-First, run the development server:
+1. **Configure Environment:**
+   Create an `.env.local` file in this directory and configure your RapidAPI keys:
+   ```env
+   RAPIDAPI_KEY=your_rapidapi_key_here
+   RAPIDAPI_HOST=cricbuzz-cricket.p.rapidapi.com
+   ```
+   *For details on obtaining a key, consult the master [README.md](../../README.md) at the root.*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Run Development Server:**
+   From the repository root, execute:
+   ```bash
+   pnpm --filter=web dev
+   ```
+   Or run directly inside this folder:
+   ```bash
+   pnpm dev
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Access Application:**
+   Open [http://localhost:3000/arena](http://localhost:3000/arena).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load Inter, a custom Google Font.
+## Key Modules
 
-## Learn More
+- **`app/`**: App router layouts, page components, and viewport configurations.
+- **`components/`**: UI building blocks styled using TailwindCSS and shadcn/ui primitives.
+- **`server/`**: Server-side controllers and data fetchers (`cricket.ts`) responsible for fetching and parsing the Cricbuzz live feed sequentially.
+- **`public/logos`**: Folder containing the high-resolution logos for all official IPL teams.
+- **`public/GDG.png`**: Symmetrical watermark banner logo presented in association with Google Developer Groups.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technical Considerations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **1 RPS Limit:** The backend sequentially executes fetches with a 1.1s delay to comply with the 1 RPS limit of standard RapidAPI tiers.
+- **90s Cache Lifetime:** Background poll updates execute every 90 seconds to prevent rapid monthly quota exhaustion.

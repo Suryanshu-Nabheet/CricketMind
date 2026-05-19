@@ -1,159 +1,124 @@
-# Turborepo starter
+# CricketMind - Fan Arena Dashboard
 
-This Turborepo starter is maintained by the Turborepo core team.
+CricketMind is a highly-polished, real-time sports dashboard and second-screen companion application designed for cricket enthusiasts. Formally presented in association with Google Developer Groups (GDG), this application integrates live Cricbuzz data streams into a sleek, minimal, and premium interface built with Next.js, TypeScript, TailwindCSS, and shadcn/ui.
 
-## Using this example
+---
 
-Run the following command:
+## Key Features
 
-```sh
-npx create-turbo@latest
+- **Live Match Insights:** Real-time score summaries, wickets, overs, current run rates (CRR), required run rates (RRR), targets, active partnerships, and over-by-over ball timelines.
+- **Completed Match Scorecards:** Interactive scorecards detailing batsmen runs, balls, 4s, 6s, strike rates, dismissals, bowlers overs, maidens, runs conceded, wickets, and economy rates.
+- **Strict IPL Filtering:** Prioritizes Indian Premier League (IPL) fixtures with real, official high-resolution team logo resolution, with graceful fallbacks to international fixtures when no IPL matches are active.
+- **Sequential API Delay Pipeline:** Tailored 1.1-second sequential fetch delay engine to strictly respect the 1 Request Per Second (RPS) rate limits of the Cricbuzz Cricket API BASIC subscription tier, preventing "Too Many Requests" errors.
+- **Conservative Polling Engine:** Background polling interval configured to 90 seconds (90000ms) to prevent monthly quota exhaustion, accompanied by an instant "Sync Now" manual sync action for on-demand refreshes.
+- **Minimal, Professional UI:** Sleek, accessible design complying with shadcn/ui design tokens, without gratuitous animations or unnecessary elements.
+
+---
+
+## Workspace Structure
+
+```text
+CricketMind/
+├── apps/
+│   ├── web/                     # Next.js 16 Application (Main App Console)
+│   │   ├── app/                 # Next.js Page & Routing Layer
+│   │   ├── components/          # Reusable UI & shadcn Primitives
+│   │   ├── public/              # Static Assets (Team Logos, GDG Branding)
+│   │   ├── server/              # Server Actions & RapidAPI Scraping Controllers
+│   │   └── lib/                 # Shared Configs & Variables
+│   └── docs/                    # Technical documentation static site
+├── packages/
+│   ├── typescript-config/       # Shared TypeScript strict configuration files
+│   ├── eslint-config/           # Monorepo linting configurations
+│   └── ui/                      # Shared design system components
+├── LICENSE                      # MIT Open Source License
+└── README.md                    # System documentation
 ```
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+## Getting Started
 
-### Apps and Packages
+### Prerequisites
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- Node.js (v18.x or later)
+- pnpm (v8.x or later)
+- RapidAPI Account
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+---
 
-### Utilities
+### Step-by-Step API Setup Guide
 
-This Turborepo has some additional tools already setup for you:
+This application pulls data in real-time from the **Cricbuzz Cricket API** hosted on RapidAPI. To obtain your API credentials:
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+1. **Sign Up:** Go to [RapidAPI](https://rapidapi.com/) and create a free account.
+2. **Subscribe:** Navigate to the [Cricbuzz Cricket API](https://rapidapi.com/cricketapilive/api/cricbuzz-cricket) page.
+3. **Choose Plan:** Select the **BASIC** plan (Free, 1 Request Per Second limit).
+4. **Get Credentials:** Go to the API Console or dashboard for your application. Copy your custom API credentials:
+   - `x-rapidapi-key` (Your unique RapidAPI developer token)
+   - `x-rapidapi-host` (The API gateway host: `cricbuzz-cricket.p.rapidapi.com`)
 
-### Build
+---
 
-To build all apps and packages, run the following command:
+### Local Installation
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+1. **Clone the Repository:**
+   ```bash
+   cd CricketMind
+   ```
 
-```sh
-cd my-turborepo
-turbo build
-```
+2. **Install Dependencies:**
+   Install the monorepo dependencies using `pnpm`:
+   ```bash
+   pnpm install
+   ```
 
-Without global `turbo`, use your package manager:
+3. **Configure Environment Variables:**
+   Create an `.env.local` configuration file inside `apps/web/`:
+   ```bash
+   touch apps/web/.env.local
+   ```
+   Add the following environment variables using your custom RapidAPI credentials:
+   ```env
+   RAPIDAPI_KEY=your_rapidapi_key_here
+   RAPIDAPI_HOST=cricbuzz-cricket.p.rapidapi.com
+   ```
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
-```
+4. **Launch Development Server:**
+   Start all applications inside the monorepo concurrently:
+   ```bash
+   pnpm dev
+   ```
+   Alternatively, run the web application directly:
+   ```bash
+   pnpm --filter=web dev
+   ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+5. **Access the App:**
+   Open [http://localhost:3000/arena](http://localhost:3000/arena) in your web browser.
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+---
 
-```sh
-turbo build --filter=docs
-```
+## Development Guidelines
 
-Without global `turbo`:
+All updates must strictly adhere to the following coding guidelines:
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+- **TypeScript Strict Mode:** Ensure all variables are fully typed. Implicit `any` is strictly prohibited.
+- **Surgical Edits:** Only touch directories and files containing features you are explicitly modifying.
+- **Performance First:** Keep cache and fetch actions optimized. Server Actions are implemented with `cache: "no-store"` to guarantee live data updates.
+- **Zero Mock Fallbacks:** Do not inject fake or simulated scores when the API returns real-time data. Provide a fallback to alternative matches instead.
 
-### Develop
+---
 
-To develop all apps and packages, run the following command:
+## Watermark & GDPR Compliance
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+This project is officially presented in association with Google Developer Groups (GDG). The GDG watermark is symmetrically integrated at the bottom of the arena dashboard at:
+`/public/GDG.png`
 
-```sh
-cd my-turborepo
-turbo dev
-```
+No user-sensitive cookies or trackers are embedded.
 
-Without global `turbo`, use your package manager:
+---
 
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
-```
+## License
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+This project is licensed under the terms of the MIT License. See [LICENSE](LICENSE) for full details.
