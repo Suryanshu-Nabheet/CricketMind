@@ -30,21 +30,21 @@ export default function Home() {
       </main>
 
       {/* Google Developer Groups Watermark Banner */}
-      <div className="flex flex-col items-center justify-center gap-1 mt-8 mb-4 opacity-90 hover:opacity-100 transition-opacity duration-300 select-none">
-        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest font-mono">
+      <div className="flex flex-col items-center justify-center gap-2 mt-12 mb-6 opacity-90 hover:opacity-100 transition-opacity duration-300 select-none">
+        <span className="text-xs md:text-sm font-bold text-muted-foreground uppercase tracking-widest font-mono">
           Presented in association with
         </span>
 
         <img
           src="/GDG.png"
           alt="Google Developer Group Logo"
-          className="h-24 md:h-32 w-auto object-contain brightness-100"
+          className="h-28 md:h-36 w-auto object-contain brightness-100 scale-110 md:scale-125 my-2"
         />
       </div>
       {/* Footer Branding */}
-      <footer className="border-t border-border bg-card/40 py-8 mt-16 text-center text-xs text-muted-foreground">
-        <p className="mb-2">© 2026 CricketMind. All Rights Reserved.</p>
-        <p className="font-mono text-[10px]">
+      <footer className="border-t border-border bg-card/40 py-8 mt-16 text-center text-sm text-muted-foreground">
+        <p className="mb-2 text-base">© 2026 CricketMind. All Rights Reserved.</p>
+        <p className="font-mono text-xs md:text-sm">
           Developed by <span className="text-foreground font-semibold">Suryanshu Nabheet</span> • MIT License
         </p>
       </footer>

@@ -210,7 +210,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
           <img
             src="/GDG.png"
             alt="Google Developer Group Logo"
-            className="h-8 md:h-9 w-auto object-contain brightness-100 contrast-100 transition-transform duration-300 hover:scale-105"
+            className="h-10 md:h-12 w-auto object-contain scale-[1.35] md:scale-[1.5] origin-center transition-transform duration-300 hover:scale-[1.6] mx-2"
           />
           <span className="text-[9px] font-mono font-bold bg-primary/10 text-primary px-2.5 py-0.5 rounded-full uppercase tracking-wider hidden sm:inline-block">
             Fan Arena
