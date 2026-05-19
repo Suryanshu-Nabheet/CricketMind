@@ -90,7 +90,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
     try {
       const { askMatchAI } = await import("@/server/cricket");
       const reply = await askMatchAI(detail, userText, updatedHistory.map(m => ({ role: m.role, content: m.content })));
-      
+
       setChatMessages(prev => [
         ...prev,
         {
@@ -135,7 +135,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
 
     let isMounted = true;
     setLoadingDetail(true);
-    
+
     const fetchMatch = () => {
       getMatchDetail(selectedMatchId)
         .then((res) => {
@@ -189,23 +189,22 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
 
   const displayVenueCity = detail?.venueCity || matchSummary?.venue?.split(",")?.[1]?.trim() || "";
   const displayVenueCountry = detail?.venueCountry || "";
-  
-  const displayToss = detail?.tossWinnerName 
-    ? (detail.tossDecision 
-        ? `${detail.tossWinnerName} elected to ${detail.tossDecision.toLowerCase()} first`
-        : detail.tossWinnerName
-      )
+
+  const displayToss = detail?.tossWinnerName
+    ? (detail.tossDecision
+      ? `${detail.tossWinnerName} elected to ${detail.tossDecision.toLowerCase()} first`
+      : detail.tossWinnerName
+    )
     : "";
 
   const displayResult = detail?.result || matchSummary?.result || "";
   const displayFormat = detail?.matchType || matchSummary?.seriesName || "";
 
   return (
-    <div className={`bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary relative ${
-      activeScreen === "details"
+    <div className={`bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary relative ${activeScreen === "details"
         ? "lg:h-screen lg:overflow-hidden flex flex-col min-h-screen lg:min-h-0 pb-20 lg:pb-0"
         : "min-h-screen pb-20"
-    }`}>
+      }`}>
       {/* Symmetrical Header */}
       <header className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
@@ -222,12 +221,11 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
       </header>
 
       {/* Main Container */}
-      <main className={`max-w-7xl w-full mx-auto px-6 py-6 flex-1 ${
-        activeScreen === "details"
+      <main className={`max-w-7xl w-full mx-auto px-6 py-6 flex-1 ${activeScreen === "details"
           ? "lg:overflow-hidden lg:flex lg:flex-col lg:min-h-0"
           : ""
-      }`}>
-        
+        }`}>
+
         {/* SCREEN 1: IPL FIXTURES GRID PANEL */}
         {activeScreen === "fixtures" && (
           <div className="space-y-8">
@@ -244,42 +242,38 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
             <div className="flex flex-wrap gap-2 border-b border-border/60 pb-4">
               <button
                 onClick={() => setFixturesTab("all")}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer ${
-                  fixturesTab === "all"
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer ${fixturesTab === "all"
                     ? "bg-primary text-primary-foreground shadow-xs"
                     : "bg-muted/40 text-muted-foreground hover:bg-muted"
-                }`}
+                  }`}
               >
                 All Fixtures ({matches.length})
               </button>
               <button
                 onClick={() => setFixturesTab("live")}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
-                  fixturesTab === "live"
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${fixturesTab === "live"
                     ? "bg-red-600 text-white shadow-xs"
                     : "bg-red-50/60 text-red-600 border border-red-100 hover:bg-red-50"
-                }`}
+                  }`}
               >
                 <span className="size-1.5 rounded-full bg-current animate-pulse" />
                 Live ({countLive})
               </button>
               <button
                 onClick={() => setFixturesTab("upcoming")}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer ${
-                  fixturesTab === "upcoming"
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer ${fixturesTab === "upcoming"
                     ? "bg-primary text-primary-foreground shadow-xs"
                     : "bg-muted/40 text-muted-foreground hover:bg-muted"
-                }`}
+                  }`}
               >
                 Upcoming ({countUpcoming})
               </button>
               <button
                 onClick={() => setFixturesTab("finished")}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer ${
-                  fixturesTab === "finished"
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer ${fixturesTab === "finished"
                     ? "bg-primary text-primary-foreground shadow-xs"
                     : "bg-muted/40 text-muted-foreground hover:bg-muted"
-                }`}
+                  }`}
               >
                 Completed ({countFinished})
               </button>
@@ -302,7 +296,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                     className="border border-border bg-background hover:border-primary/40 hover:shadow-lg hover:shadow-primary/[0.02] transition-all duration-300 rounded-2xl p-6 cursor-pointer text-left flex flex-col justify-between group relative overflow-hidden"
                   >
                     <div className="absolute top-0 left-0 w-1.5 h-full bg-transparent group-hover:bg-primary transition-colors duration-300" />
-                    
+
                     <div>
                       <div className="flex justify-between items-center mb-4">
                         <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest bg-muted px-2 py-0.5 rounded-sm">
@@ -330,10 +324,10 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                         <div className="flex justify-between items-center text-sm font-extrabold text-foreground">
                           <div className="flex items-center gap-2.5">
                             {getTeamLogo(match.teamA.name, match.teamA.shortName) ? (
-                              <img 
-                                src={getTeamLogo(match.teamA.name, match.teamA.shortName)} 
-                                className="size-6 object-contain select-none" 
-                                alt={`${match.teamA.name} logo`} 
+                              <img
+                                src={getTeamLogo(match.teamA.name, match.teamA.shortName)}
+                                className="size-6 object-contain select-none"
+                                alt={`${match.teamA.name} logo`}
                               />
                             ) : (
                               <div className="size-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-[10px] select-none">
@@ -346,14 +340,14 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                             <span className="font-mono font-black text-base">{match.runsA}/{match.wicketsA}</span>
                           )}
                         </div>
-                        
+
                         <div className="flex justify-between items-center text-sm font-extrabold text-foreground">
                           <div className="flex items-center gap-2.5">
                             {getTeamLogo(match.teamB.name, match.teamB.shortName) ? (
-                              <img 
-                                src={getTeamLogo(match.teamB.name, match.teamB.shortName)} 
-                                className="size-6 object-contain select-none" 
-                                alt={`${match.teamB.name} logo`} 
+                              <img
+                                src={getTeamLogo(match.teamB.name, match.teamB.shortName)}
+                                className="size-6 object-contain select-none"
+                                alt={`${match.teamB.name} logo`}
                               />
                             ) : (
                               <div className="size-6 rounded-full bg-amber-500 text-white flex items-center justify-center font-black text-[10px] select-none">
@@ -380,7 +374,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                         {match.status === "live" && (
                           <div className="w-full text-center bg-red-600 hover:bg-red-700 text-white text-xs font-black py-2 rounded-xl transition-all flex items-center justify-center gap-1">
                             Join Fan Arena
-                            <svg className="size-3.5 fill-current" viewBox="0 0 20 20"><path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd"/></svg>
+                            <svg className="size-3.5 fill-current" viewBox="0 0 20 20"><path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
                           </div>
                         )}
                         {match.status === "upcoming" && (
@@ -406,7 +400,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
         {/* SCREEN 2: FOCUSED MATCH DETAIL PANEL */}
         {activeScreen === "details" && (
           <div className="flex-1 lg:overflow-hidden lg:flex lg:flex-col lg:min-h-0 space-y-4">
-            
+
             {/* Nav Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-border/60 shrink-0">
               <Button
@@ -463,10 +457,10 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
               </div>
             ) : detail ? (
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start lg:items-stretch lg:flex-1 lg:overflow-hidden lg:min-h-0">
-                
+
                 {/* 1. Left Match Details Console (8 Cols) */}
                 <div className="lg:col-span-8 lg:overflow-y-auto lg:h-full pr-1 space-y-6 scrollbar-thin scrollbar-thumb-border">
-                  
+
                   {/* Scoreboard block */}
                   <div className="border border-border rounded-2xl p-6 bg-background shadow-xs">
                     <div className="flex justify-between items-center mb-6">
@@ -482,10 +476,10 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                       <div className="space-y-4">
                         <div className="flex items-center gap-3">
                           {getTeamLogo(detail.teamA.name, detail.teamA.shortName) ? (
-                            <img 
-                              src={getTeamLogo(detail.teamA.name, detail.teamA.shortName)} 
-                              className="size-10 object-contain select-none" 
-                              alt={`${detail.teamA.name} logo`} 
+                            <img
+                              src={getTeamLogo(detail.teamA.name, detail.teamA.shortName)}
+                              className="size-10 object-contain select-none"
+                              alt={`${detail.teamA.name} logo`}
                             />
                           ) : (
                             <div className="size-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs select-none">
@@ -508,10 +502,10 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
 
                         <div className="flex items-center gap-3">
                           {getTeamLogo(detail.teamB.name, detail.teamB.shortName) ? (
-                            <img 
-                              src={getTeamLogo(detail.teamB.name, detail.teamB.shortName)} 
-                              className="size-10 object-contain select-none" 
-                              alt={`${detail.teamB.name} logo`} 
+                            <img
+                              src={getTeamLogo(detail.teamB.name, detail.teamB.shortName)}
+                              className="size-10 object-contain select-none"
+                              alt={`${detail.teamB.name} logo`}
                             />
                           ) : (
                             <div className="size-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-black text-xs select-none">
@@ -848,7 +842,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
 
                 {/* 2. State-of-the-Art Match AI Assistant Chat Sidebar (4 Cols) */}
                 <div className="lg:col-span-4 h-[550px] lg:h-full flex flex-col border border-border rounded-2xl bg-card shadow-xs overflow-hidden">
-                  
+
                   {/* AI Sidebar Header */}
                   <div className="px-5 py-4 border-b border-border bg-background flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
@@ -890,17 +884,16 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                               </>
                             )}
                           </div>
-                          
+
                           <div
-                            className={`text-xs px-4 py-2.5 rounded-2xl leading-relaxed text-left border ${
-                              isAssistant
+                            className={`text-xs px-4 py-2.5 rounded-2xl leading-relaxed text-left border ${isAssistant
                                 ? "bg-muted/40 text-foreground border-border/40 rounded-tl-xs max-w-[90%]"
                                 : "bg-primary text-primary-foreground border-primary rounded-tr-xs max-w-[85%]"
-                            }`}
+                              }`}
                           >
                             {msg.content.split("\n").map((para, i) => (
                               <p key={i} className={i > 0 ? "mt-1.5" : ""}>
-                                {para.split("**").map((chunk, idx) => 
+                                {para.split("**").map((chunk, idx) =>
                                   idx % 2 === 1 ? <strong key={idx} className="font-extrabold">{chunk}</strong> : chunk
                                 )}
                               </p>
@@ -982,15 +975,40 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
 
       </main>
 
-      {/* Symmetrical Google Developer Groups watermark banner at the bottom of the arena! */}
-      <div className="flex flex-col items-center justify-center gap-2 mt-20 mb-8 opacity-90 hover:opacity-100 transition-opacity duration-300 select-none">
-        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest font-mono">Presented in association with</span>
-        <img 
-          src="/GDG.png" 
-          alt="Google Developer Group Logo" 
-          className="h-16 md:h-20 w-auto object-contain brightness-100" 
-        />
-      </div>
+      {/* Symmetrical Premium Compact Footer Bar */}
+      <footer className="border-t border-border bg-card/30 backdrop-blur-md px-6 py-3 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-muted-foreground select-none shrink-0 z-40">
+        <div className="flex items-center gap-2">
+          <img
+            src="/GDG.png"
+            alt="Google Developer Group Logo"
+            className="h-5 w-auto object-contain brightness-95 contrast-125"
+          />
+          <span className="font-mono text-muted-foreground/80">
+            Organized by Google Developer Groups
+          </span>
+        </div>
+        <div className="flex items-center gap-2.5 font-mono">
+          <span>Developed by <strong className="font-bold text-foreground">Suryanshu Nabheet</strong></span>
+          <span className="text-muted-foreground/40">•</span>
+          <a
+            href="https://github.com/Suryanshu-Nabheet"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-primary transition-colors duration-200"
+          >
+            GitHub
+          </a>
+          <span className="text-muted-foreground/40">•</span>
+          <a
+            href="https://x.com/SuryanshuXDev/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-primary transition-colors duration-200"
+          >
+            Twitter
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
