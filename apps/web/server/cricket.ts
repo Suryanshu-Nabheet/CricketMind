@@ -1,7 +1,5 @@
 "use server";
 
-import { config } from "@/lib/config";
-
 // --- TypeScript Interfaces ---
 
 export interface TeamDetails {
@@ -69,16 +67,29 @@ export interface MatchDetail extends Match {
 
 // --- RapidAPI Data Fetch Layer ---
 
-const headers = {
-  "X-RapidAPI-Key": config.rapidApiKey,
-  "X-RapidAPI-Host": config.rapidApiHost,
-};
+function getRequestHeaders() {
+  const key = process.env.RAPIDAPI_KEY || process.env.RAPID_API_KEY || "";
+  const host = process.env.RAPIDAPI_HOST || process.env.RAPID_API_HOST || "cricbuzz-cricket.p.rapidapi.com";
+
+  if (!key) {
+    console.error("CRITICAL ERROR: 'RAPIDAPI_KEY' (or 'RAPID_API_KEY') is not set in environment variables! Please configure it in your Google Cloud Run variables.");
+  }
+
+  return {
+    headers: {
+      "X-RapidAPI-Key": key,
+      "X-RapidAPI-Host": host,
+    },
+    host,
+  };
+}
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function fetchMatchList(endpoint: string): Promise<Match[]> {
+  const { headers, host } = getRequestHeaders();
   try {
-    const res = await fetch(`https://${config.rapidApiHost}/matches/v1/${endpoint}`, {
+    const res = await fetch(`https://${host}/matches/v1/${endpoint}`, {
       headers,
       cache: "no-store"
     });
@@ -156,7 +167,8 @@ async function fetchMatchList(endpoint: string): Promise<Match[]> {
 }
 
 export async function getMatches(): Promise<Match[]> {
-  if (!config.rapidApiKey) return [];
+  const { headers } = getRequestHeaders();
+  if (!headers["X-RapidAPI-Key"]) return [];
 
   const liveMatches = await fetchMatchList("live");
   await delay(1100);
@@ -176,17 +188,18 @@ export async function getMatches(): Promise<Match[]> {
 }
 
 export async function getMatchDetail(matchId: string): Promise<MatchDetail | null> {
-  if (!config.rapidApiKey) return null;
+  const { headers, host } = getRequestHeaders();
+  if (!headers["X-RapidAPI-Key"]) return null;
 
   try {
-    const commRes = await fetch(`https://${config.rapidApiHost}/mcenter/v1/${matchId}/comm`, {
+    const commRes = await fetch(`https://${host}/mcenter/v1/${matchId}/comm`, {
       headers,
       cache: "no-store"
     });
     
     await delay(1100);
     
-    const scardRes = await fetch(`https://${config.rapidApiHost}/mcenter/v1/${matchId}/scard`, {
+    const scardRes = await fetch(`https://${host}/mcenter/v1/${matchId}/scard`, {
       headers,
       cache: "no-store"
     });
