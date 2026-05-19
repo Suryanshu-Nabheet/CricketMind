@@ -30,7 +30,7 @@ export default function Home() {
       </main>
 
       {/* Google Developer Groups Watermark Banner */}
-      <div className="flex flex-col items-center justify-center gap-2 mt-12 mb-6 opacity-90 hover:opacity-100 transition-opacity duration-300 select-none">
+      <div className="max-w-md mx-auto mt-20 mb-8 px-6 py-8 rounded-2xl border border-border/40 bg-card/20 backdrop-blur-xs flex flex-col items-center justify-center gap-3 select-none">
         <span className="text-xs md:text-sm font-bold text-muted-foreground uppercase tracking-widest font-mono">
           Presented in association with
         </span>
@@ -38,15 +38,17 @@ export default function Home() {
         <img
           src="/GDG.png"
           alt="Google Developer Group Logo"
-          className="h-28 md:h-36 w-auto object-contain brightness-100 scale-110 md:scale-125 my-2"
+          className="h-28 md:h-36 w-auto object-contain brightness-100 scale-110 md:scale-125 my-1"
         />
       </div>
       {/* Footer Branding */}
-      <footer className="border-t border-border bg-card/40 py-8 mt-16 text-center text-sm text-muted-foreground">
-        <p className="mb-2 text-base">© 2026 CricketMind. All Rights Reserved.</p>
-        <p className="font-mono text-xs md:text-sm">
-          Developed by <span className="text-foreground font-semibold">Suryanshu Nabheet</span> • MIT License
-        </p>
+      <footer className="border-t border-border/50 bg-card/25 py-10 mt-20 text-center text-sm text-muted-foreground">
+        <div className="max-w-4xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-base font-semibold text-foreground tracking-tight">© 2026 CricketMind. All Rights Reserved.</p>
+          <p className="font-mono text-xs md:text-sm">
+            Developed by <span className="text-foreground font-bold">Suryanshu Nabheet</span> • MIT License
+          </p>
+        </div>
       </footer>
     </div>
   );

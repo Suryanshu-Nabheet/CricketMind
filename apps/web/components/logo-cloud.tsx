@@ -84,12 +84,12 @@ function TechCard({ label, className, children, ...props }: TechCardProps) {
 	return (
 		<div
 			className={cn(
-				"flex flex-col items-center justify-center gap-3.5 bg-background px-4 py-8 md:p-8 hover:bg-muted/40 transition-all duration-300 group cursor-default select-none",
+				"flex flex-col items-center justify-center gap-3.5 bg-background px-4 py-8 md:p-8 cursor-default select-none",
 				className
 			)}
 			{...props}
 		>
-			<div className="transform group-hover:scale-110 transition-all duration-300">
+			<div className="transition-all duration-300">
 				{children}
 			</div>
 			<span className="text-xs font-semibold text-foreground tracking-wide font-sans">{label}</span>
