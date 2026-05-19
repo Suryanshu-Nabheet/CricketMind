@@ -15,9 +15,24 @@ export interface PlayerStats {
   runs?: number;
   ballsFaced?: number;
   strikeRate?: number;
+  fours?: number;
+  sixes?: number;
+  outDec?: string;
   overs?: number;
+  maidens?: number;
   economy?: number;
   wickets?: number;
+  runsConceded?: number;
+}
+
+export interface InningsScorecard {
+  inningsId: number;
+  batTeamName: string;
+  runs: string;
+  wickets: string;
+  overs: string;
+  batsmen: PlayerStats[];
+  bowlers: PlayerStats[];
 }
 
 export interface Match {
@@ -39,7 +54,7 @@ export interface Match {
   rrr?: string;
   target?: string;
   result?: string;
-  isIPL?: boolean; // Flag to identify IPL matches
+  isIPL?: boolean;
 }
 
 export interface MatchDetail extends Match {
@@ -49,6 +64,7 @@ export interface MatchDetail extends Match {
   activeBowlers: PlayerStats[];
   partnershipInfo?: string;
   timeline: string[];
+  scorecard?: InningsScorecard[];
 }
 
 // --- RapidAPI Data Fetch Layer ---
@@ -58,7 +74,6 @@ const headers = {
   "X-RapidAPI-Host": config.rapidApiHost,
 };
 
-// Helper for rate-limiting (Cricbuzz BASIC tier allows only 1 request per second)
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function fetchMatchList(endpoint: string): Promise<Match[]> {
@@ -143,7 +158,6 @@ async function fetchMatchList(endpoint: string): Promise<Match[]> {
 export async function getMatches(): Promise<Match[]> {
   if (!config.rapidApiKey) return [];
 
-  // SEQUENTIAL FETCHING to enforce the 1 Request Per Second (RPS) limit of the Cricbuzz BASIC plan
   const liveMatches = await fetchMatchList("live");
   await delay(1100);
   const upcomingMatches = await fetchMatchList("upcoming");
@@ -151,15 +165,9 @@ export async function getMatches(): Promise<Match[]> {
   const recentMatches = await fetchMatchList("recent");
 
   const allMatches = [...liveMatches, ...upcomingMatches, ...recentMatches];
-  
-  // Deduplicate matches by ID
   const uniqueMatches = Array.from(new Map(allMatches.map(m => [m.id, m])).values());
 
-  // Prioritize IPL matches
   const iplMatches = uniqueMatches.filter(m => m.isIPL);
-  
-  // If there are IPL matches available, strictly show only IPL matches.
-  // Otherwise, fall back to showing other active/recent real matches so the dashboard is functional with real data.
   if (iplMatches.length > 0) {
     return iplMatches;
   }
@@ -171,7 +179,6 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
   if (!config.rapidApiKey) return null;
 
   try {
-    // SEQUENTIAL FETCHING to avoid 1 RPS rate-limit blocks on details
     const commRes = await fetch(`https://${config.rapidApiHost}/mcenter/v1/${matchId}/comm`, {
       headers,
       cache: "no-store"
@@ -196,39 +203,66 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
 
     const activeBatters: PlayerStats[] = [];
     const activeBowlers: PlayerStats[] = [];
+    const fullScorecard: InningsScorecard[] = [];
     
     const playingXI_A: string[] = [];
     const playingXI_B: string[] = [];
     
-    // 1. Process Scorecard for Full Active Rosters & Squads
-    if (scardData && Array.isArray(scardData.scoreCard)) {
-       scardData.scoreCard.forEach((innings: any) => {
-          if (innings.batTeamDetails && innings.batTeamDetails.batsmenData) {
-             Object.values(innings.batTeamDetails.batsmenData).forEach((batter: any) => {
-                if (batter.outDesc && batter.outDesc.toLowerCase() === "batting") {
-                   activeBatters.push({
-                      name: batter.batName,
-                      runs: batter.runs,
-                      ballsFaced: batter.balls,
-                      strikeRate: parseFloat(batter.strikeRate || "0")
-                   });
+    // Parse complete scorecard & squads (supports Cricbuzz real `/scard` schema)
+    const rawScorecard = (scardData && (scardData.scorecard || scardData.scoreCard)) || [];
+    if (Array.isArray(rawScorecard)) {
+       rawScorecard.forEach((innings: any) => {
+          const batsmenList: PlayerStats[] = [];
+          const bowlersList: PlayerStats[] = [];
+          
+          if (Array.isArray(innings.batsman)) {
+             innings.batsman.forEach((b: any) => {
+                const p: PlayerStats = {
+                   name: b.name || b.nickname || "",
+                   runs: b.runs,
+                   ballsFaced: b.balls,
+                   fours: b.fours,
+                   sixes: b.sixes,
+                   outDec: b.outdec || "",
+                   strikeRate: parseFloat(b.strkrate || "0")
+                };
+                batsmenList.push(p);
+                
+                // Track active batters if live
+                const isBatting = b.outdec && b.outdec.toLowerCase().includes("batting");
+                if (isBatting) {
+                   activeBatters.push(p);
                 }
              });
           }
-          if (innings.bowlTeamDetails && innings.bowlTeamDetails.bowlersData) {
-             Object.values(innings.bowlTeamDetails.bowlersData).forEach((bowler: any) => {
-                 activeBowlers.push({
-                    name: bowler.bowlName,
-                    overs: parseFloat(bowler.overs || "0"),
-                    wickets: bowler.wickets,
-                    economy: parseFloat(bowler.economy || "0")
-                 });
+          
+          if (Array.isArray(innings.bowler)) {
+             innings.bowler.forEach((bw: any) => {
+                const p: PlayerStats = {
+                   name: bw.name || bw.nickname || "",
+                   overs: parseFloat(bw.overs || "0"),
+                   maidens: bw.maidens,
+                   runsConceded: bw.runs,
+                   wickets: bw.wickets,
+                   economy: parseFloat(bw.economy || "0")
+                };
+                bowlersList.push(p);
              });
           }
+          
+          fullScorecard.push({
+             inningsId: innings.inningsid || 1,
+             batTeamName: innings.batteamname || "",
+             runs: String(innings.score ?? "0"),
+             wickets: String(innings.wickets ?? "0"),
+             overs: String(innings.overs ?? "0"),
+             batsmen: batsmenList,
+             bowlers: bowlersList
+          });
        });
     }
 
-    // 2. Process Commentary for Ultra Real-Time Match State (CRR, RRR, Timeline, Targets)
+    // 2. Process Commentary for Live Mini-Score fallback details
     let crr: string | undefined = undefined;
     let rrr: string | undefined = undefined;
     let target: string | undefined = undefined;
@@ -242,7 +276,7 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
        if (ms.rrr) rrr = String(ms.rrr);
        
        if (ms.inningsscores && Array.isArray(ms.inningsscores.inningsscore)) {
-          const currentInnings = ms.inningsscores.inningsscore[0]; // Usually the most recent
+          const currentInnings = ms.inningsscores.inningsscore[0];
           if (currentInnings && currentInnings.target) {
               target = String(currentInnings.target);
           }
@@ -254,7 +288,7 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
           timeline = ms.curovsstats.split(" ").filter((s: string) => s.trim() !== "");
        }
 
-       // If scard didn't catch the live batters/bowlers, merge them directly from the live mini-score:
+       // Live batsman/bowler fallback if scorecard has not populated active lists
        if (activeBatters.length === 0) {
           if (ms.batsmanstriker) activeBatters.push({ name: ms.batsmanstriker.name, runs: ms.batsmanstriker.runs, ballsFaced: ms.batsmanstriker.balls, strikeRate: parseFloat(ms.batsmanstriker.strkrate || "0") });
           if (ms.batsmannonstriker) activeBatters.push({ name: ms.batsmannonstriker.name, runs: ms.batsmannonstriker.runs, ballsFaced: ms.batsmannonstriker.balls, strikeRate: parseFloat(ms.batsmannonstriker.strkrate || "0") });
@@ -295,7 +329,8 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
       rrr,
       target,
       partnershipInfo,
-      timeline
+      timeline,
+      scorecard: fullScorecard
     };
   } catch (error) {
     console.error("Match Detail fetch failed.", error);

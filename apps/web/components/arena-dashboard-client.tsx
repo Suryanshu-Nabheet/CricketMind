@@ -204,19 +204,19 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                     </div>
 
                     <div className="flex flex-col justify-end md:items-end space-y-2 text-xs text-muted-foreground">
-                      {detail.crr && (
+                      {detail.status === "live" && detail.crr && (
                         <div>
                           <span className="font-medium mr-1.5">Current Run Rate:</span>
                           <strong className="font-mono text-foreground font-extrabold">{detail.crr}</strong>
                         </div>
                       )}
-                      {detail.rrr && (
+                      {detail.status === "live" && detail.rrr && (
                         <div>
                           <span className="font-medium mr-1.5">Required Run Rate:</span>
                           <strong className="font-mono text-foreground font-extrabold">{detail.rrr}</strong>
                         </div>
                       )}
-                      {detail.target && (
+                      {detail.status === "live" && detail.target && (
                         <div>
                           <span className="font-medium mr-1.5">Target Score:</span>
                           <strong className="font-mono text-primary font-black">{detail.target} Runs</strong>
@@ -236,7 +236,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                   </div>
 
                   {/* Partnership info */}
-                  {detail.partnershipInfo && (
+                  {detail.status === "live" && detail.partnershipInfo && (
                     <div className="pt-4 text-xs text-muted-foreground flex justify-between items-center">
                       <span>Active Partnership: <strong className="text-foreground">{detail.partnershipInfo}</strong></span>
                       {detail.timeline.length > 0 && (
@@ -311,8 +311,8 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                   </div>
                 )}
 
-                {/* 3. Player Stats Lists */}
-                {detail.activeBatters.length > 0 && (
+                {/* 3. Player Stats Lists (Live Only) */}
+                {detail.status === "live" && detail.activeBatters.length > 0 && (
                   <div className="border border-border rounded-2xl overflow-hidden bg-background shadow-xs">
                     <div className="px-6 py-4 border-b border-border/60">
                       <h3 className="text-xs font-black text-muted-foreground uppercase tracking-widest text-left">
@@ -344,8 +344,8 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                   </div>
                 )}
 
-                {/* 4. Bowler Stats Lists */}
-                {detail.activeBowlers.length > 0 && (
+                {/* 4. Bowler Stats Lists (Live Only) */}
+                {detail.status === "live" && detail.activeBowlers.length > 0 && (
                   <div className="border border-border rounded-2xl overflow-hidden bg-background shadow-xs">
                     <div className="px-6 py-4 border-b border-border/60">
                       <h3 className="text-xs font-black text-muted-foreground uppercase tracking-widest text-left">
@@ -377,8 +377,119 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                   </div>
                 )}
 
-                {/* 5. Squad Playing XIs */}
-                {detail.playingXI_A.length > 0 && (
+                {/* Completed Match Summary Card & Full Scorecard */}
+                {detail.status === "finished" && (
+                  <div className="space-y-6">
+                    {/* Match Symmetrical Winner Banner */}
+                    <div className="bg-sky-50 border border-sky-200/60 rounded-2xl p-5 text-center shadow-2xs select-none">
+                      <span className="text-[10px] font-black text-sky-600 uppercase tracking-widest block mb-1">
+                        Match Complete
+                      </span>
+                      <h2 className="text-lg font-black text-foreground">{detail.result || "Match Finished"}</h2>
+                      {detail.tossResult && (
+                        <p className="text-xs text-muted-foreground mt-1 italic">{detail.tossResult}</p>
+                      )}
+                    </div>
+
+                    {/* Innings detailed lists */}
+                    {detail.scorecard && detail.scorecard.length > 0 ? (
+                      <div className="space-y-6">
+                        {detail.scorecard.map((innings, idx) => (
+                          <div key={idx} className="border border-border rounded-2xl overflow-hidden bg-background shadow-xs">
+                            {/* Innings Banner */}
+                            <div className="px-6 py-4 bg-muted/40 border-b border-border/60 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                              <div>
+                                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest block">
+                                  Innings #{innings.inningsId}
+                                </span>
+                                <h4 className="text-sm font-black text-foreground">
+                                  {innings.batTeamName || "Unknown Team"}
+                                </h4>
+                              </div>
+                              <div className="text-left sm:text-right">
+                                <span className="font-mono font-black text-lg text-foreground">
+                                  {innings.runs}/{innings.wickets}
+                                </span>
+                                <span className="text-[10px] text-muted-foreground font-semibold block">
+                                  ({innings.overs} Overs)
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Innings Batsmen Scorecard */}
+                            {innings.batsmen.length > 0 && (
+                              <div className="overflow-x-auto border-b border-border/40">
+                                <table className="w-full text-left border-collapse text-xs">
+                                  <thead>
+                                    <tr className="bg-muted/20 font-bold border-b border-border/40 text-muted-foreground select-none">
+                                      <th className="px-6 py-2.5">Batsman</th>
+                                      <th className="px-6 py-2.5">Dismissal</th>
+                                      <th className="px-6 py-2.5 font-mono text-right">Runs</th>
+                                      <th className="px-6 py-2.5 font-mono text-right">Balls</th>
+                                      <th className="px-6 py-2.5 font-mono text-right">4s</th>
+                                      <th className="px-6 py-2.5 font-mono text-right">6s</th>
+                                      <th className="px-6 py-2.5 font-mono text-right">SR</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {innings.batsmen.map((b, bIdx) => (
+                                      <tr key={bIdx} className="border-b border-border/10 last:border-b-0 hover:bg-muted/5">
+                                        <td className="px-6 py-2.5 font-extrabold text-foreground">{b.name}</td>
+                                        <td className="px-6 py-2.5 text-muted-foreground font-medium italic">{b.outDec || "not out"}</td>
+                                        <td className="px-6 py-2.5 font-mono text-foreground text-right font-bold">{b.runs ?? 0}</td>
+                                        <td className="px-6 py-2.5 font-mono text-muted-foreground text-right">{b.ballsFaced ?? 0}</td>
+                                        <td className="px-6 py-2.5 font-mono text-muted-foreground text-right">{b.fours ?? 0}</td>
+                                        <td className="px-6 py-2.5 font-mono text-muted-foreground text-right">{b.sixes ?? 0}</td>
+                                        <td className="px-6 py-2.5 font-mono text-primary font-bold text-right">{b.strikeRate?.toFixed(1) ?? "0.0"}</td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            )}
+
+                            {/* Innings Bowlers Scorecard */}
+                            {innings.bowlers.length > 0 && (
+                              <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse text-xs">
+                                  <thead>
+                                    <tr className="bg-muted/10 font-bold border-b border-border/40 text-muted-foreground select-none">
+                                      <th className="px-6 py-2.5">Bowler</th>
+                                      <th className="px-6 py-2.5 font-mono text-right">Overs</th>
+                                      <th className="px-6 py-2.5 font-mono text-right">Maidens</th>
+                                      <th className="px-6 py-2.5 font-mono text-right">Runs</th>
+                                      <th className="px-6 py-2.5 font-mono text-right">Wickets</th>
+                                      <th className="px-6 py-2.5 font-mono text-right">Econ</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {innings.bowlers.map((bw, bwIdx) => (
+                                      <tr key={bwIdx} className="border-b border-border/10 last:border-b-0 hover:bg-muted/5">
+                                        <td className="px-6 py-2.5 font-extrabold text-foreground">{bw.name}</td>
+                                        <td className="px-6 py-2.5 font-mono text-foreground text-right">{bw.overs ?? 0.0}</td>
+                                        <td className="px-6 py-2.5 font-mono text-muted-foreground text-right">{bw.maidens ?? 0}</td>
+                                        <td className="px-6 py-2.5 font-mono text-foreground text-right">{bw.runsConceded ?? 0}</td>
+                                        <td className="px-6 py-2.5 font-mono text-primary font-bold text-right">{bw.wickets ?? 0}</td>
+                                        <td className="px-6 py-2.5 font-mono text-muted-foreground text-right font-bold">{bw.economy?.toFixed(2) ?? "0.00"}</td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="border border-border rounded-2xl p-6 bg-background text-center text-muted-foreground text-xs font-mono">
+                        Detailed scorecard is being compiled by API.
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 5. Squad Playing XIs (Live / Upcoming Only) */}
+                {detail.status !== "finished" && detail.playingXI_A.length > 0 && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
                     <div className="border border-border rounded-2xl p-5 bg-background shadow-xs">
                       <span className="block text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-4">
