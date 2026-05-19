@@ -551,14 +551,16 @@ OFFICIALS:
 - Match Referee: ${matchDetail.referee || "N/A"}
 
 ACTIVE BATTERS & BOWLERS:
-- Batting: ${matchDetail.activeBatters?.map((b: any) => `${b.name} (${b.runs} off ${b.balls} balls, ${b.fours}x4, ${b.sixes}x6, SR: ${b.strikeRate})`).join(", ") || "None"}
+- Batting: ${matchDetail.activeBatters?.map((b: any) => `${b.name} (${b.runs} off ${b.ballsFaced || b.balls || 0} balls, ${b.fours || 0}x4, ${b.sixes || 0}x6, SR: ${b.strikeRate})`).join(", ") || "None"}
 - Bowling: ${matchDetail.activeBowlers?.map((bw: any) => `${bw.name} (${bw.overs} overs, ${bw.wickets} wickets, econ: ${bw.economy})`).join(", ") || "None"}
 
-INNINGS SCORECARD:
+INNINGS SCORECARD DETAIL:
 ${matchDetail.scorecard?.map((inn: any) => `
-* Innings: ${inn.inningsName} (Score: ${inn.runs}/${inn.wickets} in ${inn.overs} overs)
-  - Batters: ${inn.battingStats?.map((b: any) => `${b.playerName} (${b.runs} off ${b.balls}, SR: ${b.strikeRate}, Status: ${b.outDescription})`).join(", ")}
-  - Bowlers: ${inn.bowlingStats?.map((bw: any) => `${bw.playerName} (${bw.overs}-${bw.maidens}-${bw.runs}-${bw.wickets}, Econ: ${bw.economy})`).join(", ")}
+* Innings #${inn.inningsId}: ${inn.batTeamName || "Unknown Team"} (Score: ${inn.runs}/${inn.wickets} in ${inn.overs} overs)
+  - Batsmen:
+    ${inn.batsmen?.map((b: any) => `  • ${b.name}: ${b.runs ?? 0} runs off ${b.ballsFaced ?? 0} balls (${b.fours ?? 0}x4, ${b.sixes ?? 0}x6, SR: ${b.strikeRate ?? 0}) - Dismissal: ${b.outDec || "not out"}`).join("\n")}
+  - Bowlers:
+    ${inn.bowlers?.map((bw: any) => `  • ${bw.name}: ${bw.overs ?? 0} overs, ${bw.maidens ?? 0} maidens, ${bw.runsConceded ?? 0} runs, ${bw.wickets ?? 0} wickets (Econ: ${bw.economy ?? 0})`).join("\n")}
 `).join("\n") || "No scorecard details registered."}
 `;
 
@@ -568,7 +570,7 @@ ${matchDetail.scorecard?.map((inn: any) => `
     
     if (query.includes("who is batting") || query.includes("batter") || query.includes("batsman")) {
       if (matchDetail.activeBatters && matchDetail.activeBatters.length > 0) {
-        return `Right now in the middle, we have ${matchDetail.activeBatters.map((b: any) => `**${b.name}** batting on **${b.runs}** runs off ${b.balls} balls`).join(" and ")}. They are looking to push the scoring rate under pressure!`;
+        return `Right now in the middle, we have ${matchDetail.activeBatters.map((b: any) => `**${b.name}** batting on **${b.runs}** runs off ${b.ballsFaced || b.balls || 0} balls`).join(" and ")}. They are looking to push the scoring rate under pressure!`;
       }
       return `There are no active batters registered on the pitch right now. The innings might be completed, or the teams are in between sessions!`;
     }
