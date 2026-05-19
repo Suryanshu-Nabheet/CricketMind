@@ -1,6 +1,9 @@
 # CricketMind - Fan Arena Dashboard
 
-CricketMind is a highly-polished, real-time sports dashboard and second-screen companion application designed for cricket enthusiasts. Formally presented in association with Google Developer Groups (GDG), this application integrates live Cricbuzz data streams into a sleek, minimal, and premium interface built with Next.js, TypeScript, TailwindCSS, and shadcn/ui.
+![CricketMind Banner](apps/web/public/Banner.webp)
+
+Presented in association with **Google Developer Groups (GDG)**:
+<img src="apps/web/public/GDG.png" width="240" alt="GDG Logo" />
 
 ---
 
@@ -107,17 +110,6 @@ All updates must strictly adhere to the following coding guidelines:
 - **Surgical Edits:** Only touch directories and files containing features you are explicitly modifying.
 - **Performance First:** Keep cache and fetch actions optimized. Server Actions are implemented with `cache: "no-store"` to guarantee live data updates.
 - **Zero Mock Fallbacks:** Do not inject fake or simulated scores when the API returns real-time data. Provide a fallback to alternative matches instead.
-
----
-
-## Watermark & GDPR Compliance
-
-This project is officially presented in association with Google Developer Groups (GDG). The GDG watermark is symmetrically integrated at the bottom of the arena dashboard at:
-[/public/GDG.png](/apps/web/public/GDG.png)
-
-No user-sensitive cookies or trackers are embedded.
-
----
 
 ## License
 
