@@ -8,15 +8,15 @@ import { MobileNav } from "@/components/mobile-nav";
 export const navLinks = [
 	{
 		label: "Prediction Center",
-		href: "#predictions",
+		href: "/arena",
 	},
 	{
 		label: "Fan Arena",
-		href: "#arena",
+		href: "/arena",
 	},
 	{
 		label: "Live Match Hub",
-		href: "#live",
+		href: "/arena",
 	},
 ];
 
