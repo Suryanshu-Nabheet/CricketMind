@@ -30,15 +30,17 @@ export default function Home() {
       </main>
 
       {/* Google Developer Groups Watermark Banner */}
-      <div className="flex flex-col items-center justify-center gap-2 mt-20 mb-8 opacity-90 hover:opacity-100 transition-opacity duration-300 select-none">
-        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest font-mono">Presented in association with</span>
-        <img 
-          src="/GDG.png" 
-          alt="Google Developer Group Logo" 
-          className="h-16 md:h-20 w-auto object-contain brightness-100" 
+      <div className="flex flex-col items-center justify-center gap-1 mt-8 mb-4 opacity-90 hover:opacity-100 transition-opacity duration-300 select-none">
+        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest font-mono">
+          Presented in association with
+        </span>
+
+        <img
+          src="/GDG.png"
+          alt="Google Developer Group Logo"
+          className="h-24 md:h-32 w-auto object-contain brightness-100"
         />
       </div>
-
       {/* Footer Branding */}
       <footer className="border-t border-border bg-card/40 py-8 mt-16 text-center text-xs text-muted-foreground">
         <p className="mb-2">© 2026 CricketMind. All Rights Reserved.</p>
