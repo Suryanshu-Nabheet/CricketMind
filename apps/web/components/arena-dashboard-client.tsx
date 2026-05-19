@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { getMatchDetail, checkDatabaseSource } from "@/server/cricket";
 import { Match, MatchDetail, PlayerStats } from "@/server/types";
 import { Button } from "@/components/ui/button";
+import { GlowBorderButton } from "@/components/ui/glow-border-button";
 import { Logo } from "@/components/logo";
 import {
   Sparkles,
@@ -235,18 +236,15 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
               Live API
             </span>
           )}
-          <Button
-            asChild
-            size="sm"
-            variant={isUsingLocal ? "default" : "outline"}
-            className={`rounded-full font-bold transition-all duration-300 ${
-              isUsingLocal
-                ? "bg-blue-600 hover:bg-blue-700 text-white border-transparent shadow-md shadow-blue-500/20"
-                : "text-foreground border-border bg-background hover:bg-muted"
-            }`}
+          <GlowBorderButton
+            colors={isUsingLocal ? ["#3b82f6", "#2563eb", "#60a5fa", "#3b82f6"] : ["#10b981", "#34d399", "#a7f3d0", "#10b981"]}
+            duration={3}
+            glowIntensity="medium"
+            className="rounded-full px-5 py-2 text-xs font-black cursor-pointer"
+            onClick={() => window.location.href = "/"}
           >
-            <a href="/">Exit Arena</a>
-          </Button>
+            Exit Arena
+          </GlowBorderButton>
         </div>
       </header>
 
@@ -313,111 +311,133 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredMatches.map((match) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">                  {filteredMatches.map((match) => (
                     <div
                       key={match.id}
                       onClick={() => {
                         setSelectedMatchId(match.id);
                         setActiveScreen("details");
                       }}
-                      className="border border-border bg-background hover:border-primary/40 hover:shadow-lg hover:shadow-primary/[0.02] transition-all duration-300 rounded-2xl p-6 cursor-pointer text-left flex flex-col justify-between group relative overflow-hidden"
+                      className="group relative rounded-2xl p-[1px] cursor-pointer text-left transition-all duration-300 hover:scale-[1.01] hover:shadow-xl hover:shadow-primary/[0.03] overflow-hidden animate-in fade-in zoom-in-95 duration-300"
+                      style={{
+                        "--glow-duration": "4s",
+                      } as React.CSSProperties}
                     >
-                      <div className="absolute top-0 left-0 w-1.5 h-full bg-transparent group-hover:bg-primary transition-colors duration-300" />
+                      {/* Rotating Glow layer (visible only on hover) */}
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute -inset-[1px] rounded-2xl opacity-0 group-hover:opacity-45 blur-[15px] transition-opacity duration-300 animate-pulse"
+                        style={{
+                          background: "conic-gradient(from var(--glow-angle), #3b82f6, #06b6d4, #a855f7, #3b82f6)",
+                          animation: "glow-rotate var(--glow-duration) linear infinite",
+                        }}
+                      />
 
-                      <div>
-                        <div className="flex justify-between items-center mb-4">
-                          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest bg-muted px-2 py-0.5 rounded-sm">
-                            IPL 2026
-                          </span>
-                          {match.status === "live" && (
-                            <span className="inline-flex items-center gap-1 bg-red-100 text-red-600 text-[9px] font-bold px-2.5 py-0.5 rounded-md animate-pulse">
-                              <span className="size-1 rounded-full bg-red-600" /> LIVE
-                            </span>
-                          )}
-                          {match.status === "upcoming" && (
-                            <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider border border-border px-2 py-0.5 rounded-md">
-                              UPCOMING
-                            </span>
-                          )}
-                          {match.status === "finished" && (
-                            <span className="text-[9px] font-bold text-sky-600 bg-sky-50 border border-sky-100 uppercase tracking-wider px-2 py-0.5 rounded-md">
-                              FINISHED
-                            </span>
-                          )}
-                        </div>
+                      {/* Border layer (gradient visible only on hover) */}
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute -inset-[1px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        style={{
+                          background: "conic-gradient(from var(--glow-angle), #3b82f6, #06b6d4, #a855f7, #3b82f6)",
+                          animation: "glow-rotate var(--glow-duration) linear infinite",
+                        }}
+                      />
 
-                        {/* Team Scores Block */}
-                        <div className="space-y-3.5 my-4">
-                          <div className="flex justify-between items-center text-sm font-extrabold text-foreground">
-                            <div className="flex items-center gap-2.5">
-                              {getTeamLogo(match.teamA.name, match.teamA.shortName) ? (
-                                <img
-                                  src={getTeamLogo(match.teamA.name, match.teamA.shortName)}
-                                  className="size-6 object-contain select-none"
-                                  alt={`${match.teamA.name} logo`}
-                                />
-                              ) : (
-                                <div className="size-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-[10px] select-none">
-                                  {match.teamA.shortName[0]}
-                                </div>
-                              )}
-                              <span className="tracking-tight text-base font-black">{match.teamA.name}</span>
-                            </div>
-                            {match.runsA && (
-                              <span className="font-mono font-black text-base">{match.runsA}/{match.wicketsA}</span>
+                      {/* Inner card container (acts as mask & background) */}
+                      <div className="relative rounded-[15px] p-6 bg-background border border-border group-hover:border-transparent transition-all duration-300 flex flex-col justify-between h-full min-h-[220px] z-10">
+                        <div>
+                          <div className="flex justify-between items-center mb-4">
+                            <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest bg-muted px-2 py-0.5 rounded-sm">
+                              IPL 2026
+                            </span>
+                            {match.status === "live" && (
+                              <span className="inline-flex items-center gap-1 bg-red-100 text-red-600 text-[9px] font-bold px-2.5 py-0.5 rounded-md animate-pulse">
+                                <span className="size-1 rounded-full bg-red-600" /> LIVE
+                              </span>
+                            )}
+                            {match.status === "upcoming" && (
+                              <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider border border-border px-2 py-0.5 rounded-md">
+                                UPCOMING
+                              </span>
+                            )}
+                            {match.status === "finished" && (
+                              <span className="text-[9px] font-bold text-sky-600 bg-sky-50 border border-sky-100 uppercase tracking-wider px-2 py-0.5 rounded-md">
+                                FINISHED
+                              </span>
                             )}
                           </div>
 
-                          <div className="flex justify-between items-center text-sm font-extrabold text-foreground">
-                            <div className="flex items-center gap-2.5">
-                              {getTeamLogo(match.teamB.name, match.teamB.shortName) ? (
-                                <img
-                                  src={getTeamLogo(match.teamB.name, match.teamB.shortName)}
-                                  className="size-6 object-contain select-none"
-                                  alt={`${match.teamB.name} logo`}
-                                />
-                              ) : (
-                                <div className="size-6 rounded-full bg-amber-500 text-white flex items-center justify-center font-black text-[10px] select-none">
-                                  {match.teamB.shortName[0]}
-                                </div>
+                          {/* Team Scores Block */}
+                          <div className="space-y-3.5 my-4">
+                            <div className="flex justify-between items-center text-sm font-extrabold text-foreground">
+                              <div className="flex items-center gap-2.5">
+                                {getTeamLogo(match.teamA.name, match.teamA.shortName) ? (
+                                  <img
+                                    src={getTeamLogo(match.teamA.name, match.teamA.shortName)}
+                                    className="size-6 object-contain select-none"
+                                    alt={`${match.teamA.name} logo`}
+                                  />
+                                ) : (
+                                  <div className="size-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-[10px] select-none">
+                                    {match.teamA.shortName[0]}
+                                  </div>
+                                )}
+                                <span className="tracking-tight text-base font-black">{match.teamA.name}</span>
+                              </div>
+                              {match.runsA && (
+                                <span className="font-mono font-black text-base">{match.runsA}/{match.wicketsA}</span>
                               )}
-                              <span className="tracking-tight text-base font-black">{match.teamB.name}</span>
                             </div>
-                            {match.runsB && (
-                              <span className="font-mono font-black text-base">{match.runsB}/{match.wicketsB}</span>
+
+                            <div className="flex justify-between items-center text-sm font-extrabold text-foreground">
+                              <div className="flex items-center gap-2.5">
+                                {getTeamLogo(match.teamB.name, match.teamB.shortName) ? (
+                                  <img
+                                    src={getTeamLogo(match.teamB.name, match.teamB.shortName)}
+                                    className="size-6 object-contain select-none"
+                                    alt={`${match.teamB.name} logo`}
+                                  />
+                                ) : (
+                                  <div className="size-6 rounded-full bg-amber-500 text-white flex items-center justify-center font-black text-[10px] select-none">
+                                    {match.teamB.shortName[0]}
+                                  </div>
+                                )}
+                                <span className="tracking-tight text-base font-black">{match.teamB.name}</span>
+                              </div>
+                              {match.runsB && (
+                                <span className="font-mono font-black text-base">{match.runsB}/{match.wicketsB}</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="border-t border-border/60 mt-4 pt-4 flex flex-col gap-3">
+                          <div className="text-[10px] text-muted-foreground flex justify-between font-mono">
+                            <span className="truncate max-w-[150px]">{match.venue.split(",")[0]}</span>
+                            {match.oversA && <span>{match.oversA} Overs</span>}
+                          </div>
+
+                          {/* Dynamic sleek CTA buttons */}
+                          <div className="w-full">
+                            {match.status === "live" && (
+                              <div className="w-full text-center bg-red-600 hover:bg-red-700 text-white text-xs font-black py-2 rounded-xl transition-all flex items-center justify-center gap-1">
+                                Join Fan Arena
+                                <svg className="size-3.5 fill-current" viewBox="0 0 20 20"><path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                              </div>
+                            )}
+                            {match.status === "upcoming" && (
+                              <div className="w-full text-center bg-muted/60 text-foreground border border-border group-hover:border-primary/30 group-hover:bg-primary/[0.02] text-xs font-bold py-2 rounded-xl transition-all">
+                                Pre-Match Console
+                              </div>
+                            )}
+                            {match.status === "finished" && (
+                              <div className="w-full text-center bg-sky-550 border border-sky-200 text-sky-700 bg-sky-50/50 group-hover:bg-sky-50 text-xs font-black py-2 rounded-xl transition-all">
+                                View Match Summary
+                              </div>
                             )}
                           </div>
                         </div>
                       </div>
-
-                      <div className="border-t border-border/60 mt-4 pt-4 flex flex-col gap-3">
-                        <div className="text-[10px] text-muted-foreground flex justify-between font-mono">
-                          <span className="truncate max-w-[150px]">{match.venue.split(",")[0]}</span>
-                          {match.oversA && <span>{match.oversA} Overs</span>}
-                        </div>
-
-                        {/* Dynamic sleek CTA buttons */}
-                        <div className="w-full">
-                          {match.status === "live" && (
-                            <div className="w-full text-center bg-red-600 hover:bg-red-700 text-white text-xs font-black py-2 rounded-xl transition-all flex items-center justify-center gap-1">
-                              Join Fan Arena
-                              <svg className="size-3.5 fill-current" viewBox="0 0 20 20"><path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
-                            </div>
-                          )}
-                          {match.status === "upcoming" && (
-                            <div className="w-full text-center bg-muted/60 text-foreground border border-border group-hover:border-primary/30 group-hover:bg-primary/[0.02] text-xs font-bold py-2 rounded-xl transition-all">
-                              Pre-Match Console
-                            </div>
-                          )}
-                          {match.status === "finished" && (
-                            <div className="w-full text-center bg-sky-550 border border-sky-200 text-sky-700 bg-sky-50/50 group-hover:bg-sky-50 text-xs font-black py-2 rounded-xl transition-all">
-                              View Match Summary
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
                     </div>
                   ))}
                 </div>
