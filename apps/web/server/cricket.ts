@@ -353,53 +353,88 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
        }
     }
 
-    const matchHeader = hscardData?.matchHeader || commData?.matchheaders || scardData?.matchHeader;
+    // Symmetrically resolve matchHeader across all potential endpoints and casing variants
+    const matchHeader = 
+      hscardData?.matchHeader || 
+      hscardData?.matchInfo || 
+      hscardData?.matchheaders ||
+      scardData?.matchHeader || 
+      scardData?.matchInfo || 
+      scardData?.matchheaders ||
+      commData?.matchHeader || 
+      commData?.matchInfo || 
+      commData?.matchheaders;
+
     const seriesName = matchHeader?.seriesname || matchHeader?.seriesName || "";
 
-    // Parse Toss Details
+    // Parse Toss Details with comprehensive nested field discovery
     let tossWinnerName: string | undefined = undefined;
     let tossDecision: string | undefined = undefined;
-    if (matchHeader?.toss) {
-      tossWinnerName = matchHeader.toss.winnerName || matchHeader.toss.winnerTeamName || "";
-      tossDecision = matchHeader.toss.decision || "";
+    const tossObj = matchHeader?.toss || matchHeader?.tossResult || matchHeader?.tossResults;
+    if (tossObj) {
+      if (typeof tossObj === "object") {
+        tossWinnerName = tossObj.winnerName || tossObj.winnerTeamName || tossObj.tossWinnerName || "";
+        tossDecision = tossObj.decision || tossObj.tossDecision || "";
+      } else if (typeof tossObj === "string") {
+        tossWinnerName = tossObj;
+      }
+    }
+    // Deep fallback to status or result text analysis for toss details
+    if (!tossWinnerName && (matchHeader?.status || matchHeader?.result)) {
+      const statusText = matchHeader?.status || matchHeader?.result || "";
+      if (statusText.toLowerCase().includes("won the toss") || statusText.toLowerCase().includes("opted to")) {
+        tossWinnerName = statusText;
+      }
     }
 
-    // Parse Player of the Match
+    // Parse Player of the Match MVP
     let playerOfTheMatch: string | undefined = undefined;
-    if (Array.isArray(matchHeader?.playersOfTheMatch)) {
-      playerOfTheMatch = matchHeader.playersOfTheMatch.map((p: any) => p.name || p.fullName).join(", ");
-    } else if (Array.isArray(matchHeader?.playerOfMatch)) {
-      playerOfTheMatch = matchHeader.playerOfMatch.map((p: any) => p.name || p.fullName).join(", ");
-    } else if (matchHeader?.playerOfMatch) {
-      playerOfTheMatch = matchHeader.playerOfMatch.name || matchHeader.playerOfMatch.fullName || "";
+    const pomObj = matchHeader?.playersOfTheMatch || matchHeader?.playerOfMatch || matchHeader?.playerOfTheMatch || matchHeader?.playersOfMatch;
+    if (pomObj) {
+      if (Array.isArray(pomObj)) {
+        playerOfTheMatch = pomObj.map((p: any) => p.name || p.fullName || p).join(", ");
+      } else if (typeof pomObj === "object") {
+        playerOfTheMatch = pomObj.name || pomObj.fullName || "";
+      } else if (typeof pomObj === "string") {
+        playerOfTheMatch = pomObj;
+      }
     }
 
-    // Parse Officials
+    // Parse Officials with robust role filtering
     let umpires: string | undefined = undefined;
     let thirdUmpire: string | undefined = undefined;
     let referee: string | undefined = undefined;
-    if (Array.isArray(matchHeader?.officials)) {
-      const umps = matchHeader.officials.filter((o: any) => (o.role || "").toLowerCase().includes("umpire"));
-      umpires = umps.filter((o: any) => (o.role || "").toLowerCase() === "umpire").map((o: any) => o.name).join(", ");
-      thirdUmpire = matchHeader.officials.find((o: any) => (o.role || "").toLowerCase().includes("third"))?.name;
-      referee = matchHeader.officials.find((o: any) => (o.role || "").toLowerCase().includes("referee") || (o.role || "").toLowerCase().includes("manager"))?.name;
+    const officialsObj = matchHeader?.officials || matchHeader?.matchOfficials;
+    if (Array.isArray(officialsObj)) {
+      const umps = officialsObj.filter((o: any) => (o.role || "").toLowerCase().includes("umpire"));
+      umpires = umps.filter((o: any) => (o.role || "").toLowerCase().includes("ground") || (o.role || "").toLowerCase() === "umpire").map((o: any) => o.name || o.fullName).filter(Boolean).join(", ");
+      if (!umpires && umps.length > 0) {
+        umpires = umps.slice(0, 2).map((o: any) => o.name || o.fullName).filter(Boolean).join(", ");
+      }
+      thirdUmpire = officialsObj.find((o: any) => (o.role || "").toLowerCase().includes("third"))?.name;
+      referee = officialsObj.find((o: any) => (o.role || "").toLowerCase().includes("referee") || (o.role || "").toLowerCase().includes("manager") || (o.role || "").toLowerCase().includes("match referee"))?.name;
     }
 
-    // Parse Venue details
+    // Parse Venue details with multi-property fallbacks
     let venueGround: string | undefined = undefined;
     let venueCity: string | undefined = undefined;
     let venueCountry: string | undefined = undefined;
     let timezone: string | undefined = undefined;
-    if (matchHeader?.venueInfo) {
-      venueGround = matchHeader.venueInfo.ground || matchHeader.venueInfo.name || "";
-      venueCity = matchHeader.venueInfo.city || "";
-      venueCountry = matchHeader.venueInfo.country || "";
-      timezone = matchHeader.venueInfo.timezone || "";
+    const venueObj = matchHeader?.venueInfo || matchHeader?.venue || matchHeader?.venueDetails;
+    if (venueObj) {
+      if (typeof venueObj === "object") {
+        venueGround = venueObj.ground || venueObj.name || venueObj.venueName || "";
+        venueCity = venueObj.city || venueObj.venueCity || "";
+        venueCountry = venueObj.country || venueObj.venueCountry || "";
+        timezone = venueObj.timezone || venueObj.timeZone || "";
+      } else if (typeof venueObj === "string") {
+        venueGround = venueObj;
+      }
     }
 
     const matchType = matchHeader?.matchType || matchHeader?.matchFormat || "";
     const statusDescription = matchHeader?.status || "";
-    const venueFull = venueGround && venueCity ? `${venueGround}, ${venueCity}` : matchHeader?.venueInfo?.ground || "";
+    const venueFull = venueGround && venueCity ? `${venueGround}, ${venueCity}` : venueGround || matchHeader?.venueInfo?.ground || "";
 
     return {
       id: matchId,

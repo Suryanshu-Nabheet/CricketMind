@@ -96,6 +96,26 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
   const countLive = matches.filter(m => m.status === "live").length;
   const countUpcoming = matches.filter(m => m.status === "upcoming").length;
   const countFinished = matches.filter(m => m.status === "finished").length;
+  const matchSummary = matches.find(m => m.id === selectedMatchId);
+
+  // High-fidelity fallback computation for premium dashboard fields
+  const displayVenue = (detail?.venueGround && detail.venueGround !== "Unknown Ground" && detail.venueGround.trim() !== "")
+    ? detail.venueGround
+    : (detail?.venue && detail.venue.trim() !== "")
+      ? detail.venue
+      : (matchSummary?.venue && matchSummary.venue.trim() !== "")
+        ? matchSummary.venue
+        : "IPL Venue";
+
+  const displayVenueCity = detail?.venueCity || matchSummary?.venue?.split(",")?.[1]?.trim() || "";
+  const displayVenueCountry = detail?.venueCountry || "";
+  
+  const displayToss = detail?.tossWinnerName 
+    ? `${detail.tossWinnerName} elected to ${detail.tossDecision?.toLowerCase() || "bat"} first`
+    : detail?.tossResult || matchSummary?.tossResult || "";
+
+  const displayResult = detail?.result || matchSummary?.result || "";
+  const displayFormat = detail?.matchType || matchSummary?.seriesName || "";
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary relative pb-20">
@@ -349,8 +369,8 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                       <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest bg-muted px-2 py-0.5 rounded-sm">
                         {detail.status === "finished" ? "Match Complete" : detail.status === "upcoming" ? "Pre-Match Info" : "Live Feed"}
                       </span>
-                      <span className="text-xs font-mono text-muted-foreground truncate max-w-[200px]">
-                        {detail.venueGround || detail.venue || "IPL Venue"}
+                      <span className="text-xs font-mono text-muted-foreground truncate max-w-[200px]" title={displayVenue}>
+                        {displayVenue}
                       </span>
                     </div>
 
@@ -681,11 +701,11 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                         Venue
                       </span>
                       <p className="text-xs font-bold text-foreground leading-snug">
-                        {detail.venueGround || "Unknown Ground"}
+                        {displayVenue}
                       </p>
-                      {(detail.venueCity || detail.venueCountry) && (
+                      {(displayVenueCity || displayVenueCountry) && (
                         <p className="text-[10px] text-muted-foreground">
-                          {detail.venueCity}, {detail.venueCountry}
+                          {displayVenueCity}{displayVenueCity && displayVenueCountry ? ", " : ""}{displayVenueCountry}
                         </p>
                       )}
                       {detail.timezone && (
@@ -696,30 +716,25 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                     </div>
 
                     {/* Toss Details */}
-                    {detail.tossWinnerName && (
+                    {displayToss && (
                       <div className="space-y-1.5 border-t border-border/40 pt-4">
                         <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
                           Toss Results
                         </span>
-                        <p className="text-xs font-bold text-foreground">
-                          {detail.tossWinnerName}
+                        <p className="text-xs font-bold text-foreground leading-snug">
+                          {displayToss}
                         </p>
-                        {detail.tossDecision && (
-                          <p className="text-[10px] text-muted-foreground italic">
-                            Elected to {detail.tossDecision.toLowerCase()} first
-                          </p>
-                        )}
                       </div>
                     )}
 
-                    {/* Match Type */}
-                    {detail.matchType && (
+                    {/* Match Format */}
+                    {displayFormat && (
                       <div className="space-y-1.5 border-t border-border/40 pt-4">
                         <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
                           Format
                         </span>
-                        <p className="text-xs font-bold text-primary font-mono tracking-wider">
-                          {detail.matchType} Series
+                        <p className="text-xs font-bold text-primary font-mono uppercase tracking-wider">
+                          {displayFormat}
                         </p>
                       </div>
                     )}
