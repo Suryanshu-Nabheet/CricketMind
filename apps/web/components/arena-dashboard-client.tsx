@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Match, MatchDetail, getMatchDetail, PlayerStats } from "@/server/cricket";
+import { getMatchDetail, checkDatabaseSource } from "@/server/cricket";
+import { Match, MatchDetail, PlayerStats } from "@/server/types";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import {
@@ -41,6 +42,13 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
   const [detail, setDetail] = useState<MatchDetail | null>(null);
   const [loadingDetail, setLoadingDetail] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [isLocalDB, setIsLocalDB] = useState<boolean>(false);
+
+  useEffect(() => {
+    checkDatabaseSource().then((res) => {
+      setIsLocalDB(res.isLocal);
+    });
+  }, []);
 
   // AI Chat Assistant State
   const [chatMessages, setChatMessages] = useState<{ id: string; role: "user" | "assistant"; content: string }[]>([]);
@@ -199,6 +207,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
 
   const displayResult = detail?.result || matchSummary?.result || "";
   const displayFormat = detail?.matchType || matchSummary?.seriesName || "";
+  const isUsingLocal = isLocalDB || !!detail?.isLocalDB;
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary relative pb-6">
@@ -217,7 +226,25 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
           </span>
         </div>
         <div className="flex items-center gap-4 text-xs">
-          <Button asChild size="sm" variant="outline" className="rounded-full text-foreground border-border bg-background">
+          {isUsingLocal ? (
+            <span className="text-[10px] font-black text-blue-500 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full uppercase tracking-wider font-mono">
+              Local DB
+            </span>
+          ) : (
+            <span className="text-[10px] font-black text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full uppercase tracking-wider font-mono">
+              Live API
+            </span>
+          )}
+          <Button
+            asChild
+            size="sm"
+            variant={isUsingLocal ? "default" : "outline"}
+            className={`rounded-full font-bold transition-all duration-300 ${
+              isUsingLocal
+                ? "bg-blue-600 hover:bg-blue-700 text-white border-transparent shadow-md shadow-blue-500/20"
+                : "text-foreground border-border bg-background hover:bg-muted"
+            }`}
+          >
             <a href="/">Exit Arena</a>
           </Button>
         </div>

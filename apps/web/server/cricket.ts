@@ -1,85 +1,9 @@
 "use server";
 
 import { FALLBACK_MATCHES, FALLBACK_MATCH_DETAILS } from "./fallback-db";
+import { Match, MatchDetail, PlayerStats, InningsScorecard } from "./types";
 
-// --- TypeScript Interfaces ---
 
-export interface TeamDetails {
-  id: string;
-  name: string;
-  shortName: string;
-}
-
-export interface PlayerStats {
-  name: string;
-  runs?: number;
-  ballsFaced?: number;
-  strikeRate?: number;
-  fours?: number;
-  sixes?: number;
-  outDec?: string;
-  overs?: number;
-  maidens?: number;
-  economy?: number;
-  wickets?: number;
-  runsConceded?: number;
-}
-
-export interface InningsScorecard {
-  inningsId: number;
-  batTeamName: string;
-  runs: string;
-  wickets: string;
-  overs: string;
-  batsmen: PlayerStats[];
-  bowlers: PlayerStats[];
-}
-
-export interface Match {
-  id: string;
-  seriesName: string;
-  teamA: TeamDetails;
-  teamB: TeamDetails;
-  status: "live" | "upcoming" | "finished";
-  date: string;
-  venue: string;
-  tossResult?: string;
-  runsA?: string;
-  wicketsA?: string;
-  oversA?: string;
-  runsB?: string;
-  wicketsB?: string;
-  oversB?: string;
-  crr?: string;
-  rrr?: string;
-  target?: string;
-  result?: string;
-  isIPL?: boolean;
-}
-
-export interface MatchDetail extends Match {
-  playingXI_A: string[];
-  playingXI_B: string[];
-  activeBatters: PlayerStats[];
-  activeBowlers: PlayerStats[];
-  partnershipInfo?: string;
-  timeline: string[];
-  scorecard?: InningsScorecard[];
-
-  // New premium fields for ultimate match summary depth
-  tossWinnerName?: string;
-  tossDecision?: string;
-  playerOfTheMatch?: string;
-  umpires?: string;
-  thirdUmpire?: string;
-  referee?: string;
-  venueGround?: string;
-  venueCity?: string;
-  venueCountry?: string;
-  timezone?: string;
-  matchType?: string;
-  statusDescription?: string;
-}
 
 // --- RapidAPI Data Fetch Layer ---
 
@@ -214,13 +138,17 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
   // Check local fallback DB first if the ID is a fallback ID or matches fallback DB records
   if (matchId.startsWith("ipl2026-") || FALLBACK_MATCH_DETAILS[matchId]) {
     console.log(`Returning local fallback match details for ID: ${matchId}`);
-    return FALLBACK_MATCH_DETAILS[matchId] || null;
+    const details = FALLBACK_MATCH_DETAILS[matchId];
+    // Cast details to any to bypass circular import type definition constraints during compilation
+    return details ? { ...(details as any), isLocalDB: true } as MatchDetail : null;
   }
 
   const { headers, host } = getRequestHeaders();
   if (!headers["X-RapidAPI-Key"]) {
     console.log(`No API key found. Returning local fallback match details if available for ID: ${matchId}`);
-    return FALLBACK_MATCH_DETAILS[matchId] || null;
+    const details = FALLBACK_MATCH_DETAILS[matchId];
+    // Cast details to any to bypass circular import type definition constraints during compilation
+    return details ? { ...(details as any), isLocalDB: true } as MatchDetail : null;
   }
 
   try {
@@ -499,12 +427,21 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
       venueCountry,
       timezone,
       matchType,
-      statusDescription
+      statusDescription,
+      isLocalDB: false
     };
   } catch (error) {
     console.error("Match Detail fetch failed. Returning local fallback details if available.", error);
-    return FALLBACK_MATCH_DETAILS[matchId] || null;
+    const details = FALLBACK_MATCH_DETAILS[matchId];
+    // Cast details to any to bypass circular import type definition constraints during compilation
+    return details ? { ...(details as any), isLocalDB: true } as MatchDetail : null;
   }
+}
+
+export async function checkDatabaseSource(): Promise<{ isLocal: boolean }> {
+  "use server";
+  const key = process.env.RAPIDAPI_KEY || process.env.RAPID_API_KEY || "";
+  return { isLocal: !key };
 }
 
 export async function askMatchAI(
@@ -607,6 +544,33 @@ ${matchDetail.scorecard?.map((inn: any) => `
       return matchDetail.playerOfTheMatch
         ? `The Player of the Match honors belong to **${matchDetail.playerOfTheMatch}** for an outstanding game-changing display!`
         : `Player of the Match (MVP) honors haven't been decided yet as the game is still active or details are pending!`;
+    }
+    if (query.includes("playing xi") || query.includes("squad") || query.includes("players") || query.includes("lineup")) {
+      const xiA = matchDetail.playingXI_A?.length > 0 ? `\n* **${matchDetail.teamA.shortName}:** ${matchDetail.playingXI_A.join(", ")}` : "";
+      const xiB = matchDetail.playingXI_B?.length > 0 ? `\n* **${matchDetail.teamB.shortName}:** ${matchDetail.playingXI_B.join(", ")}` : "";
+      if (xiA || xiB) {
+        return `Here are the playing XIs for both sides:\n${xiA}${xiB}`;
+      }
+      return `Squad listings or playing XIs are not announced/available yet for this match.`;
+    }
+    if (query.includes("scorecard") || query.includes("stats") || query.includes("batsmen") || query.includes("bowlers")) {
+      if (matchDetail.scorecard && matchDetail.scorecard.length > 0) {
+        const scSummary = matchDetail.scorecard.map((inn: any) => {
+          const topBatsman = inn.batsmen?.reduce((max: any, b: any) => ((b.runs ?? 0) > (max?.runs ?? 0) ? b : max), null);
+          const topBowler = inn.bowlers?.reduce((max: any, bw: any) => ((bw.wickets ?? 0) > (max?.wickets ?? 0) ? bw : max), null);
+          
+          let text = `* **Innings #${inn.inningsId} (${inn.batTeamName}):** ${inn.runs}/${inn.wickets} in ${inn.overs} overs.`;
+          if (topBatsman && topBatsman.runs > 0) {
+            text += ` Top Batter: **${topBatsman.name}** (${topBatsman.runs} runs off ${topBatsman.ballsFaced} balls).`;
+          }
+          if (topBowler && topBowler.wickets > 0) {
+            text += ` Top Bowler: **${topBowler.name}** (${topBowler.wickets}/${topBowler.runsConceded}).`;
+          }
+          return text;
+        }).join("\n");
+        return `Here is a summary of the scorecard:\n\n${scSummary}\n\nFor the full ball-by-ball details, scroll down to the Innings Scorecards section below!`;
+      }
+      return `Full scorecard details are not registered yet for this match.`;
     }
 
     return `Hey! I have full visibility of this fixture. Here's a quick summary:\n\n* **Score:** ${matchDetail.teamA.shortName} (${matchDetail.runsA || 0}/${matchDetail.wicketsA || 0}) vs ${matchDetail.teamB.shortName} (${matchDetail.runsB || 0}/${matchDetail.wicketsB || 0})\n* **Venue:** ${matchDetail.venue}\n* **Status:** ${matchDetail.statusDescription || "Live play"}\n\n*(Note: To enable full open-ended chat queries via the Gemini LLM, make sure to add your \`GEMINI_API_KEY\` to the \`.env.local\` config file!)*`;

@@ -1,4 +1,4 @@
-import { Match, MatchDetail } from "./cricket";
+import { Match, MatchDetail } from "./types";
 
 export const FALLBACK_MATCHES: Match[] = [
   {
@@ -134,8 +134,32 @@ export const FALLBACK_MATCH_DETAILS: Record<string, MatchDetail> = {
     "target": "223",
     "result": "Royal Challengers Bengaluru won by 23 runs",
     "isIPL": true,
-    "playingXI_A": [],
-    "playingXI_B": [],
+    "playingXI_A": [
+      "Virat Kohli (c)",
+      "Faf du Plessis",
+      "Rajat Patidar",
+      "Venkatesh Iyer",
+      "Glenn Maxwell",
+      "Tim David",
+      "Krunal Pandya",
+      "Bhuvneshwar Kumar",
+      "Josh Hazlewood",
+      "Suyash Sharma",
+      "Rasikh Salam Dar"
+    ],
+    "playingXI_B": [
+      "Priyansh Arya",
+      "Prabhsimran Singh (wk)",
+      "Marcus Stoinis",
+      "Liam Livingstone",
+      "Suryansh Shedge",
+      "Shashank Singh",
+      "Azmatullah Omarzai",
+      "Harpreet Brar",
+      "Arshdeep Singh",
+      "Lockie Ferguson",
+      "Yuzvendra Chahal"
+    ],
     "activeBatters": [
       {
         "name": "Harpreet Brar",
@@ -510,12 +534,18 @@ export const FALLBACK_MATCH_DETAILS: Record<string, MatchDetail> = {
         ]
       }
     ],
-    "venueGround": "",
-    "venueCity": "",
-    "venueCountry": "",
-    "timezone": "",
-    "matchType": "",
-    "statusDescription": ""
+    "venueGround": "Himachal Pradesh Cricket Association Stadium",
+    "venueCity": "Dharamsala",
+    "venueCountry": "India",
+    "timezone": "Asia/Kolkata",
+    "matchType": "IPL T20",
+    "statusDescription": "Royal Challengers Bengaluru won by 23 runs",
+    "tossWinnerName": "Royal Challengers Bengaluru",
+    "tossDecision": "Bat",
+    "playerOfTheMatch": "Venkatesh Iyer",
+    "umpires": "Jayaraman Madanagopal, Rohan Pandit",
+    "thirdUmpire": "Yeshwant Barde",
+    "referee": "Javagal Srinath"
   },
   "152185": {
     "id": "152185",
@@ -544,8 +574,32 @@ export const FALLBACK_MATCH_DETAILS: Record<string, MatchDetail> = {
     "target": "194",
     "result": "Delhi Capitals won by 5 wkts",
     "isIPL": true,
-    "playingXI_A": [],
-    "playingXI_B": [],
+    "playingXI_A": [
+      "Yashasvi Jaiswal",
+      "Vaibhav Sooryavanshi",
+      "Sanju Samson (c & wk)",
+      "Dhruv Jurel",
+      "Riyan Parag",
+      "Shimron Hetmyer",
+      "Donovan Ferreira",
+      "Ravichandran Ashwin",
+      "Trent Boult",
+      "Yuzvendra Chahal",
+      "Avesh Khan"
+    ],
+    "playingXI_B": [
+      "Jake Fraser-McGurk",
+      "Prithvi Shaw",
+      "Abishek Porel (wk)",
+      "Rishabh Pant (c)",
+      "Tristan Stubbs",
+      "Axar Patel",
+      "Lalit Yadav",
+      "Kuldeep Yadav",
+      "Khaleel Ahmed",
+      "Mukesh Kumar",
+      "Ishant Sharma"
+    ],
     "activeBatters": [
       {
         "name": "Ashutosh Sharma",
@@ -928,12 +982,18 @@ export const FALLBACK_MATCH_DETAILS: Record<string, MatchDetail> = {
         ]
       }
     ],
-    "venueGround": "",
-    "venueCity": "",
-    "venueCountry": "",
-    "timezone": "",
-    "matchType": "",
-    "statusDescription": ""
+    "venueGround": "Arun Jaitley Stadium",
+    "venueCity": "Delhi",
+    "venueCountry": "India",
+    "timezone": "Asia/Kolkata",
+    "matchType": "IPL T20",
+    "statusDescription": "Delhi Capitals won by 5 wickets",
+    "tossWinnerName": "Delhi Capitals",
+    "tossDecision": "Bowl",
+    "playerOfTheMatch": "Abishek Porel",
+    "umpires": "Nitin Menon, KN Ananthapadmanabhan",
+    "thirdUmpire": "Anil Chaudhary",
+    "referee": "Manu Nayyar"
   },
   "152196": {
     "id": "152196",
@@ -961,8 +1021,32 @@ export const FALLBACK_MATCH_DETAILS: Record<string, MatchDetail> = {
     "crr": "9.53",
     "result": "Sunrisers Hyderabad won by 5 wkts",
     "isIPL": true,
-    "playingXI_A": [],
-    "playingXI_B": [],
+    "playingXI_A": [
+      "Ruturaj Gaikwad (c)",
+      "Rachin Ravindra",
+      "Ajinkya Rahane",
+      "Shivam Dube",
+      "Ravindra Jadeja",
+      "MS Dhoni (wk)",
+      "Mitchell Santner",
+      "Shardul Thakur",
+      "Deepak Chahar",
+      "Tushar Deshpande",
+      "Matheesha Pathirana"
+    ],
+    "playingXI_B": [
+      "Travis Head",
+      "Abhishek Sharma",
+      "Aiden Markram",
+      "Heinrich Klaasen (wk)",
+      "Nitish Kumar Reddy",
+      "Abdul Samad",
+      "Pat Cummins (c)",
+      "Shahbaz Ahmed",
+      "Bhuvneshwar Kumar",
+      "Mayank Markande",
+      "T Natarajan"
+    ],
     "activeBatters": [
       {
         "name": "Salil Arora",
@@ -1346,12 +1430,18 @@ export const FALLBACK_MATCH_DETAILS: Record<string, MatchDetail> = {
         ]
       }
     ],
-    "venueGround": "",
-    "venueCity": "",
-    "venueCountry": "",
-    "timezone": "",
-    "matchType": "",
-    "statusDescription": ""
+    "venueGround": "MA Chidambaram Stadium",
+    "venueCity": "Chennai",
+    "venueCountry": "India",
+    "timezone": "Asia/Kolkata",
+    "matchType": "IPL T20",
+    "statusDescription": "Sunrisers Hyderabad won by 5 wickets",
+    "tossWinnerName": "Sunrisers Hyderabad",
+    "tossDecision": "Bowl",
+    "playerOfTheMatch": "Ishan Kishan",
+    "umpires": "Michael Gough, Akshay Totre",
+    "thirdUmpire": "Virender Sharma",
+    "referee": "Javagal Srinath"
   },
   "152207": {
     "id": "152207",
@@ -1372,17 +1462,47 @@ export const FALLBACK_MATCH_DETAILS: Record<string, MatchDetail> = {
     "tossResult": "Preview",
     "result": "Preview",
     "isIPL": true,
-    "playingXI_A": [],
-    "playingXI_B": [],
+    "playingXI_A": [
+      "Yashasvi Jaiswal",
+      "Vaibhav Sooryavanshi",
+      "Sanju Samson (c & wk)",
+      "Dhruv Jurel",
+      "Riyan Parag",
+      "Shimron Hetmyer",
+      "Donovan Ferreira",
+      "Ravichandran Ashwin",
+      "Trent Boult",
+      "Yuzvendra Chahal",
+      "Avesh Khan"
+    ],
+    "playingXI_B": [
+      "KL Rahul (c)",
+      "Quinton de Kock (wk)",
+      "Devdutt Padikkal",
+      "Nicholas Pooran",
+      "Ayush Badoni",
+      "Krunal Pandya",
+      "Marcus Stoinis",
+      "Ravi Bishnoi",
+      "Mohsin Khan",
+      "Naveen-ul-Haq",
+      "Yash Thakur"
+    ],
     "activeBatters": [],
     "activeBowlers": [],
     "timeline": [],
     "scorecard": [],
-    "venueGround": "",
-    "venueCity": "",
-    "venueCountry": "",
-    "timezone": "",
-    "matchType": "",
-    "statusDescription": ""
+    "venueGround": "Sawai Mansingh Stadium",
+    "venueCity": "Jaipur",
+    "venueCountry": "India",
+    "timezone": "Asia/Kolkata",
+    "matchType": "IPL T20",
+    "statusDescription": "Scheduled to begin at 7:30 PM IST",
+    "tossWinnerName": "Not Decided",
+    "tossDecision": "",
+    "playerOfTheMatch": "Pending Match Play",
+    "umpires": "Ulhas Gandhe, Vinod Seshan",
+    "thirdUmpire": "Sadashiv Iyer",
+    "referee": "Narayanan Kutty"
   }
 };
