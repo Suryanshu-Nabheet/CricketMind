@@ -63,6 +63,20 @@ export interface MatchDetail extends Match {
   partnershipInfo?: string;
   timeline: string[];
   scorecard?: InningsScorecard[];
+
+  // New premium fields for ultimate match summary depth
+  tossWinnerName?: string;
+  tossDecision?: string;
+  playerOfTheMatch?: string;
+  umpires?: string;
+  thirdUmpire?: string;
+  referee?: string;
+  venueGround?: string;
+  venueCity?: string;
+  venueCountry?: string;
+  timezone?: string;
+  matchType?: string;
+  statusDescription?: string;
 }
 
 // --- RapidAPI Data Fetch Layer ---
@@ -204,13 +218,28 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
       cache: "no-store"
     });
 
+    await delay(1100);
+
+    let hscardData: any = null;
+    try {
+      const hscardRes = await fetch(`https://${host}/mcenter/v1/${matchId}/hscard`, {
+        headers,
+        cache: "no-store"
+      });
+      if (hscardRes.ok) {
+        hscardData = await hscardRes.json();
+      }
+    } catch (e) {
+      console.warn("hscard fetch failed, falling back to commentary/scorecard headers", e);
+    }
+
     let commData: any = null;
     let scardData: any = null;
 
     if (commRes.ok) commData = await commRes.json();
     if (scardRes.ok) scardData = await scardRes.json();
     
-    if (!commData && !scardData) {
+    if (!commData && !scardData && !hscardData) {
        return null;
     }
 
@@ -220,6 +249,17 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
     
     const playingXI_A: string[] = [];
     const playingXI_B: string[] = [];
+
+    // Parse squads (playing XIs)
+    const team1Squad = scardData?.matchHeader?.team1?.players || hscardData?.matchHeader?.team1?.players || [];
+    const team2Squad = scardData?.matchHeader?.team2?.players || hscardData?.matchHeader?.team2?.players || [];
+    
+    if (Array.isArray(team1Squad)) {
+       team1Squad.forEach((p: any) => playingXI_A.push(p.name || p.fullName || ""));
+    }
+    if (Array.isArray(team2Squad)) {
+       team2Squad.forEach((p: any) => playingXI_B.push(p.name || p.fullName || ""));
+    }
     
     // Parse complete scorecard & squads (supports Cricbuzz real `/scard` schema)
     const rawScorecard = (scardData && (scardData.scorecard || scardData.scoreCard)) || [];
@@ -313,8 +353,53 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
        }
     }
 
-    const matchHeader = (commData && commData.matchheaders) || (scardData && scardData.matchHeader);
+    const matchHeader = hscardData?.matchHeader || commData?.matchheaders || scardData?.matchHeader;
     const seriesName = matchHeader?.seriesname || matchHeader?.seriesName || "";
+
+    // Parse Toss Details
+    let tossWinnerName: string | undefined = undefined;
+    let tossDecision: string | undefined = undefined;
+    if (matchHeader?.toss) {
+      tossWinnerName = matchHeader.toss.winnerName || matchHeader.toss.winnerTeamName || "";
+      tossDecision = matchHeader.toss.decision || "";
+    }
+
+    // Parse Player of the Match
+    let playerOfTheMatch: string | undefined = undefined;
+    if (Array.isArray(matchHeader?.playersOfTheMatch)) {
+      playerOfTheMatch = matchHeader.playersOfTheMatch.map((p: any) => p.name || p.fullName).join(", ");
+    } else if (Array.isArray(matchHeader?.playerOfMatch)) {
+      playerOfTheMatch = matchHeader.playerOfMatch.map((p: any) => p.name || p.fullName).join(", ");
+    } else if (matchHeader?.playerOfMatch) {
+      playerOfTheMatch = matchHeader.playerOfMatch.name || matchHeader.playerOfMatch.fullName || "";
+    }
+
+    // Parse Officials
+    let umpires: string | undefined = undefined;
+    let thirdUmpire: string | undefined = undefined;
+    let referee: string | undefined = undefined;
+    if (Array.isArray(matchHeader?.officials)) {
+      const umps = matchHeader.officials.filter((o: any) => (o.role || "").toLowerCase().includes("umpire"));
+      umpires = umps.filter((o: any) => (o.role || "").toLowerCase() === "umpire").map((o: any) => o.name).join(", ");
+      thirdUmpire = matchHeader.officials.find((o: any) => (o.role || "").toLowerCase().includes("third"))?.name;
+      referee = matchHeader.officials.find((o: any) => (o.role || "").toLowerCase().includes("referee") || (o.role || "").toLowerCase().includes("manager"))?.name;
+    }
+
+    // Parse Venue details
+    let venueGround: string | undefined = undefined;
+    let venueCity: string | undefined = undefined;
+    let venueCountry: string | undefined = undefined;
+    let timezone: string | undefined = undefined;
+    if (matchHeader?.venueInfo) {
+      venueGround = matchHeader.venueInfo.ground || matchHeader.venueInfo.name || "";
+      venueCity = matchHeader.venueInfo.city || "";
+      venueCountry = matchHeader.venueInfo.country || "";
+      timezone = matchHeader.venueInfo.timezone || "";
+    }
+
+    const matchType = matchHeader?.matchType || matchHeader?.matchFormat || "";
+    const statusDescription = matchHeader?.status || "";
+    const venueFull = venueGround && venueCity ? `${venueGround}, ${venueCity}` : matchHeader?.venueInfo?.ground || "";
 
     return {
       id: matchId,
@@ -331,7 +416,7 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
       },
       status: matchHeader?.state === "Complete" ? "finished" : matchHeader?.state === "Upcoming" ? "upcoming" : "live",
       date: new Date().toISOString(),
-      venue: "",
+      venue: venueFull,
       tossResult: matchHeader?.status || "",
       result: matchHeader?.status || "",
       playingXI_A,
@@ -343,7 +428,21 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
       target,
       partnershipInfo,
       timeline,
-      scorecard: fullScorecard
+      scorecard: fullScorecard,
+      
+      // Inject new premium match metadata
+      tossWinnerName,
+      tossDecision,
+      playerOfTheMatch,
+      umpires,
+      thirdUmpire,
+      referee,
+      venueGround,
+      venueCity,
+      venueCountry,
+      timezone,
+      matchType,
+      statusDescription
     };
   } catch (error) {
     console.error("Match Detail fetch failed.", error);
