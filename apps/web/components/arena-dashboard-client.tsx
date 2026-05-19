@@ -208,7 +208,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
 
   const displayResult = detail?.result || matchSummary?.result || "";
   const displayFormat = detail?.matchType || matchSummary?.seriesName || "";
-  const isUsingLocal = isLocalDB || !!detail?.isLocalDB;
+  const isUsingLocal = isLocalDB || !!detail?.isLocalDB || matches.length === 0 || matches.some(m => m.isLocalDB);
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary relative pb-6">

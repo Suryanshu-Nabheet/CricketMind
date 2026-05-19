@@ -110,7 +110,7 @@ export async function getMatches(): Promise<Match[]> {
   const { headers } = getRequestHeaders();
   if (!headers["X-RapidAPI-Key"]) {
     console.log("No API key found. Returning local fallback matches database.");
-    return FALLBACK_MATCHES;
+    return FALLBACK_MATCHES.map(m => ({ ...m, isLocalDB: true }));
   }
 
   try {
@@ -125,12 +125,13 @@ export async function getMatches(): Promise<Match[]> {
 
     const iplMatches = uniqueMatches.filter(m => m.isIPL);
     if (iplMatches.length > 0) {
-      return iplMatches;
+      return iplMatches.map(m => ({ ...m, isLocalDB: false }));
     }
-    return uniqueMatches.length > 0 ? uniqueMatches : FALLBACK_MATCHES;
+    console.log("No IPL matches returned from API. Returning local fallback matches.");
+    return FALLBACK_MATCHES.map(m => ({ ...m, isLocalDB: true }));
   } catch (error) {
     console.error("RapidAPI match list fetch failed, falling back to local matches.", error);
-    return FALLBACK_MATCHES;
+    return FALLBACK_MATCHES.map(m => ({ ...m, isLocalDB: true }));
   }
 }
 
@@ -187,7 +188,8 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
     
     if (!commData && !scardData && !hscardData) {
        console.log(`No data returned from RapidAPI. Returning local fallback details if available for ID: ${matchId}`);
-       return FALLBACK_MATCH_DETAILS[matchId] || null;
+       const details = FALLBACK_MATCH_DETAILS[matchId];
+       return details ? { ...(details as any), isLocalDB: true } as MatchDetail : null;
     }
 
     const activeBatters: PlayerStats[] = [];

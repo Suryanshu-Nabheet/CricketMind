@@ -49,6 +49,7 @@ export interface Match {
   target?: string;
   result?: string;
   isIPL?: boolean;
+  isLocalDB?: boolean;
 }
 
 export interface MatchDetail extends Match {
