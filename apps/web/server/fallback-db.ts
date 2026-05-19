@@ -2,552 +2,969 @@ import { Match, MatchDetail } from "./cricket";
 
 export const FALLBACK_MATCHES: Match[] = [
   {
-    id: "ipl2026-m01",
-    seriesName: "Indian Premier League 2026",
-    teamA: {
-      id: "rcb-01",
-      name: "Royal Challengers Bengaluru",
-      shortName: "RCB"
+    "id": "153791",
+    "seriesName": "Pakistan tour of Bangladesh, 2026",
+    "teamA": {
+      "id": "6",
+      "name": "Bangladesh",
+      "shortName": "BAN"
     },
-    teamB: {
-      id: "csk-02",
-      name: "Chennai Super Kings",
-      shortName: "CSK"
+    "teamB": {
+      "id": "3",
+      "name": "Pakistan",
+      "shortName": "PAK"
     },
-    status: "live",
-    date: new Date().toISOString(),
-    venue: "M. Chinnaswamy Stadium, Bengaluru",
-    tossResult: "Chennai Super Kings won the toss & elected to bowl",
-    runsA: "218",
-    wicketsA: "5",
-    oversA: "20.0",
-    runsB: "162",
-    wicketsB: "4",
-    oversB: "15.4",
-    crr: "10.34",
-    rrr: "13.38",
-    target: "219",
-    result: "CSK needs 57 runs in 26 balls",
-    isIPL: true
+    "status": "live",
+    "date": "2026-05-16T04:00:00.000Z",
+    "venue": "Sylhet International Cricket Stadium, Sylhet",
+    "tossResult": "Day 3: Stumps - Pakistan need 437 runs",
+    "result": "Day 3: Stumps - Pakistan need 437 runs",
+    "runsA": "278",
+    "wicketsA": "10",
+    "oversA": "76.6",
+    "runsB": "232",
+    "wicketsB": "10",
+    "oversB": "57.4",
+    "isIPL": false
   },
   {
-    id: "ipl2026-m02",
-    seriesName: "Indian Premier League 2026",
-    teamA: {
-      id: "mi-03",
-      name: "Mumbai Indians",
-      shortName: "MI"
+    "id": "154905",
+    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
+    "teamA": {
+      "id": "1069",
+      "name": "Slovenia",
+      "shortName": "SLV"
     },
-    teamB: {
-      id: "kkr-04",
-      name: "Kolkata Knight Riders",
-      shortName: "KKR"
+    "teamB": {
+      "id": "534",
+      "name": "Sweden",
+      "shortName": "SWE"
     },
-    status: "upcoming",
-    date: new Date(Date.now() + 86400000).toISOString(),
-    venue: "Wankhede Stadium, Mumbai",
-    tossResult: "Match begins tomorrow at 19:30 IST",
-    result: "Upcoming Match",
-    isIPL: true
+    "status": "upcoming",
+    "date": "2026-05-19T07:30:00.000Z",
+    "venue": "Happy Valley Ground 2, Episkopi",
+    "tossResult": "Match starts at May 19, 07:30 GMT",
+    "result": "Match starts at May 19, 07:30 GMT",
+    "isIPL": false
   },
   {
-    id: "ipl2026-m03",
-    seriesName: "Indian Premier League 2026",
-    teamA: {
-      id: "rr-05",
-      name: "Rajasthan Royals",
-      shortName: "RR"
+    "id": "154916",
+    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
+    "teamA": {
+      "id": "1076",
+      "name": "Croatia",
+      "shortName": "CRT"
     },
-    teamB: {
-      id: "srh-06",
-      name: "Sunrisers Hyderabad",
-      shortName: "SRH"
+    "teamB": {
+      "id": "1062",
+      "name": "Switzerland",
+      "shortName": "SUI"
     },
-    status: "finished",
-    date: new Date(Date.now() - 86400000).toISOString(),
-    venue: "Narendra Modi Stadium, Ahmedabad",
-    tossResult: "Rajasthan Royals won the toss & elected to bat",
-    runsA: "201",
-    wicketsA: "4",
-    oversA: "20.0",
-    runsB: "186",
-    wicketsB: "8",
-    oversB: "20.0",
-    result: "RR won by 15 runs",
-    isIPL: true
+    "status": "upcoming",
+    "date": "2026-05-19T12:30:00.000Z",
+    "venue": "Happy Valley Ground, Episkopi",
+    "tossResult": "Match starts at May 19, 12:30 GMT",
+    "result": "Match starts at May 19, 12:30 GMT",
+    "isIPL": false
   },
   {
-    id: "ipl2026-m04",
-    seriesName: "Indian Premier League 2026",
-    teamA: {
-      id: "dc-07",
-      name: "Delhi Capitals",
-      shortName: "DC"
+    "id": "154927",
+    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
+    "teamA": {
+      "id": "532",
+      "name": "Austria",
+      "shortName": "AUT"
     },
-    teamB: {
-      id: "gt-08",
-      name: "Gujarat Titans",
-      shortName: "GT"
+    "teamB": {
+      "id": "533",
+      "name": "Guernsey",
+      "shortName": "GGY"
     },
-    status: "live",
-    date: new Date().toISOString(),
-    venue: "Arun Jaitley Stadium, Delhi",
-    tossResult: "Gujarat Titans won the toss & elected to bowl",
-    runsA: "184",
-    wicketsA: "6",
-    oversA: "18.2",
-    crr: "10.04",
-    result: "Delhi Capitals batting first",
-    isIPL: true
+    "status": "upcoming",
+    "date": "2026-05-19T12:30:00.000Z",
+    "venue": "Happy Valley Ground 2, Episkopi",
+    "tossResult": "Match starts at May 19, 12:30 GMT",
+    "result": "Match starts at May 19, 12:30 GMT",
+    "isIPL": false
+  },
+  {
+    "id": "152207",
+    "seriesName": "Indian Premier League 2026",
+    "teamA": {
+      "id": "64",
+      "name": "Rajasthan Royals",
+      "shortName": "RR"
+    },
+    "teamB": {
+      "id": "966",
+      "name": "Lucknow Super Giants",
+      "shortName": "LSG"
+    },
+    "status": "upcoming",
+    "date": "2026-05-19T14:00:00.000Z",
+    "venue": "Sawai Mansingh Stadium, Jaipur",
+    "tossResult": "Preview",
+    "result": "Preview",
+    "isIPL": true
+  },
+  {
+    "id": "153780",
+    "seriesName": "Pakistan tour of Bangladesh, 2026",
+    "teamA": {
+      "id": "6",
+      "name": "Bangladesh",
+      "shortName": "BAN"
+    },
+    "teamB": {
+      "id": "3",
+      "name": "Pakistan",
+      "shortName": "PAK"
+    },
+    "status": "finished",
+    "date": "2026-05-08T04:00:00.000Z",
+    "venue": "Shere Bangla National Stadium, Dhaka",
+    "tossResult": "Bangladesh won by 104 runs",
+    "result": "Bangladesh won by 104 runs",
+    "runsA": "413",
+    "wicketsA": "10",
+    "oversA": "117.1",
+    "runsB": "386",
+    "wicketsB": "10",
+    "oversB": "100.3",
+    "isIPL": false
+  },
+  {
+    "id": "153242",
+    "seriesName": "ICC Cricket World Cup League Two 2023-27",
+    "teamA": {
+      "id": "23",
+      "name": "Scotland",
+      "shortName": "SCO"
+    },
+    "teamB": {
+      "id": "72",
+      "name": "Nepal",
+      "shortName": "NEP"
+    },
+    "status": "finished",
+    "date": "2026-05-18T03:45:00.000Z",
+    "venue": "Tribhuvan University International Cricket Ground, Kirtipur",
+    "tossResult": "Nepal won by 6 wkts",
+    "result": "Nepal won by 6 wkts",
+    "runsA": "194",
+    "wicketsA": "10",
+    "oversA": "39.1",
+    "runsB": "199",
+    "wicketsB": "4",
+    "oversB": "38.1",
+    "isIPL": false
+  },
+  {
+    "id": "153231",
+    "seriesName": "ICC Cricket World Cup League Two 2023-27",
+    "teamA": {
+      "id": "15",
+      "name": "United States of America",
+      "shortName": "USA"
+    },
+    "teamB": {
+      "id": "72",
+      "name": "Nepal",
+      "shortName": "NEP"
+    },
+    "status": "finished",
+    "date": "2026-05-16T03:45:00.000Z",
+    "venue": "Tribhuvan University International Cricket Ground, Kirtipur",
+    "tossResult": "Nepal won by 9 wkts",
+    "result": "Nepal won by 9 wkts",
+    "runsA": "195",
+    "wicketsA": "10",
+    "oversA": "43.3",
+    "runsB": "199",
+    "wicketsB": "1",
+    "oversB": "36.4",
+    "isIPL": false
   }
 ];
 
 export const FALLBACK_MATCH_DETAILS: Record<string, MatchDetail> = {
-  "ipl2026-m01": {
-    id: "ipl2026-m01",
-    seriesName: "Indian Premier League 2026",
-    teamA: {
-      id: "rcb-01",
-      name: "Royal Challengers Bengaluru",
-      shortName: "RCB"
+  "152207": {
+    "id": "152207",
+    "seriesName": "Indian Premier League 2026",
+    "teamA": {
+      "id": "64",
+      "name": "Rajasthan Royals",
+      "shortName": "RR"
     },
-    teamB: {
-      id: "csk-02",
-      name: "Chennai Super Kings",
-      shortName: "CSK"
+    "teamB": {
+      "id": "966",
+      "name": "Lucknow Super Giants",
+      "shortName": "LSG"
     },
-    status: "live",
-    date: new Date().toISOString(),
-    venue: "M. Chinnaswamy Stadium, Bengaluru",
-    tossResult: "Chennai Super Kings won the toss & elected to bowl",
-    runsA: "218",
-    wicketsA: "5",
-    oversA: "20.0",
-    runsB: "162",
-    wicketsB: "4",
-    oversB: "15.4",
-    crr: "10.34",
-    rrr: "13.38",
-    target: "219",
-    result: "CSK needs 57 runs in 26 balls",
-    isIPL: true,
-    playingXI_A: [
-      "Virat Kohli",
-      "Faf du Plessis (c)",
-      "Rajat Patidar",
-      "Glenn Maxwell",
-      "Cameron Green",
-      "Dinesh Karthik (wk)",
-      "Mahipal Lomror",
-      "Karn Sharma",
-      "Mohammed Siraj",
-      "Yash Dayal",
-      "Swapnil Singh"
-    ],
-    playingXI_B: [
-      "Ruturaj Gaikwad (c)",
-      "Rachin Ravindra",
-      "Ajinkya Rahane",
-      "Daryl Mitchell",
-      "Shivam Dube",
-      "Ravindra Jadeja",
-      "MS Dhoni (wk)",
-      "Mitchell Santner",
-      "Shardul Thakur",
-      "Tushar Deshpande",
-      "Maheesh Theekshana"
-    ],
-    activeBatters: [
-      {
-        name: "MS Dhoni",
-        runs: 28,
-        ballsFaced: 11,
-        strikeRate: 254.55,
-        fours: 2,
-        sixes: 3,
-        outDec: "batting"
-      },
-      {
-        name: "Ravindra Jadeja",
-        runs: 41,
-        ballsFaced: 22,
-        strikeRate: 186.36,
-        fours: 4,
-        sixes: 1,
-        outDec: "batting"
-      }
-    ],
-    activeBowlers: [
-      {
-        name: "Yash Dayal",
-        overs: 3.4,
-        maidens: 0,
-        runsConceded: 42,
-        wickets: 1,
-        economy: 11.45
-      },
-      {
-        name: "Mohammed Siraj",
-        overs: 3.0,
-        maidens: 0,
-        runsConceded: 35,
-        wickets: 2,
-        economy: 11.67
-      }
-    ],
-    partnershipInfo: "69 runs off 31 balls between MS Dhoni and Ravindra Jadeja",
-    timeline: ["6", "Wd", "4", "1", "6", "W"],
-    scorecard: [
-      {
-        inningsId: 1,
-        batTeamName: "Royal Challengers Bengaluru",
-        runs: "218",
-        wickets: "5",
-        overs: "20.0",
-        batsmen: [
-          { name: "Virat Kohli", runs: 47, ballsFaced: 29, strikeRate: 162.07, fours: 3, sixes: 4, outDec: "c Santner b Thakur" },
-          { name: "Faf du Plessis", runs: 54, ballsFaced: 39, strikeRate: 138.46, fours: 3, sixes: 3, outDec: "run out (Santner)" },
-          { name: "Rajat Patidar", runs: 41, ballsFaced: 23, strikeRate: 178.26, fours: 2, sixes: 4, outDec: "c Mitchell b Thakur" },
-          { name: "Glenn Maxwell", runs: 16, ballsFaced: 5, strikeRate: 320.0, fours: 1, sixes: 2, outDec: "c Dhoni b Deshpande" },
-          { name: "Cameron Green", runs: 38, ballsFaced: 17, strikeRate: 223.53, fours: 3, sixes: 3, outDec: "not out" },
-          { name: "Dinesh Karthik", runs: 14, ballsFaced: 6, strikeRate: 233.33, fours: 1, sixes: 1, outDec: "c Dhoni b Deshpande" }
-        ],
-        bowlers: [
-          { name: "Tushar Deshpande", overs: 4.0, maidens: 0, runsConceded: 49, wickets: 2, economy: 12.25 },
-          { name: "Maheesh Theekshana", overs: 4.0, maidens: 0, runsConceded: 25, wickets: 0, economy: 6.25 },
-          { name: "Mitchell Santner", overs: 4.0, maidens: 0, runsConceded: 23, wickets: 0, economy: 5.75 },
-          { name: "Shardul Thakur", overs: 4.0, maidens: 0, runsConceded: 61, wickets: 2, economy: 15.25 }
-        ]
-      },
-      {
-        inningsId: 2,
-        batTeamName: "Chennai Super Kings",
-        runs: "162",
-        wickets: "4",
-        overs: "15.4",
-        batsmen: [
-          { name: "Ruturaj Gaikwad", runs: 0, ballsFaced: 1, strikeRate: 0.0, fours: 0, sixes: 0, outDec: "c Green b Siraj" },
-          { name: "Rachin Ravindra", runs: 61, ballsFaced: 37, strikeRate: 164.86, fours: 5, sixes: 3, outDec: "run out (Swapnil)" },
-          { name: "Ajinkya Rahane", runs: 33, ballsFaced: 22, strikeRate: 150.0, fours: 3, sixes: 1, outDec: "c du Plessis b Siraj" },
-          { name: "Daryl Mitchell", runs: 4, ballsFaced: 6, strikeRate: 66.67, fours: 0, sixes: 0, outDec: "c Kohli b Dayal" },
-          { name: "Ravindra Jadeja", runs: 41, ballsFaced: 22, strikeRate: 186.36, fours: 4, sixes: 1, outDec: "batting" },
-          { name: "MS Dhoni", runs: 28, ballsFaced: 11, strikeRate: 254.55, fours: 2, sixes: 3, outDec: "batting" }
-        ],
-        bowlers: [
-          { name: "Glenn Maxwell", overs: 4.0, maidens: 0, runsConceded: 25, wickets: 0, economy: 6.25 },
-          { name: "Mohammed Siraj", overs: 3.0, maidens: 0, runsConceded: 35, wickets: 2, economy: 11.67 },
-          { name: "Yash Dayal", overs: 3.4, maidens: 0, runsConceded: 42, wickets: 1, economy: 11.45 },
-          { name: "Karn Sharma", overs: 4.0, maidens: 0, runsConceded: 48, wickets: 0, economy: 12.0 }
-        ]
-      }
-    ],
-    tossWinnerName: "Chennai Super Kings",
-    tossDecision: "bowl",
-    playerOfTheMatch: "Not announced yet",
-    umpires: "K.N. Ananthapadmanabhan, Michael Gough",
-    thirdUmpire: "Jayaraman Madanagopal",
-    referee: "Javagal Srinath",
-    venueGround: "M. Chinnaswamy Stadium",
-    venueCity: "Bengaluru",
-    venueCountry: "India",
-    timezone: "IST (UTC+5:30)",
-    matchType: "T20 League Match",
-    statusDescription: "CSK chasing 219. MS Dhoni and Ravindra Jadeja at the crease."
+    "status": "upcoming",
+    "date": "2026-05-19T14:00:00.000Z",
+    "venue": "Sawai Mansingh Stadium, Jaipur",
+    "tossResult": "Preview",
+    "result": "Preview",
+    "isIPL": true,
+    "playingXI_A": [],
+    "playingXI_B": [],
+    "activeBatters": [],
+    "activeBowlers": [],
+    "timeline": [],
+    "scorecard": [],
+    "matchType": "",
+    "statusDescription": ""
   },
-  "ipl2026-m02": {
-    id: "ipl2026-m02",
-    seriesName: "Indian Premier League 2026",
-    teamA: {
-      id: "mi-03",
-      name: "Mumbai Indians",
-      shortName: "MI"
+  "153791": {
+    "id": "153791",
+    "seriesName": "Pakistan tour of Bangladesh, 2026",
+    "teamA": {
+      "id": "6",
+      "name": "Bangladesh",
+      "shortName": "BAN"
     },
-    teamB: {
-      id: "kkr-04",
-      name: "Kolkata Knight Riders",
-      shortName: "KKR"
+    "teamB": {
+      "id": "3",
+      "name": "Pakistan",
+      "shortName": "PAK"
     },
-    status: "upcoming",
-    date: new Date(Date.now() + 86400000).toISOString(),
-    venue: "Wankhede Stadium, Mumbai",
-    tossResult: "Match begins tomorrow at 19:30 IST",
-    result: "Upcoming Match",
-    isIPL: true,
-    playingXI_A: [
-      "Rohit Sharma",
-      "Ishan Kishan (wk)",
-      "Suryakumar Yadav",
-      "Hardik Pandya (c)",
-      "Tilak Varma",
-      "Tim David",
-      "Nehal Wadhera",
-      "Gerald Coetzee",
-      "Jasprit Bumrah",
-      "Piyush Chawla",
-      "Nuwan Thushara"
+    "status": "live",
+    "date": "2026-05-16T04:00:00.000Z",
+    "venue": "Sylhet International Cricket Stadium, Sylhet",
+    "tossResult": "Day 3: Stumps - Pakistan need 437 runs",
+    "result": "Day 3: Stumps - Pakistan need 437 runs",
+    "runsA": "278",
+    "wicketsA": "10",
+    "oversA": "76.6",
+    "runsB": "232",
+    "wicketsB": "10",
+    "oversB": "57.4",
+    "isIPL": false,
+    "playingXI_A": [],
+    "playingXI_B": [],
+    "activeBatters": [
+      {
+        "name": "Azan Awais",
+        "runs": 0,
+        "ballsFaced": 6,
+        "fours": 0,
+        "sixes": 0,
+        "outDec": "batting",
+        "strikeRate": 0
+      },
+      {
+        "name": "Abdullah Fazal",
+        "runs": 0,
+        "ballsFaced": 6,
+        "fours": 0,
+        "sixes": 0,
+        "outDec": "batting",
+        "strikeRate": 0
+      }
     ],
-    playingXI_B: [
-      "Phil Salt (wk)",
-      "Sunil Narine",
-      "Venkatesh Iyer",
-      "Shreyas Iyer (c)",
-      "Rinku Singh",
-      "Andre Russell",
-      "Ramandeep Singh",
-      "Mitchell Starc",
-      "Varun Chakaravarthy",
-      "Harshit Rana",
-      "Vaibhav Arora"
+    "activeBowlers": [
+      {
+        "name": "Taskin Ahmed",
+        "overs": 1,
+        "wickets": 0,
+        "economy": 0
+      },
+      {
+        "name": "Shoriful Islam",
+        "overs": 1,
+        "wickets": 0,
+        "economy": 0
+      }
     ],
-    activeBatters: [],
-    activeBowlers: [],
-    timeline: [],
-    scorecard: [],
-    tossWinnerName: "Toss pending",
-    tossDecision: "Toss pending",
-    playerOfTheMatch: "Toss pending",
-    umpires: "Anil Chaudhary, Chris Gaffaney",
-    thirdUmpire: "Nitin Menon",
-    referee: "Manu Nayyar",
-    venueGround: "Wankhede Stadium",
-    venueCity: "Mumbai",
-    venueCountry: "India",
-    timezone: "IST (UTC+5:30)",
-    matchType: "T20 League Match",
-    statusDescription: "Pre-match preparations underway. Toss scheduled at 19:00 IST."
+    "partnershipInfo": "0(12)",
+    "timeline": [
+      "...",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "|",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "scorecard": [
+      {
+        "inningsId": 1,
+        "batTeamName": "Bangladesh",
+        "runs": "278",
+        "wickets": "10",
+        "overs": "77",
+        "batsmen": [
+          {
+            "name": "Mahmudul Hasan Joy",
+            "runs": 0,
+            "ballsFaced": 2,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "c Salman Agha b Mohammad Abbas",
+            "strikeRate": 0
+          },
+          {
+            "name": "Tanzid Hasan Tamim",
+            "runs": 26,
+            "ballsFaced": 34,
+            "fours": 3,
+            "sixes": 0,
+            "outDec": "c and b Mohammad Abbas",
+            "strikeRate": 76.47
+          },
+          {
+            "name": "Mominul Haque",
+            "runs": 22,
+            "ballsFaced": 41,
+            "fours": 3,
+            "sixes": 0,
+            "outDec": "b Khurram Shahzad",
+            "strikeRate": 53.66
+          },
+          {
+            "name": "Najmul Hossain Shanto",
+            "runs": 29,
+            "ballsFaced": 74,
+            "fours": 3,
+            "sixes": 0,
+            "outDec": "c Mohammad Rizwan b Mohammad Abbas",
+            "strikeRate": 39.19
+          },
+          {
+            "name": "Mushfiqur Rahim",
+            "runs": 23,
+            "ballsFaced": 64,
+            "fours": 2,
+            "sixes": 0,
+            "outDec": "lbw b Khurram Shahzad",
+            "strikeRate": 35.94
+          },
+          {
+            "name": "Litton Das",
+            "runs": 126,
+            "ballsFaced": 159,
+            "fours": 16,
+            "sixes": 2,
+            "outDec": "c Abdullah Fazal b Hasan Ali",
+            "strikeRate": 79.25
+          },
+          {
+            "name": "Mehidy Hasan Miraz",
+            "runs": 4,
+            "ballsFaced": 6,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "c Hasan Ali b Khurram Shahzad",
+            "strikeRate": 66.67
+          },
+          {
+            "name": "Taijul Islam",
+            "runs": 16,
+            "ballsFaced": 40,
+            "fours": 2,
+            "sixes": 0,
+            "outDec": "b Sajid Khan",
+            "strikeRate": 40
+          },
+          {
+            "name": "Taskin Ahmed",
+            "runs": 7,
+            "ballsFaced": 13,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "c Salman Agha b Khurram Shahzad",
+            "strikeRate": 53.85
+          },
+          {
+            "name": "Shoriful Islam",
+            "runs": 12,
+            "ballsFaced": 30,
+            "fours": 2,
+            "sixes": 0,
+            "outDec": "not out",
+            "strikeRate": 40
+          },
+          {
+            "name": "Nahid Rana",
+            "runs": 0,
+            "ballsFaced": 4,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "c Mohammad Rizwan b Hasan Ali",
+            "strikeRate": 0
+          }
+        ],
+        "bowlers": [
+          {
+            "name": "Mohammad Abbas",
+            "overs": 16,
+            "maidens": 3,
+            "runsConceded": 45,
+            "wickets": 3,
+            "economy": 2.8
+          },
+          {
+            "name": "Khurram Shahzad",
+            "overs": 17,
+            "maidens": 1,
+            "runsConceded": 81,
+            "wickets": 4,
+            "economy": 4.8
+          },
+          {
+            "name": "Hasan Ali",
+            "overs": 11.5,
+            "maidens": 1,
+            "runsConceded": 49,
+            "wickets": 2,
+            "economy": 4.1
+          },
+          {
+            "name": "Salman Agha",
+            "overs": 1.1,
+            "maidens": 0,
+            "runsConceded": 1,
+            "wickets": 0,
+            "economy": 0.9
+          },
+          {
+            "name": "Sajid Khan",
+            "overs": 31,
+            "maidens": 1,
+            "runsConceded": 96,
+            "wickets": 1,
+            "economy": 3.1
+          }
+        ]
+      },
+      {
+        "inningsId": 2,
+        "batTeamName": "Pakistan",
+        "runs": "232",
+        "wickets": "10",
+        "overs": "57.4",
+        "batsmen": [
+          {
+            "name": "Azan Awais",
+            "runs": 13,
+            "ballsFaced": 34,
+            "fours": 3,
+            "sixes": 0,
+            "outDec": "c Mominul b Taskin Ahmed",
+            "strikeRate": 38.24
+          },
+          {
+            "name": "Abdullah Fazal",
+            "runs": 9,
+            "ballsFaced": 21,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "c Litton Das b Taskin Ahmed",
+            "strikeRate": 42.86
+          },
+          {
+            "name": "Shan Masood",
+            "runs": 21,
+            "ballsFaced": 26,
+            "fours": 2,
+            "sixes": 0,
+            "outDec": "c (sub)Nayeem Hasan b Mehidy Hasan Miraz",
+            "strikeRate": 80.77
+          },
+          {
+            "name": "Babar Azam",
+            "runs": 68,
+            "ballsFaced": 84,
+            "fours": 10,
+            "sixes": 0,
+            "outDec": "c Mushfiqur Rahim b Nahid Rana",
+            "strikeRate": 80.95
+          },
+          {
+            "name": "Saud Shakeel",
+            "runs": 8,
+            "ballsFaced": 28,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "c Litton Das b Mehidy Hasan Miraz",
+            "strikeRate": 28.57
+          },
+          {
+            "name": "Salman Agha",
+            "runs": 21,
+            "ballsFaced": 51,
+            "fours": 2,
+            "sixes": 0,
+            "outDec": "c Mominul b Taijul Islam",
+            "strikeRate": 41.18
+          },
+          {
+            "name": "Mohammad Rizwan",
+            "runs": 13,
+            "ballsFaced": 27,
+            "fours": 2,
+            "sixes": 0,
+            "outDec": "b Taijul Islam",
+            "strikeRate": 48.15
+          },
+          {
+            "name": "Hasan Ali",
+            "runs": 18,
+            "ballsFaced": 37,
+            "fours": 3,
+            "sixes": 0,
+            "outDec": "c Nahid Rana b Taijul Islam",
+            "strikeRate": 48.65
+          },
+          {
+            "name": "Sajid Khan",
+            "runs": 38,
+            "ballsFaced": 28,
+            "fours": 2,
+            "sixes": 4,
+            "outDec": "c Tanzid Hasan Tamim b Nahid Rana",
+            "strikeRate": 135.71
+          },
+          {
+            "name": "Khurram Shahzad",
+            "runs": 10,
+            "ballsFaced": 10,
+            "fours": 1,
+            "sixes": 1,
+            "outDec": "c Mahmudul Hasan Joy b Nahid Rana",
+            "strikeRate": 100
+          },
+          {
+            "name": "Mohammad Abbas",
+            "runs": 0,
+            "ballsFaced": 4,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "not out",
+            "strikeRate": 0
+          }
+        ],
+        "bowlers": [
+          {
+            "name": "Taskin Ahmed",
+            "overs": 11,
+            "maidens": 1,
+            "runsConceded": 37,
+            "wickets": 2,
+            "economy": 3.4
+          },
+          {
+            "name": "Shoriful Islam",
+            "overs": 11,
+            "maidens": 3,
+            "runsConceded": 39,
+            "wickets": 0,
+            "economy": 3.5
+          },
+          {
+            "name": "Mehidy Hasan Miraz",
+            "overs": 9,
+            "maidens": 3,
+            "runsConceded": 21,
+            "wickets": 2,
+            "economy": 2.3
+          },
+          {
+            "name": "Nahid Rana",
+            "overs": 12.4,
+            "maidens": 1,
+            "runsConceded": 60,
+            "wickets": 3,
+            "economy": 4.7
+          },
+          {
+            "name": "Taijul Islam",
+            "overs": 14,
+            "maidens": 4,
+            "runsConceded": 67,
+            "wickets": 3,
+            "economy": 4.8
+          }
+        ]
+      },
+      {
+        "inningsId": 3,
+        "batTeamName": "Bangladesh",
+        "runs": "390",
+        "wickets": "10",
+        "overs": "102.2",
+        "batsmen": [
+          {
+            "name": "Mahmudul Hasan Joy",
+            "runs": 52,
+            "ballsFaced": 64,
+            "fours": 10,
+            "sixes": 0,
+            "outDec": "c Abdullah Fazal b Mohammad Abbas",
+            "strikeRate": 81.25
+          },
+          {
+            "name": "Tanzid Hasan Tamim",
+            "runs": 4,
+            "ballsFaced": 7,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "c Saud Shakeel b Khurram Shahzad",
+            "strikeRate": 57.14
+          },
+          {
+            "name": "Mominul Haque",
+            "runs": 30,
+            "ballsFaced": 60,
+            "fours": 3,
+            "sixes": 0,
+            "outDec": "c Mohammad Rizwan b Khurram Shahzad",
+            "strikeRate": 50
+          },
+          {
+            "name": "Najmul Hossain Shanto",
+            "runs": 15,
+            "ballsFaced": 46,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "lbw b Khurram Shahzad",
+            "strikeRate": 32.61
+          },
+          {
+            "name": "Mushfiqur Rahim",
+            "runs": 137,
+            "ballsFaced": 233,
+            "fours": 12,
+            "sixes": 1,
+            "outDec": "c Mohammad Abbas b Sajid Khan",
+            "strikeRate": 58.8
+          },
+          {
+            "name": "Litton Das",
+            "runs": 69,
+            "ballsFaced": 92,
+            "fours": 5,
+            "sixes": 0,
+            "outDec": "c Saud Shakeel b Hasan Ali",
+            "strikeRate": 75
+          },
+          {
+            "name": "Mehidy Hasan Miraz",
+            "runs": 19,
+            "ballsFaced": 39,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "b Khurram Shahzad",
+            "strikeRate": 48.72
+          },
+          {
+            "name": "Taijul Islam",
+            "runs": 22,
+            "ballsFaced": 51,
+            "fours": 2,
+            "sixes": 0,
+            "outDec": "c Mohammad Abbas b Sajid Khan",
+            "strikeRate": 43.14
+          },
+          {
+            "name": "Taskin Ahmed",
+            "runs": 6,
+            "ballsFaced": 13,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "c Salman Agha b Hasan Ali",
+            "strikeRate": 46.15
+          },
+          {
+            "name": "Shoriful Islam",
+            "runs": 12,
+            "ballsFaced": 15,
+            "fours": 2,
+            "sixes": 0,
+            "outDec": "c Hasan Ali b Sajid Khan",
+            "strikeRate": 80
+          },
+          {
+            "name": "Nahid Rana",
+            "runs": 0,
+            "ballsFaced": 5,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "not out",
+            "strikeRate": 0
+          }
+        ],
+        "bowlers": [
+          {
+            "name": "Mohammad Abbas",
+            "overs": 23,
+            "maidens": 2,
+            "runsConceded": 66,
+            "wickets": 1,
+            "economy": 2.9
+          },
+          {
+            "name": "Khurram Shahzad",
+            "overs": 20,
+            "maidens": 3,
+            "runsConceded": 86,
+            "wickets": 4,
+            "economy": 4.3
+          },
+          {
+            "name": "Hasan Ali",
+            "overs": 23,
+            "maidens": 2,
+            "runsConceded": 83,
+            "wickets": 2,
+            "economy": 3.6
+          },
+          {
+            "name": "Sajid Khan",
+            "overs": 33.2,
+            "maidens": 2,
+            "runsConceded": 126,
+            "wickets": 3,
+            "economy": 3.8
+          },
+          {
+            "name": "Salman Agha",
+            "overs": 1,
+            "maidens": 0,
+            "runsConceded": 5,
+            "wickets": 0,
+            "economy": 5
+          },
+          {
+            "name": "Saud Shakeel",
+            "overs": 2,
+            "maidens": 0,
+            "runsConceded": 13,
+            "wickets": 0,
+            "economy": 6.5
+          }
+        ]
+      },
+      {
+        "inningsId": 4,
+        "batTeamName": "Pakistan",
+        "runs": "0",
+        "wickets": "0",
+        "overs": "2",
+        "batsmen": [
+          {
+            "name": "Azan Awais",
+            "runs": 0,
+            "ballsFaced": 6,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "batting",
+            "strikeRate": 0
+          },
+          {
+            "name": "Abdullah Fazal",
+            "runs": 0,
+            "ballsFaced": 6,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "batting",
+            "strikeRate": 0
+          },
+          {
+            "name": "Shan Masood",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Babar Azam",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Saud Shakeel",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Mohammad Rizwan",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Salman Agha",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Khurram Shahzad",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Sajid Khan",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Hasan Ali",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Mohammad Abbas",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          }
+        ],
+        "bowlers": [
+          {
+            "name": "Taskin Ahmed",
+            "overs": 1,
+            "maidens": 1,
+            "runsConceded": 0,
+            "wickets": 0,
+            "economy": 0
+          },
+          {
+            "name": "Shoriful Islam",
+            "overs": 1,
+            "maidens": 1,
+            "runsConceded": 0,
+            "wickets": 0,
+            "economy": 0
+          }
+        ]
+      }
+    ],
+    "matchType": "",
+    "statusDescription": ""
   },
-  "ipl2026-m03": {
-    id: "ipl2026-m03",
-    seriesName: "Indian Premier League 2026",
-    teamA: {
-      id: "rr-05",
-      name: "Rajasthan Royals",
-      shortName: "RR"
+  "154905": {
+    "id": "154905",
+    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
+    "teamA": {
+      "id": "1069",
+      "name": "Slovenia",
+      "shortName": "SLV"
     },
-    teamB: {
-      id: "srh-06",
-      name: "Sunrisers Hyderabad",
-      shortName: "SRH"
+    "teamB": {
+      "id": "534",
+      "name": "Sweden",
+      "shortName": "SWE"
     },
-    status: "finished",
-    date: new Date(Date.now() - 86400000).toISOString(),
-    venue: "Narendra Modi Stadium, Ahmedabad",
-    tossResult: "Rajasthan Royals won the toss & elected to bat",
-    runsA: "201",
-    wicketsA: "4",
-    oversA: "20.0",
-    runsB: "186",
-    wicketsB: "8",
-    oversB: "20.0",
-    result: "RR won by 15 runs",
-    isIPL: true,
-    playingXI_A: [
-      "Yashasvi Jaiswal",
-      "Jos Buttler",
-      "Sanju Samson (c & wk)",
-      "Riyan Parag",
-      "Shimron Hetmyer",
-      "Dhruv Jurel",
-      "Ravichandran Ashwin",
-      "Trent Boult",
-      "Avesh Khan",
-      "Sandeep Sharma",
-      "Yuzvendra Chahal"
-    ],
-    playingXI_B: [
-      "Travis Head",
-      "Abhishek Sharma",
-      "Nitish Reddy",
-      "Heinrich Klaasen (wk)",
-      "Aiden Markram",
-      "Abdul Samad",
-      "Shahbaz Ahmed",
-      "Pat Cummins (c)",
-      "Bhuvneshwar Kumar",
-      "Jaydev Unadkat",
-      "T. Natarajan"
-    ],
-    activeBatters: [],
-    activeBowlers: [],
-    timeline: ["1", "4", "W", "2", "6", "W"],
-    scorecard: [
-      {
-        inningsId: 1,
-        batTeamName: "Rajasthan Royals",
-        runs: "201",
-        wickets: "4",
-        overs: "20.0",
-        batsmen: [
-          { name: "Yashasvi Jaiswal", runs: 82, ballsFaced: 45, strikeRate: 182.22, fours: 8, sixes: 4, outDec: "c Cummins b Natarajan" },
-          { name: "Jos Buttler", runs: 30, ballsFaced: 20, strikeRate: 150.0, fours: 4, sixes: 0, outDec: "c Klaasen b Bhuvneshwar" },
-          { name: "Sanju Samson", runs: 45, ballsFaced: 28, strikeRate: 160.71, fours: 3, sixes: 2, outDec: "c Markram b Cummins" },
-          { name: "Riyan Parag", runs: 36, ballsFaced: 19, strikeRate: 189.47, fours: 2, sixes: 3, outDec: "not out" },
-          { name: "Shimron Hetmyer", runs: 8, ballsFaced: 8, strikeRate: 100.0, fours: 0, sixes: 1, outDec: "c Head b Natarajan" }
-        ],
-        bowlers: [
-          { name: "Bhuvneshwar Kumar", overs: 4.0, maidens: 0, runsConceded: 38, wickets: 1, economy: 9.5 },
-          { name: "Pat Cummins", overs: 4.0, maidens: 0, runsConceded: 42, wickets: 1, economy: 10.5 },
-          { name: "T. Natarajan", overs: 4.0, maidens: 0, runsConceded: 35, wickets: 2, economy: 8.75 },
-          { name: "Shahbaz Ahmed", overs: 4.0, maidens: 0, runsConceded: 46, wickets: 0, economy: 11.5 }
-        ]
-      },
-      {
-        inningsId: 2,
-        batTeamName: "Sunrisers Hyderabad",
-        runs: "186",
-        wickets: "8",
-        overs: "20.0",
-        batsmen: [
-          { name: "Travis Head", runs: 58, ballsFaced: 32, strikeRate: 181.25, fours: 6, sixes: 3, outDec: "b Chahal" },
-          { name: "Abhishek Sharma", runs: 12, ballsFaced: 8, strikeRate: 150.0, fours: 1, sixes: 1, outDec: "c Buttler b Boult" },
-          { name: "Nitish Reddy", runs: 24, ballsFaced: 16, strikeRate: 150.0, fours: 2, sixes: 1, outDec: "c Samson b Ashwin" },
-          { name: "Heinrich Klaasen", runs: 42, ballsFaced: 24, strikeRate: 175.0, fours: 3, sixes: 2, outDec: "c Samson b Sandeep" },
-          { name: "Pat Cummins", runs: 15, ballsFaced: 10, strikeRate: 150.0, fours: 1, sixes: 1, outDec: "c Ashwin b Avesh" }
-        ],
-        bowlers: [
-          { name: "Trent Boult", overs: 4.0, maidens: 0, runsConceded: 28, wickets: 2, economy: 7.0 },
-          { name: "Sandeep Sharma", overs: 4.0, maidens: 0, runsConceded: 32, wickets: 2, economy: 8.0 },
-          { name: "Yuzvendra Chahal", overs: 4.0, maidens: 0, runsConceded: 41, wickets: 2, economy: 10.25 },
-          { name: "Avesh Khan", overs: 4.0, maidens: 0, runsConceded: 43, wickets: 1, economy: 10.75 }
-        ]
-      }
-    ],
-    tossWinnerName: "Rajasthan Royals",
-    tossDecision: "bat",
-    playerOfTheMatch: "Yashasvi Jaiswal",
-    umpires: "Rohan Pandit, Tapan Sharma",
-    thirdUmpire: "Ulhas Gandhe",
-    referee: "Amit Sharma",
-    venueGround: "Narendra Modi Stadium",
-    venueCity: "Ahmedabad",
-    venueCountry: "India",
-    timezone: "IST (UTC+5:30)",
-    matchType: "T20 League Match",
-    statusDescription: "Rajasthan Royals won by 15 runs. Yashasvi Jaiswal named Player of the Match for his blistering 82."
+    "status": "upcoming",
+    "date": "2026-05-19T07:30:00.000Z",
+    "venue": "Happy Valley Ground 2, Episkopi",
+    "tossResult": "Match starts at May 19, 07:30 GMT",
+    "result": "Match starts at May 19, 07:30 GMT",
+    "isIPL": false,
+    "playingXI_A": [],
+    "playingXI_B": [],
+    "activeBatters": [],
+    "activeBowlers": [],
+    "timeline": [],
+    "scorecard": [],
+    "matchType": "",
+    "statusDescription": ""
   },
-  "ipl2026-m04": {
-    id: "ipl2026-m04",
-    seriesName: "Indian Premier League 2026",
-    teamA: {
-      id: "dc-07",
-      name: "Delhi Capitals",
-      shortName: "DC"
+  "154916": {
+    "id": "154916",
+    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
+    "teamA": {
+      "id": "1076",
+      "name": "Croatia",
+      "shortName": "CRT"
     },
-    teamB: {
-      id: "gt-08",
-      name: "Gujarat Titans",
-      shortName: "GT"
+    "teamB": {
+      "id": "1062",
+      "name": "Switzerland",
+      "shortName": "SUI"
     },
-    status: "live",
-    date: new Date().toISOString(),
-    venue: "Arun Jaitley Stadium, Delhi",
-    tossResult: "Gujarat Titans won the toss & elected to bowl",
-    runsA: "184",
-    wicketsA: "6",
-    oversA: "18.2",
-    crr: "10.04",
-    result: "Delhi Capitals batting first",
-    isIPL: true,
-    playingXI_A: [
-      "Prithvi Shaw",
-      "Jake Fraser-McGurk",
-      "Abishek Porel",
-      "Rishabh Pant (c & wk)",
-      "Tristan Stubbs",
-      "Axar Patel",
-      "Kumar Kushagra",
-      "Kuldeep Yadav",
-      "Khaleel Ahmed",
-      "Mukesh Kumar",
-      "Rasikh Dar Salam"
-    ],
-    playingXI_B: [
-      "Shubman Gill (c)",
-      "Sai Sudharsan",
-      "David Miller",
-      "Azmatullah Omarzai",
-      "Rahul Tewatia",
-      "Shahrukh Khan",
-      "Rashid Khan",
-      "Wridhiman Saha (wk)",
-      "Umesh Yadav",
-      "Spencer Johnson",
-      "Mohit Sharma"
-    ],
-    activeBatters: [
-      {
-        name: "Rishabh Pant",
-        runs: 54,
-        ballsFaced: 31,
-        strikeRate: 174.19,
-        fours: 4,
-        sixes: 3,
-        outDec: "batting"
-      },
-      {
-        name: "Tristan Stubbs",
-        runs: 22,
-        ballsFaced: 10,
-        strikeRate: 220.0,
-        fours: 2,
-        sixes: 1,
-        outDec: "batting"
-      }
-    ],
-    activeBowlers: [
-      {
-        name: "Rashid Khan",
-        overs: 3.2,
-        maidens: 0,
-        runsConceded: 28,
-        wickets: 2,
-        economy: 8.4
-      },
-      {
-        name: "Mohit Sharma",
-        overs: 4.0,
-        maidens: 0,
-        runsConceded: 48,
-        wickets: 1,
-        economy: 12.0
-      }
-    ],
-    partnershipInfo: "43 runs off 18 balls between Rishabh Pant and Tristan Stubbs",
-    timeline: ["1", "6", "4", "2", "6", "1"],
-    scorecard: [
-      {
-        inningsId: 1,
-        batTeamName: "Delhi Capitals",
-        runs: "184",
-        wickets: "6",
-        overs: "18.2",
-        batsmen: [
-          { name: "Prithvi Shaw", runs: 12, ballsFaced: 9, strikeRate: 133.33, fours: 2, sixes: 0, outDec: "c Gill b Umesh" },
-          { name: "Jake Fraser-McGurk", runs: 35, ballsFaced: 14, strikeRate: 250.0, fours: 4, sixes: 3, outDec: "c Miller b Rashid" },
-          { name: "Abishek Porel", runs: 8, ballsFaced: 7, strikeRate: 114.29, fours: 1, sixes: 0, outDec: "c Saha b Mohit" },
-          { name: "Rishabh Pant", runs: 54, ballsFaced: 31, strikeRate: 174.19, fours: 4, sixes: 3, outDec: "batting" },
-          { name: "Axar Patel", runs: 41, ballsFaced: 26, strikeRate: 157.69, fours: 3, sixes: 2, outDec: "c Tewatia b Rashid" },
-          { name: "Tristan Stubbs", runs: 22, ballsFaced: 10, strikeRate: 220.0, fours: 2, sixes: 1, outDec: "batting" }
-        ],
-        bowlers: [
-          { name: "Umesh Yadav", overs: 4.0, maidens: 0, runsConceded: 42, wickets: 1, economy: 10.5 },
-          { name: "Spencer Johnson", overs: 3.0, maidens: 0, runsConceded: 34, wickets: 0, economy: 11.33 },
-          { name: "Rashid Khan", overs: 4.0, maidens: 0, runsConceded: 28, wickets: 2, economy: 7.0 },
-          { name: "Mohit Sharma", overs: 4.0, maidens: 0, runsConceded: 48, wickets: 1, economy: 12.0 }
-        ]
-      }
-    ],
-    tossWinnerName: "Gujarat Titans",
-    tossDecision: "bowl",
-    playerOfTheMatch: "Not announced yet",
-    umpires: "Niranjan Bangalore, Yeshwant Barde",
-    thirdUmpire: "Virender Sharma",
-    referee: "Sanjay Verma",
-    venueGround: "Arun Jaitley Stadium",
-    venueCity: "Delhi",
-    venueCountry: "India",
-    timezone: "IST (UTC+5:30)",
-    matchType: "T20 League Match",
-    statusDescription: "Delhi Capitals batting first. Rishabh Pant hitting a masterful fifty."
+    "status": "upcoming",
+    "date": "2026-05-19T12:30:00.000Z",
+    "venue": "Happy Valley Ground, Episkopi",
+    "tossResult": "Match starts at May 19, 12:30 GMT",
+    "result": "Match starts at May 19, 12:30 GMT",
+    "isIPL": false,
+    "playingXI_A": [],
+    "playingXI_B": [],
+    "activeBatters": [],
+    "activeBowlers": [],
+    "timeline": [],
+    "scorecard": [],
+    "matchType": "",
+    "statusDescription": ""
+  },
+  "154927": {
+    "id": "154927",
+    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
+    "teamA": {
+      "id": "532",
+      "name": "Austria",
+      "shortName": "AUT"
+    },
+    "teamB": {
+      "id": "533",
+      "name": "Guernsey",
+      "shortName": "GGY"
+    },
+    "status": "upcoming",
+    "date": "2026-05-19T12:30:00.000Z",
+    "venue": "Happy Valley Ground 2, Episkopi",
+    "tossResult": "Match starts at May 19, 12:30 GMT",
+    "result": "Match starts at May 19, 12:30 GMT",
+    "isIPL": false,
+    "playingXI_A": [],
+    "playingXI_B": [],
+    "activeBatters": [],
+    "activeBowlers": [],
+    "timeline": [],
+    "scorecard": [],
+    "matchType": "",
+    "statusDescription": ""
   }
 };
