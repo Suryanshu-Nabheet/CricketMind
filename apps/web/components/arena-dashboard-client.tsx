@@ -5,6 +5,24 @@ import { Match, MatchDetail, getMatchDetail, PlayerStats } from "@/server/cricke
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 
+export function getTeamLogo(name: string, shortName: string): string {
+  const n = (name || "").toLowerCase();
+  const sn = (shortName || "").toLowerCase();
+
+  if (sn.includes("csk") || n.includes("chennai") || n.includes("super kings")) return "/logos/CSK.png";
+  if (sn.includes("dc") || n.includes("delhi") || n.includes("capitals")) return "/logos/DC.png";
+  if (sn.includes("gt") || n.includes("gujarat") || n.includes("titans")) return "/logos/GT.png";
+  if (sn.includes("kkr") || n.includes("kolkata") || n.includes("knight riders")) return "/logos/KKR.png";
+  if (sn.includes("lsg") || n.includes("lucknow") || n.includes("super giants")) return "/logos/LSG.png";
+  if (sn.includes("mi") || n.includes("mumbai") || n.includes("indians")) return "/logos/MI.png";
+  if (sn.includes("pbks") || n.includes("punjab") || n.includes("kings")) return "/logos/PBKS.png";
+  if (sn.includes("rcb") || n.includes("bangalore") || n.includes("bengaluru") || n.includes("royal challengers")) return "/logos/RCB.png";
+  if (sn.includes("rr") || n.includes("rajasthan") || n.includes("royals")) return "/logos/RR.png";
+  if (sn.includes("srh") || n.includes("hyderabad") || n.includes("sunrisers")) return "/logos/SRH.png";
+
+  return "";
+}
+
 interface ArenaDashboardClientProps {
   initialMatches: Match[];
 }
@@ -14,9 +32,22 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
   const [selectedMatchId, setSelectedMatchId] = useState<string | null>(initialMatches[0]?.id || null);
   const [detail, setDetail] = useState<MatchDetail | null>(null);
   const [loadingDetail, setLoadingDetail] = useState<boolean>(false);
-  const [predictionSubmitted, setPredictionSubmitted] = useState<boolean>(false);
-  const [selectedPrediction, setSelectedPrediction] = useState<string | null>(null);
-  const [fanPoints, setFanPoints] = useState<number>(0);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  const triggerRefresh = () => {
+    if (!selectedMatchId || refreshing) return;
+    setRefreshing(true);
+    getMatchDetail(selectedMatchId)
+      .then((res) => {
+        setDetail(res);
+      })
+      .catch((err) => {
+        console.error("Error refreshing match details:", err);
+      })
+      .finally(() => {
+        setRefreshing(false);
+      });
+  };
 
   // Fetch match details dynamically whenever selected match changes
   useEffect(() => {
@@ -24,8 +55,6 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
 
     let isMounted = true;
     setLoadingDetail(true);
-    setPredictionSubmitted(false);
-    setSelectedPrediction(null);
     
     const fetchMatch = () => {
       getMatchDetail(selectedMatchId)
@@ -43,8 +72,8 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
     // Initial fetch
     fetchMatch();
 
-    // Poll every 10 seconds for ultra real-time accurate updates
-    const intervalId = setInterval(fetchMatch, 10000);
+    // Poll every 90 seconds (90000ms)
+    const intervalId = setInterval(fetchMatch, 90000);
 
     return () => {
       isMounted = false;
@@ -52,12 +81,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
     };
   }, [selectedMatchId]);
 
-  const handlePrediction = (option: string) => {
-    setSelectedPrediction(option);
-    setPredictionSubmitted(true);
-    // Award mock points for second-screen fan interaction
-    setFanPoints(prev => prev + 150);
-  };
+
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary relative pb-20">
@@ -70,10 +94,6 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
           </span>
         </div>
         <div className="flex items-center gap-4 text-xs">
-          <div className="flex items-center gap-2 border border-border px-3 py-1.5 rounded-full bg-card">
-            <span className="font-semibold text-muted-foreground">Fan Score:</span>
-            <span className="font-mono font-black text-primary">{fanPoints} PTS</span>
-          </div>
           <Button asChild size="sm" variant="outline" className="rounded-full text-foreground border-border bg-background">
             <a href="/">Exit Arena</a>
           </Button>
@@ -125,13 +145,39 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
 
                     <div className="space-y-2">
                       <div className="flex justify-between items-center text-sm font-extrabold text-foreground">
-                        <span>{match.teamA.shortName}</span>
+                        <div className="flex items-center gap-2">
+                          {getTeamLogo(match.teamA.name, match.teamA.shortName) ? (
+                            <img 
+                              src={getTeamLogo(match.teamA.name, match.teamA.shortName)} 
+                              className="size-5 object-contain select-none" 
+                              alt={`${match.teamA.name} logo`} 
+                            />
+                          ) : (
+                            <div className="size-5 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-[9px] select-none">
+                              {match.teamA.shortName[0]}
+                            </div>
+                          )}
+                          <span>{match.teamA.shortName}</span>
+                        </div>
                         {match.runsA && (
                           <span className="font-mono">{match.runsA}/{match.wicketsA}</span>
                         )}
                       </div>
                       <div className="flex justify-between items-center text-sm font-extrabold text-foreground">
-                        <span>{match.teamB.shortName}</span>
+                        <div className="flex items-center gap-2">
+                          {getTeamLogo(match.teamB.name, match.teamB.shortName) ? (
+                            <img 
+                              src={getTeamLogo(match.teamB.name, match.teamB.shortName)} 
+                              className="size-5 object-contain select-none" 
+                              alt={`${match.teamB.name} logo`} 
+                            />
+                          ) : (
+                            <div className="size-5 rounded-full bg-amber-500 text-white flex items-center justify-center font-black text-[9px] select-none">
+                              {match.teamB.shortName[0]}
+                            </div>
+                          )}
+                          <span>{match.teamB.shortName}</span>
+                        </div>
                         {match.runsB && (
                           <span className="font-mono">{match.runsB}/{match.wicketsB}</span>
                         )}
@@ -160,20 +206,38 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                 {/* 1. Scorecard Header Console */}
                 <div className="border border-border rounded-2xl p-6 bg-background shadow-xs">
                   <div className="flex justify-between items-center mb-6">
-                    <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">
-                      Live Dashboard
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">
+                        {detail.status === "finished" ? "Match Summary" : "Live Dashboard"}
+                      </span>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={triggerRefresh}
+                        className="h-6 px-2 text-[10px] font-bold border border-border text-foreground hover:bg-muted cursor-pointer"
+                      >
+                        {refreshing ? "Syncing..." : "Sync Now"}
+                      </Button>
+                    </div>
                     <span className="text-xs font-mono text-muted-foreground">
                       {detail.venue}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-border/60">
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-border/60">
                     <div className="space-y-4">
                       <div className="flex items-center gap-3">
-                        <div className="size-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs">
-                          {detail.teamA.shortName[0]}
-                        </div>
+                        {getTeamLogo(detail.teamA.name, detail.teamA.shortName) ? (
+                          <img 
+                            src={getTeamLogo(detail.teamA.name, detail.teamA.shortName)} 
+                            className="size-10 object-contain select-none" 
+                            alt={`${detail.teamA.name} logo`} 
+                          />
+                        ) : (
+                          <div className="size-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs select-none">
+                            {detail.teamA.shortName[0]}
+                          </div>
+                        )}
                         <div>
                           <span className="text-base font-extrabold text-foreground tracking-tight block">
                             {detail.teamA.name}
@@ -187,9 +251,17 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                       </div>
 
                       <div className="flex items-center gap-3">
-                        <div className="size-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-black text-xs">
-                          {detail.teamB.shortName[0]}
-                        </div>
+                        {getTeamLogo(detail.teamB.name, detail.teamB.shortName) ? (
+                          <img 
+                            src={getTeamLogo(detail.teamB.name, detail.teamB.shortName)} 
+                            className="size-10 object-contain select-none" 
+                            alt={`${detail.teamB.name} logo`} 
+                          />
+                        ) : (
+                          <div className="size-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-black text-xs select-none">
+                            {detail.teamB.shortName[0]}
+                          </div>
+                        )}
                         <div>
                           <span className="text-base font-extrabold text-foreground tracking-tight block">
                             {detail.teamB.name}
@@ -253,63 +325,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                   )}
                 </div>
 
-                {/* 2. Interactive Fan Arena Prediction Box */}
-                {detail.status === "live" && (
-                  <div className="border border-primary/20 rounded-2xl p-6 bg-primary/5 shadow-xs relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl -z-10" />
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-xs font-black text-primary uppercase tracking-widest">
-                        Second-Screen Play Console
-                      </span>
-                      <span className="text-[9px] font-black bg-primary text-primary-foreground px-2 py-0.5 rounded-full uppercase tracking-wider">
-                        +150 PTS Bounty
-                      </span>
-                    </div>
 
-                    {!predictionSubmitted ? (
-                      <>
-                        <h3 className="text-base font-extrabold text-foreground mb-4">
-                          Predict the outcome of the very next delivery to score Arena Points:
-                        </h3>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                          <button
-                            onClick={() => handlePrediction("Dot Ball")}
-                            className="border border-border bg-background hover:border-primary/50 text-foreground font-semibold py-3 px-2 rounded-xl transition-all cursor-pointer shadow-2xs"
-                          >
-                            Dot Ball (0)
-                          </button>
-                          <button
-                            onClick={() => handlePrediction("Single/Double")}
-                            className="border border-border bg-background hover:border-primary/50 text-foreground font-semibold py-3 px-2 rounded-xl transition-all cursor-pointer shadow-2xs"
-                          >
-                            1 - 2 Runs
-                          </button>
-                          <button
-                            onClick={() => handlePrediction("Boundary (4/6)")}
-                            className="border border-primary bg-primary text-primary-foreground font-bold py-3 px-2 rounded-xl transition-all cursor-pointer hover:bg-primary/95 shadow-md"
-                          >
-                            Boundary (4/6)
-                          </button>
-                          <button
-                            onClick={() => handlePrediction("Wicket!")}
-                            className="border border-border bg-background hover:border-primary/50 text-foreground font-semibold py-3 px-2 rounded-xl transition-all cursor-pointer shadow-2xs"
-                          >
-                            Wicket!
-                          </button>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="text-center py-4 space-y-2">
-                        <span className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-700 text-xs font-black px-3 py-1 rounded-full">
-                          ✓ Prediction Submitted Successfully
-                        </span>
-                        <p className="text-xs text-muted-foreground">
-                          You chose <strong className="text-foreground">{selectedPrediction}</strong>. Points will update as the bowler delivers!
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                )}
 
                 {/* 3. Player Stats Lists (Live Only) */}
                 {detail.status === "live" && detail.activeBatters.length > 0 && (
