@@ -201,9 +201,13 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
   const displayFormat = detail?.matchType || matchSummary?.seriesName || "";
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary relative pb-20">
+    <div className={`bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary relative ${
+      activeScreen === "details"
+        ? "lg:h-screen lg:overflow-hidden flex flex-col min-h-screen lg:min-h-0 pb-20 lg:pb-0"
+        : "min-h-screen pb-20"
+    }`}>
       {/* Symmetrical Header */}
-      <header className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <Logo />
           <span className="text-[10px] font-mono font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full uppercase tracking-wider">
@@ -218,7 +222,11 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
       </header>
 
       {/* Main Container */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main className={`max-w-7xl w-full mx-auto px-6 py-6 flex-1 ${
+        activeScreen === "details"
+          ? "lg:overflow-hidden lg:flex lg:flex-col lg:min-h-0"
+          : ""
+      }`}>
         
         {/* SCREEN 1: IPL FIXTURES GRID PANEL */}
         {activeScreen === "fixtures" && (
@@ -397,10 +405,10 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
 
         {/* SCREEN 2: FOCUSED MATCH DETAIL PANEL */}
         {activeScreen === "details" && (
-          <div className="space-y-6">
+          <div className="flex-1 lg:overflow-hidden lg:flex lg:flex-col lg:min-h-0 space-y-4">
             
             {/* Nav Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-border/60">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-border/60 shrink-0">
               <Button
                 size="sm"
                 variant="ghost"
@@ -454,10 +462,10 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                 Synchronizing live match feeds from RapidAPI...
               </div>
             ) : detail ? (
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start lg:items-stretch lg:flex-1 lg:overflow-hidden lg:min-h-0">
                 
                 {/* 1. Left Match Details Console (8 Cols) */}
-                <div className="lg:col-span-8 space-y-6">
+                <div className="lg:col-span-8 lg:overflow-y-auto lg:h-full pr-1 space-y-6 scrollbar-thin scrollbar-thumb-border">
                   
                   {/* Scoreboard block */}
                   <div className="border border-border rounded-2xl p-6 bg-background shadow-xs">
@@ -839,7 +847,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                 </div>
 
                 {/* 2. State-of-the-Art Match AI Assistant Chat Sidebar (4 Cols) */}
-                <div className="lg:col-span-4 lg:sticky lg:top-24 h-[calc(100vh-140px)] flex flex-col border border-border rounded-2xl bg-card shadow-xs overflow-hidden">
+                <div className="lg:col-span-4 h-[550px] lg:h-full flex flex-col border border-border rounded-2xl bg-card shadow-xs overflow-hidden">
                   
                   {/* AI Sidebar Header */}
                   <div className="px-5 py-4 border-b border-border bg-background flex items-center justify-between">
