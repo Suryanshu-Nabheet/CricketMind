@@ -215,12 +215,14 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
       {/* Symmetrical Header */}
       <header className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3 select-none">
-          <Logo />
+          <a href="/" className="hover:opacity-90 active:scale-95 transition-all">
+            <Logo />
+          </a>
           <span className="text-muted-foreground/35 font-mono text-sm">×</span>
           <img
             src="/GDG.png"
             alt="Google Developer Group Logo"
-            className="h-10 md:h-12 w-auto object-contain scale-[1.35] md:scale-[1.5] origin-center mx-2"
+            className="h-7 md:h-8 w-auto object-contain"
           />
           <span className="text-[9px] font-mono font-bold bg-primary/10 text-primary px-2.5 py-0.5 rounded-full uppercase tracking-wider hidden sm:inline-block">
             Fan Arena
@@ -318,25 +320,25 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                         setSelectedMatchId(match.id);
                         setActiveScreen("details");
                       }}
-                      className="group relative rounded-2xl p-[1px] cursor-pointer text-left transition-all duration-300 hover:scale-[1.01] hover:shadow-xl hover:shadow-primary/[0.03] overflow-hidden animate-in fade-in zoom-in-95 duration-300"
+                      className="group relative rounded-2xl p-[2px] cursor-pointer text-left transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/[0.05] overflow-hidden animate-in fade-in zoom-in-95 duration-300"
                       style={{
                         "--glow-duration": "4s",
                       } as React.CSSProperties}
                     >
-                      {/* Rotating Glow layer (visible only on hover) */}
+                      {/* Rotating Glow layer (thin by default, bold on hover) */}
                       <span
                         aria-hidden="true"
-                        className="pointer-events-none absolute -inset-[1px] rounded-2xl opacity-0 group-hover:opacity-45 blur-[15px] transition-opacity duration-300 animate-pulse"
+                        className="pointer-events-none absolute -inset-[2px] rounded-2xl opacity-15 group-hover:opacity-65 blur-[8px] group-hover:blur-[25px] transition-all duration-500 animate-pulse"
                         style={{
                           background: "conic-gradient(from var(--glow-angle), #3b82f6, #06b6d4, #a855f7, #3b82f6)",
                           animation: "glow-rotate var(--glow-duration) linear infinite",
                         }}
                       />
 
-                      {/* Border layer (gradient visible only on hover) */}
+                      {/* Border layer (rotating always, thin by default, bold on hover) */}
                       <span
                         aria-hidden="true"
-                        className="pointer-events-none absolute -inset-[1px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        className="pointer-events-none absolute -inset-[2px] rounded-2xl opacity-35 group-hover:opacity-100 transition-all duration-300"
                         style={{
                           background: "conic-gradient(from var(--glow-angle), #3b82f6, #06b6d4, #a855f7, #3b82f6)",
                           animation: "glow-rotate var(--glow-duration) linear infinite",
@@ -344,7 +346,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                       />
 
                       {/* Inner card container (acts as mask & background) */}
-                      <div className="relative rounded-[15px] p-6 bg-background border border-border group-hover:border-transparent transition-all duration-300 flex flex-col justify-between h-full min-h-[220px] z-10">
+                      <div className="relative rounded-[14px] p-6 bg-background border border-border group-hover:border-transparent transition-all duration-300 flex flex-col justify-between h-full min-h-[220px] z-10">
                         <div>
                           <div className="flex justify-between items-center mb-4">
                             <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest bg-muted px-2 py-0.5 rounded-sm">

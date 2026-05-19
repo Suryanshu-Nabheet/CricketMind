@@ -69,7 +69,7 @@ export const GlowBorderButton = React.forwardRef<HTMLButtonElement, GlowBorderBu
         {/* Glow layer (behind) */}
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-[2px] rounded-lg opacity-[var(--glow-opacity)] blur-[var(--glow-blur)]"
+          className="pointer-events-none absolute -inset-[2px] rounded-lg opacity-15 group-hover:opacity-[var(--glow-opacity)] blur-[10px] group-hover:blur-[var(--glow-blur)] transition-all duration-500"
           style={{
             background: gradient,
             animation: paused ? "none" : "glow-rotate var(--glow-duration) linear infinite",
@@ -79,7 +79,7 @@ export const GlowBorderButton = React.forwardRef<HTMLButtonElement, GlowBorderBu
         {/* Border layer */}
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-[2px] rounded-lg"
+          className="pointer-events-none absolute -inset-[2px] rounded-lg opacity-35 group-hover:opacity-100 transition-all duration-300"
           style={{
             background: gradient,
             animation: paused ? "none" : "glow-rotate var(--glow-duration) linear infinite",

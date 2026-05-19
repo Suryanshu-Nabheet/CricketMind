@@ -37,7 +37,7 @@ export function Header() {
 			>
 				<a
 					className="rounded-full p-2 hover:bg-muted dark:hover:bg-muted/50"
-					href="#"
+					href="/"
 				>
 					<Logo className="h-4" />
 				</a>
@@ -49,10 +49,9 @@ export function Header() {
 							</Button>
 						))}
 					</div>
-					<Button size="sm" variant="outline" className="rounded-full">
-						Sign In
+					<Button asChild size="sm" className="rounded-full cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground">
+						<a href="/arena">Enter Arena</a>
 					</Button>
-					<Button size="sm" className="rounded-full">Get Started</Button>
 				</div>
 				<MobileNav />
 			</nav>
