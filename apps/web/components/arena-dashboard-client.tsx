@@ -46,11 +46,16 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
   const [chatMessages, setChatMessages] = useState<{ id: string; role: "user" | "assistant"; content: string }[]>([]);
   const [chatInput, setChatInput] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll chat to bottom
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth"
+      });
+    }
   }, [chatMessages, aiLoading]);
 
   // Seed welcome message when match changes
@@ -834,7 +839,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                 </div>
 
                 {/* 2. State-of-the-Art Match AI Assistant Chat Sidebar (4 Cols) */}
-                <div className="lg:col-span-4 lg:sticky lg:top-24 h-[calc(100vh-140px)] min-h-[550px] flex flex-col border border-border rounded-2xl bg-card shadow-xs overflow-hidden">
+                <div className="lg:col-span-4 lg:sticky lg:top-24 h-[calc(100vh-140px)] flex flex-col border border-border rounded-2xl bg-card shadow-xs overflow-hidden">
                   
                   {/* AI Sidebar Header */}
                   <div className="px-5 py-4 border-b border-border bg-background flex items-center justify-between">
@@ -856,7 +861,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                   </div>
 
                   {/* AI Sidebar Messages Viewport */}
-                  <div className="flex-1 overflow-y-auto p-5 space-y-4 scrollbar-thin scrollbar-thumb-border">
+                  <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-5 space-y-4 scrollbar-thin scrollbar-thumb-border">
                     {chatMessages.map((msg) => {
                       const isAssistant = msg.role === "assistant";
                       return (
@@ -912,7 +917,7 @@ export function ArenaDashboardClient({ initialMatches }: ArenaDashboardClientPro
                         </div>
                       </div>
                     )}
-                    <div ref={chatEndRef} />
+                    {/* Scroll anchor controlled by parent scrollTo */}
                   </div>
 
                   {/* AI Sidebar Input Footer (Symmetrical Prompt Input Style) */}
