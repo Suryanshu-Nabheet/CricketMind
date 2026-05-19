@@ -39,6 +39,7 @@ export interface Match {
   rrr?: string;
   target?: string;
   result?: string;
+  isIPL?: boolean; // Flag to identify IPL matches
 }
 
 export interface MatchDetail extends Match {
@@ -57,6 +58,9 @@ const headers = {
   "X-RapidAPI-Host": config.rapidApiHost,
 };
 
+// Helper for rate-limiting (Cricbuzz BASIC tier allows only 1 request per second)
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 async function fetchMatchList(endpoint: string): Promise<Match[]> {
   try {
     const res = await fetch(`https://${config.rapidApiHost}/matches/v1/${endpoint}`, {
@@ -64,7 +68,11 @@ async function fetchMatchList(endpoint: string): Promise<Match[]> {
       cache: "no-store"
     });
     
-    if (!res.ok) return [];
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error(`RapidAPI Error on ${endpoint}: ${res.status}`, errText);
+      return [];
+    }
     
     const data = await res.json();
     const matches: Match[] = [];
@@ -80,12 +88,8 @@ async function fetchMatchList(endpoint: string): Promise<Match[]> {
                 const score = matchItem.matchScore;
                 if (!info) return;
 
-                // STRICT FILTER FOR IPL:
                 const seriesName = (info.seriesName || "").toLowerCase();
-                if (!seriesName.includes("ipl") && !seriesName.includes("indian premier league")) {
-                  return; // Skip non-IPL matches
-                }
-
+                const isIPL = seriesName.includes("ipl") || seriesName.includes("indian premier league");
                 const status = info.state === "Complete" ? "finished" : info.state === "Upcoming" || info.state === "Preview" ? "upcoming" : "live";
                 
                 let runsA, wicketsA, oversA, runsB, wicketsB, oversB;
@@ -120,7 +124,8 @@ async function fetchMatchList(endpoint: string): Promise<Match[]> {
                   venue: info.venueInfo ? `${info.venueInfo.ground}, ${info.venueInfo.city}` : "",
                   tossResult: info.status || "",
                   result: info.status || "",
-                  runsA, wicketsA, oversA, runsB, wicketsB, oversB
+                  runsA, wicketsA, oversA, runsB, wicketsB, oversB,
+                  isIPL
                 });
               });
             }
@@ -138,14 +143,26 @@ async function fetchMatchList(endpoint: string): Promise<Match[]> {
 export async function getMatches(): Promise<Match[]> {
   if (!config.rapidApiKey) return [];
 
-  const [liveMatches, upcomingMatches, recentMatches] = await Promise.all([
-    fetchMatchList("live"),
-    fetchMatchList("upcoming"),
-    fetchMatchList("recent")
-  ]);
+  // SEQUENTIAL FETCHING to enforce the 1 Request Per Second (RPS) limit of the Cricbuzz BASIC plan
+  const liveMatches = await fetchMatchList("live");
+  await delay(1100);
+  const upcomingMatches = await fetchMatchList("upcoming");
+  await delay(1100);
+  const recentMatches = await fetchMatchList("recent");
 
   const allMatches = [...liveMatches, ...upcomingMatches, ...recentMatches];
+  
+  // Deduplicate matches by ID
   const uniqueMatches = Array.from(new Map(allMatches.map(m => [m.id, m])).values());
+
+  // Prioritize IPL matches
+  const iplMatches = uniqueMatches.filter(m => m.isIPL);
+  
+  // If there are IPL matches available, strictly show only IPL matches.
+  // Otherwise, fall back to showing other active/recent real matches so the dashboard is functional with real data.
+  if (iplMatches.length > 0) {
+    return iplMatches;
+  }
 
   return uniqueMatches;
 }
@@ -154,17 +171,18 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
   if (!config.rapidApiKey) return null;
 
   try {
-    // Fetch Commentary and Scorecard simultaneously for super-fast real-time accurate info!
-    const [commRes, scardRes] = await Promise.all([
-       fetch(`https://${config.rapidApiHost}/mcenter/v1/${matchId}/comm`, {
-         headers,
-         cache: "no-store"
-       }),
-       fetch(`https://${config.rapidApiHost}/mcenter/v1/${matchId}/scard`, {
-         headers,
-         cache: "no-store"
-       })
-    ]);
+    // SEQUENTIAL FETCHING to avoid 1 RPS rate-limit blocks on details
+    const commRes = await fetch(`https://${config.rapidApiHost}/mcenter/v1/${matchId}/comm`, {
+      headers,
+      cache: "no-store"
+    });
+    
+    await delay(1100);
+    
+    const scardRes = await fetch(`https://${config.rapidApiHost}/mcenter/v1/${matchId}/scard`, {
+      headers,
+      cache: "no-store"
+    });
 
     let commData: any = null;
     let scardData: any = null;
@@ -233,7 +251,6 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
        if (ms.partnership) partnershipInfo = ms.partnership;
        
        if (ms.curovsstats) {
-          // curovsstats is usually a string like "1 0 4 . . | W"
           timeline = ms.curovsstats.split(" ").filter((s: string) => s.trim() !== "");
        }
 
