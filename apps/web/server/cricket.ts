@@ -1,5 +1,7 @@
 "use server";
 
+import { FALLBACK_MATCHES, FALLBACK_MATCH_DETAILS } from "./fallback-db";
+
 // --- TypeScript Interfaces ---
 
 export interface TeamDetails {
@@ -182,28 +184,44 @@ async function fetchMatchList(endpoint: string): Promise<Match[]> {
 
 export async function getMatches(): Promise<Match[]> {
   const { headers } = getRequestHeaders();
-  if (!headers["X-RapidAPI-Key"]) return [];
-
-  const liveMatches = await fetchMatchList("live");
-  await delay(1100);
-  const upcomingMatches = await fetchMatchList("upcoming");
-  await delay(1100);
-  const recentMatches = await fetchMatchList("recent");
-
-  const allMatches = [...liveMatches, ...upcomingMatches, ...recentMatches];
-  const uniqueMatches = Array.from(new Map(allMatches.map(m => [m.id, m])).values());
-
-  const iplMatches = uniqueMatches.filter(m => m.isIPL);
-  if (iplMatches.length > 0) {
-    return iplMatches;
+  if (!headers["X-RapidAPI-Key"]) {
+    console.log("No API key found. Returning local fallback matches database.");
+    return FALLBACK_MATCHES;
   }
 
-  return uniqueMatches;
+  try {
+    const liveMatches = await fetchMatchList("live");
+    await delay(1100);
+    const upcomingMatches = await fetchMatchList("upcoming");
+    await delay(1100);
+    const recentMatches = await fetchMatchList("recent");
+
+    const allMatches = [...liveMatches, ...upcomingMatches, ...recentMatches];
+    const uniqueMatches = Array.from(new Map(allMatches.map(m => [m.id, m])).values());
+
+    const iplMatches = uniqueMatches.filter(m => m.isIPL);
+    if (iplMatches.length > 0) {
+      return iplMatches;
+    }
+    return uniqueMatches.length > 0 ? uniqueMatches : FALLBACK_MATCHES;
+  } catch (error) {
+    console.error("RapidAPI match list fetch failed, falling back to local matches.", error);
+    return FALLBACK_MATCHES;
+  }
 }
 
 export async function getMatchDetail(matchId: string): Promise<MatchDetail | null> {
+  // Check local fallback DB first if the ID is a fallback ID or matches fallback DB records
+  if (matchId.startsWith("ipl2026-") || FALLBACK_MATCH_DETAILS[matchId]) {
+    console.log(`Returning local fallback match details for ID: ${matchId}`);
+    return FALLBACK_MATCH_DETAILS[matchId] || null;
+  }
+
   const { headers, host } = getRequestHeaders();
-  if (!headers["X-RapidAPI-Key"]) return null;
+  if (!headers["X-RapidAPI-Key"]) {
+    console.log(`No API key found. Returning local fallback match details if available for ID: ${matchId}`);
+    return FALLBACK_MATCH_DETAILS[matchId] || null;
+  }
 
   try {
     const commRes = await fetch(`https://${host}/mcenter/v1/${matchId}/comm`, {
@@ -240,7 +258,8 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
     if (scardRes.ok) scardData = await scardRes.json();
     
     if (!commData && !scardData && !hscardData) {
-       return null;
+       console.log(`No data returned from RapidAPI. Returning local fallback details if available for ID: ${matchId}`);
+       return FALLBACK_MATCH_DETAILS[matchId] || null;
     }
 
     const activeBatters: PlayerStats[] = [];
@@ -483,8 +502,8 @@ export async function getMatchDetail(matchId: string): Promise<MatchDetail | nul
       statusDescription
     };
   } catch (error) {
-    console.error("Match Detail fetch failed.", error);
-    return null;
+    console.error("Match Detail fetch failed. Returning local fallback details if available.", error);
+    return FALLBACK_MATCH_DETAILS[matchId] || null;
   }
 }
 
