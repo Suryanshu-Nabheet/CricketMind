@@ -2,92 +2,6 @@ import { Match, MatchDetail } from "./cricket";
 
 export const FALLBACK_MATCHES: Match[] = [
   {
-    "id": "153791",
-    "seriesName": "Pakistan tour of Bangladesh, 2026",
-    "teamA": {
-      "id": "6",
-      "name": "Bangladesh",
-      "shortName": "BAN"
-    },
-    "teamB": {
-      "id": "3",
-      "name": "Pakistan",
-      "shortName": "PAK"
-    },
-    "status": "live",
-    "date": "2026-05-16T04:00:00.000Z",
-    "venue": "Sylhet International Cricket Stadium, Sylhet",
-    "tossResult": "Day 3: Stumps - Pakistan need 437 runs",
-    "result": "Day 3: Stumps - Pakistan need 437 runs",
-    "runsA": "278",
-    "wicketsA": "10",
-    "oversA": "76.6",
-    "runsB": "232",
-    "wicketsB": "10",
-    "oversB": "57.4",
-    "isIPL": false
-  },
-  {
-    "id": "154905",
-    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
-    "teamA": {
-      "id": "1069",
-      "name": "Slovenia",
-      "shortName": "SLV"
-    },
-    "teamB": {
-      "id": "534",
-      "name": "Sweden",
-      "shortName": "SWE"
-    },
-    "status": "upcoming",
-    "date": "2026-05-19T07:30:00.000Z",
-    "venue": "Happy Valley Ground 2, Episkopi",
-    "tossResult": "Match starts at May 19, 07:30 GMT",
-    "result": "Match starts at May 19, 07:30 GMT",
-    "isIPL": false
-  },
-  {
-    "id": "154916",
-    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
-    "teamA": {
-      "id": "1076",
-      "name": "Croatia",
-      "shortName": "CRT"
-    },
-    "teamB": {
-      "id": "1062",
-      "name": "Switzerland",
-      "shortName": "SUI"
-    },
-    "status": "upcoming",
-    "date": "2026-05-19T12:30:00.000Z",
-    "venue": "Happy Valley Ground, Episkopi",
-    "tossResult": "Match starts at May 19, 12:30 GMT",
-    "result": "Match starts at May 19, 12:30 GMT",
-    "isIPL": false
-  },
-  {
-    "id": "154927",
-    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
-    "teamA": {
-      "id": "532",
-      "name": "Austria",
-      "shortName": "AUT"
-    },
-    "teamB": {
-      "id": "533",
-      "name": "Guernsey",
-      "shortName": "GGY"
-    },
-    "status": "upcoming",
-    "date": "2026-05-19T12:30:00.000Z",
-    "venue": "Happy Valley Ground 2, Episkopi",
-    "tossResult": "Match starts at May 19, 12:30 GMT",
-    "result": "Match starts at May 19, 12:30 GMT",
-    "isIPL": false
-  },
-  {
     "id": "152207",
     "seriesName": "Indian Premier League 2026",
     "teamA": {
@@ -108,86 +22,1337 @@ export const FALLBACK_MATCHES: Match[] = [
     "isIPL": true
   },
   {
-    "id": "153780",
-    "seriesName": "Pakistan tour of Bangladesh, 2026",
+    "id": "152196",
+    "seriesName": "Indian Premier League 2026",
     "teamA": {
-      "id": "6",
-      "name": "Bangladesh",
-      "shortName": "BAN"
+      "id": "58",
+      "name": "Chennai Super Kings",
+      "shortName": "CSK"
     },
     "teamB": {
-      "id": "3",
-      "name": "Pakistan",
-      "shortName": "PAK"
+      "id": "255",
+      "name": "Sunrisers Hyderabad",
+      "shortName": "SRH"
     },
     "status": "finished",
-    "date": "2026-05-08T04:00:00.000Z",
-    "venue": "Shere Bangla National Stadium, Dhaka",
-    "tossResult": "Bangladesh won by 104 runs",
-    "result": "Bangladesh won by 104 runs",
-    "runsA": "413",
-    "wicketsA": "10",
-    "oversA": "117.1",
-    "runsB": "386",
-    "wicketsB": "10",
-    "oversB": "100.3",
-    "isIPL": false
+    "date": "2026-05-18T14:00:00.000Z",
+    "venue": "MA Chidambaram Stadium, Chennai",
+    "tossResult": "Sunrisers Hyderabad won by 5 wkts",
+    "runsA": "180",
+    "wicketsA": "7",
+    "oversA": "19.6",
+    "runsB": "181",
+    "wicketsB": "5",
+    "oversB": "18.6",
+    "crr": "9.53",
+    "result": "Sunrisers Hyderabad won by 5 wkts",
+    "isIPL": true
   },
   {
-    "id": "153242",
-    "seriesName": "ICC Cricket World Cup League Two 2023-27",
+    "id": "152185",
+    "seriesName": "Indian Premier League 2026",
     "teamA": {
-      "id": "23",
-      "name": "Scotland",
-      "shortName": "SCO"
+      "id": "64",
+      "name": "Rajasthan Royals",
+      "shortName": "RR"
     },
     "teamB": {
-      "id": "72",
-      "name": "Nepal",
-      "shortName": "NEP"
+      "id": "61",
+      "name": "Delhi Capitals",
+      "shortName": "DC"
     },
     "status": "finished",
-    "date": "2026-05-18T03:45:00.000Z",
-    "venue": "Tribhuvan University International Cricket Ground, Kirtipur",
-    "tossResult": "Nepal won by 6 wkts",
-    "result": "Nepal won by 6 wkts",
-    "runsA": "194",
-    "wicketsA": "10",
-    "oversA": "39.1",
-    "runsB": "199",
-    "wicketsB": "4",
-    "oversB": "38.1",
-    "isIPL": false
+    "date": "2026-05-17T14:00:00.000Z",
+    "venue": "Arun Jaitley Stadium, Delhi",
+    "tossResult": "Delhi Capitals won by 5 wkts",
+    "runsA": "193",
+    "wicketsA": "8",
+    "oversA": "19.6",
+    "runsB": "197",
+    "wicketsB": "5",
+    "oversB": "19.2",
+    "crr": "10.19",
+    "target": "194",
+    "result": "Delhi Capitals won by 5 wkts",
+    "isIPL": true
   },
   {
-    "id": "153231",
-    "seriesName": "ICC Cricket World Cup League Two 2023-27",
+    "id": "152174",
+    "seriesName": "Indian Premier League 2026",
     "teamA": {
-      "id": "15",
-      "name": "United States of America",
-      "shortName": "USA"
+      "id": "59",
+      "name": "Royal Challengers Bengaluru",
+      "shortName": "RCB"
     },
     "teamB": {
-      "id": "72",
-      "name": "Nepal",
-      "shortName": "NEP"
+      "id": "65",
+      "name": "Punjab Kings",
+      "shortName": "PBKS"
     },
     "status": "finished",
-    "date": "2026-05-16T03:45:00.000Z",
-    "venue": "Tribhuvan University International Cricket Ground, Kirtipur",
-    "tossResult": "Nepal won by 9 wkts",
-    "result": "Nepal won by 9 wkts",
-    "runsA": "195",
-    "wicketsA": "10",
-    "oversA": "43.3",
+    "date": "2026-05-17T10:00:00.000Z",
+    "venue": "Himachal Pradesh Cricket Association Stadium, Dharamsala",
+    "tossResult": "Royal Challengers Bengaluru won by 23 runs",
+    "runsA": "222",
+    "wicketsA": "4",
+    "oversA": "19.6",
     "runsB": "199",
-    "wicketsB": "1",
-    "oversB": "36.4",
-    "isIPL": false
+    "wicketsB": "8",
+    "oversB": "19.6",
+    "crr": "9.95",
+    "target": "223",
+    "result": "Royal Challengers Bengaluru won by 23 runs",
+    "isIPL": true
   }
 ];
 
 export const FALLBACK_MATCH_DETAILS: Record<string, MatchDetail> = {
+  "152174": {
+    "id": "152174",
+    "seriesName": "Indian Premier League 2026",
+    "teamA": {
+      "id": "59",
+      "name": "Royal Challengers Bengaluru",
+      "shortName": "RCB"
+    },
+    "teamB": {
+      "id": "65",
+      "name": "Punjab Kings",
+      "shortName": "PBKS"
+    },
+    "status": "finished",
+    "date": "2026-05-17T10:00:00.000Z",
+    "venue": "Himachal Pradesh Cricket Association Stadium, Dharamsala",
+    "tossResult": "Royal Challengers Bengaluru won by 23 runs",
+    "runsA": "222",
+    "wicketsA": "4",
+    "oversA": "19.6",
+    "runsB": "199",
+    "wicketsB": "8",
+    "oversB": "19.6",
+    "crr": "9.95",
+    "target": "223",
+    "result": "Royal Challengers Bengaluru won by 23 runs",
+    "isIPL": true,
+    "playingXI_A": [],
+    "playingXI_B": [],
+    "activeBatters": [
+      {
+        "name": "Harpreet Brar",
+        "runs": 5,
+        "ballsFaced": 3,
+        "strikeRate": 166.66666666666669
+      },
+      {
+        "name": "",
+        "runs": 0,
+        "ballsFaced": 0,
+        "strikeRate": 0
+      }
+    ],
+    "activeBowlers": [
+      {
+        "name": "Josh Hazlewood",
+        "overs": 4,
+        "wickets": 1,
+        "economy": 9
+      },
+      {
+        "name": "Rasikh Salam Dar",
+        "overs": 4,
+        "wickets": 3,
+        "economy": 9
+      }
+    ],
+    "partnershipInfo": "5(4)",
+    "timeline": [
+      "...",
+      "1",
+      "0",
+      "4",
+      "0",
+      "1",
+      "1",
+      "|",
+      "Wd",
+      "2",
+      "Wd",
+      "W",
+      "0",
+      "4",
+      "1",
+      "W"
+    ],
+    "scorecard": [
+      {
+        "inningsId": 1,
+        "batTeamName": "Royal Challengers Bengaluru",
+        "runs": "222",
+        "wickets": "4",
+        "overs": "20",
+        "batsmen": [
+          {
+            "name": "Jacob Bethell",
+            "runs": 11,
+            "ballsFaced": 7,
+            "fours": 2,
+            "sixes": 0,
+            "outDec": "b Harpreet Brar",
+            "strikeRate": 157.14
+          },
+          {
+            "name": "Virat Kohli",
+            "runs": 58,
+            "ballsFaced": 37,
+            "fours": 4,
+            "sixes": 3,
+            "outDec": "c Priyansh Arya b Yuzvendra Chahal",
+            "strikeRate": 156.76
+          },
+          {
+            "name": "Devdutt Padikkal",
+            "runs": 45,
+            "ballsFaced": 25,
+            "fours": 4,
+            "sixes": 3,
+            "outDec": "c Shreyas Iyer b Harpreet Brar",
+            "strikeRate": 180
+          },
+          {
+            "name": "Venkatesh Iyer",
+            "runs": 73,
+            "ballsFaced": 40,
+            "fours": 8,
+            "sixes": 4,
+            "outDec": "not out",
+            "strikeRate": 182.5
+          },
+          {
+            "name": "Tim David",
+            "runs": 28,
+            "ballsFaced": 12,
+            "fours": 2,
+            "sixes": 2,
+            "outDec": "c Harpreet Brar b Arshdeep Singh",
+            "strikeRate": 233.33
+          },
+          {
+            "name": "Jitesh Sharma",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Romario Shepherd",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Krunal Pandya",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Bhuvneshwar Kumar",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Josh Hazlewood",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Suyash Sharma",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          }
+        ],
+        "bowlers": [
+          {
+            "name": "Arshdeep Singh",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 43,
+            "wickets": 1,
+            "economy": 10.8
+          },
+          {
+            "name": "Azmatullah Omarzai",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 38,
+            "wickets": 0,
+            "economy": 9.5
+          },
+          {
+            "name": "Harpreet Brar",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 35,
+            "wickets": 2,
+            "economy": 8.8
+          },
+          {
+            "name": "Lockie Ferguson",
+            "overs": 3,
+            "maidens": 0,
+            "runsConceded": 43,
+            "wickets": 0,
+            "economy": 14.3
+          },
+          {
+            "name": "Yuzvendra Chahal",
+            "overs": 3,
+            "maidens": 0,
+            "runsConceded": 42,
+            "wickets": 1,
+            "economy": 14
+          },
+          {
+            "name": "Shashank Singh",
+            "overs": 2,
+            "maidens": 0,
+            "runsConceded": 20,
+            "wickets": 0,
+            "economy": 10
+          }
+        ]
+      },
+      {
+        "inningsId": 2,
+        "batTeamName": "Punjab Kings",
+        "runs": "199",
+        "wickets": "8",
+        "overs": "20",
+        "batsmen": [
+          {
+            "name": "Priyansh Arya",
+            "runs": 0,
+            "ballsFaced": 3,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "c Romario Shepherd b Bhuvneshwar Kumar",
+            "strikeRate": 0
+          },
+          {
+            "name": "Prabhsimran Singh",
+            "runs": 2,
+            "ballsFaced": 5,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "c Devdutt Padikkal b Bhuvneshwar Kumar",
+            "strikeRate": 40
+          },
+          {
+            "name": "Cooper Connolly",
+            "runs": 37,
+            "ballsFaced": 22,
+            "fours": 3,
+            "sixes": 3,
+            "outDec": "c Jacob Bethell b Romario Shepherd",
+            "strikeRate": 168.18
+          },
+          {
+            "name": "Shreyas Iyer",
+            "runs": 1,
+            "ballsFaced": 3,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "c Jitesh Sharma b Rasikh Salam Dar",
+            "strikeRate": 33.33
+          },
+          {
+            "name": "Suryansh Shedge",
+            "runs": 35,
+            "ballsFaced": 22,
+            "fours": 2,
+            "sixes": 2,
+            "outDec": "c Virat Kohli b Suyash Sharma",
+            "strikeRate": 159.09
+          },
+          {
+            "name": "Marcus Stoinis",
+            "runs": 37,
+            "ballsFaced": 25,
+            "fours": 5,
+            "sixes": 0,
+            "outDec": "lbw b Josh Hazlewood",
+            "strikeRate": 148
+          },
+          {
+            "name": "Shashank Singh",
+            "runs": 56,
+            "ballsFaced": 27,
+            "fours": 4,
+            "sixes": 4,
+            "outDec": "c Virat Kohli b Rasikh Salam Dar",
+            "strikeRate": 207.41
+          },
+          {
+            "name": "Azmatullah Omarzai",
+            "runs": 14,
+            "ballsFaced": 10,
+            "fours": 1,
+            "sixes": 1,
+            "outDec": "c Tim David b Rasikh Salam Dar",
+            "strikeRate": 140
+          },
+          {
+            "name": "Harpreet Brar",
+            "runs": 5,
+            "ballsFaced": 3,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "not out",
+            "strikeRate": 166.67
+          },
+          {
+            "name": "Lockie Ferguson",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Arshdeep Singh",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Yuzvendra Chahal",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          }
+        ],
+        "bowlers": [
+          {
+            "name": "Bhuvneshwar Kumar",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 38,
+            "wickets": 2,
+            "economy": 9.5
+          },
+          {
+            "name": "Josh Hazlewood",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 36,
+            "wickets": 1,
+            "economy": 9
+          },
+          {
+            "name": "Rasikh Salam Dar",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 36,
+            "wickets": 3,
+            "economy": 9
+          },
+          {
+            "name": "Suyash Sharma",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 50,
+            "wickets": 1,
+            "economy": 12.5
+          },
+          {
+            "name": "Romario Shepherd",
+            "overs": 1,
+            "maidens": 0,
+            "runsConceded": 8,
+            "wickets": 1,
+            "economy": 8
+          },
+          {
+            "name": "Krunal Pandya",
+            "overs": 3,
+            "maidens": 0,
+            "runsConceded": 27,
+            "wickets": 0,
+            "economy": 9
+          }
+        ]
+      }
+    ],
+    "venueGround": "",
+    "venueCity": "",
+    "venueCountry": "",
+    "timezone": "",
+    "matchType": "",
+    "statusDescription": ""
+  },
+  "152185": {
+    "id": "152185",
+    "seriesName": "Indian Premier League 2026",
+    "teamA": {
+      "id": "64",
+      "name": "Rajasthan Royals",
+      "shortName": "RR"
+    },
+    "teamB": {
+      "id": "61",
+      "name": "Delhi Capitals",
+      "shortName": "DC"
+    },
+    "status": "finished",
+    "date": "2026-05-17T14:00:00.000Z",
+    "venue": "Arun Jaitley Stadium, Delhi",
+    "tossResult": "Delhi Capitals won by 5 wkts",
+    "runsA": "193",
+    "wicketsA": "8",
+    "oversA": "19.6",
+    "runsB": "197",
+    "wicketsB": "5",
+    "oversB": "19.2",
+    "crr": "10.19",
+    "target": "194",
+    "result": "Delhi Capitals won by 5 wkts",
+    "isIPL": true,
+    "playingXI_A": [],
+    "playingXI_B": [],
+    "activeBatters": [
+      {
+        "name": "Ashutosh Sharma",
+        "runs": 18,
+        "ballsFaced": 5,
+        "strikeRate": 360
+      },
+      {
+        "name": "Axar Patel",
+        "runs": 34,
+        "ballsFaced": 18,
+        "strikeRate": 188.88888888888889
+      }
+    ],
+    "activeBowlers": [
+      {
+        "name": "Adam Milne",
+        "overs": 3.2,
+        "wickets": 0,
+        "economy": 12.3
+      },
+      {
+        "name": "Brijesh Sharma",
+        "overs": 4,
+        "wickets": 2,
+        "economy": 11
+      }
+    ],
+    "partnershipInfo": "22(7)",
+    "timeline": [
+      "...",
+      "1",
+      "1",
+      "6",
+      "|",
+      "W",
+      "1",
+      "1",
+      "Wd2",
+      "1",
+      "6",
+      "1",
+      "|",
+      "4",
+      "6"
+    ],
+    "scorecard": [
+      {
+        "inningsId": 1,
+        "batTeamName": "Rajasthan Royals",
+        "runs": "193",
+        "wickets": "8",
+        "overs": "20",
+        "batsmen": [
+          {
+            "name": "Yashasvi Jaiswal",
+            "runs": 12,
+            "ballsFaced": 9,
+            "fours": 3,
+            "sixes": 0,
+            "outDec": "c Mitchell Starc b Lungi Ngidi",
+            "strikeRate": 133.33
+          },
+          {
+            "name": "Vaibhav Sooryavanshi",
+            "runs": 46,
+            "ballsFaced": 21,
+            "fours": 5,
+            "sixes": 3,
+            "outDec": "c David Miller b Madhav Tiwari",
+            "strikeRate": 219.05
+          },
+          {
+            "name": "Dhruv Jurel",
+            "runs": 53,
+            "ballsFaced": 40,
+            "fours": 5,
+            "sixes": 2,
+            "outDec": "lbw b Lungi Ngidi",
+            "strikeRate": 132.5
+          },
+          {
+            "name": "Riyan Parag",
+            "runs": 51,
+            "ballsFaced": 26,
+            "fours": 3,
+            "sixes": 5,
+            "outDec": "c Axar Patel b Mitchell Starc",
+            "strikeRate": 196.15
+          },
+          {
+            "name": "Donovan Ferreira",
+            "runs": 0,
+            "ballsFaced": 1,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "c Axar Patel b Mitchell Starc",
+            "strikeRate": 0
+          },
+          {
+            "name": "Ravi Singh",
+            "runs": 4,
+            "ballsFaced": 2,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "lbw b Mitchell Starc",
+            "strikeRate": 200
+          },
+          {
+            "name": "Shubham Dubey",
+            "runs": 5,
+            "ballsFaced": 9,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "c Tripurana Vijay b Madhav Tiwari",
+            "strikeRate": 55.56
+          },
+          {
+            "name": "Dasun Shanaka",
+            "runs": 10,
+            "ballsFaced": 8,
+            "fours": 0,
+            "sixes": 1,
+            "outDec": "c Tristan Stubbs b Mitchell Starc",
+            "strikeRate": 125
+          },
+          {
+            "name": "Jofra Archer",
+            "runs": 2,
+            "ballsFaced": 2,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "not out",
+            "strikeRate": 100
+          },
+          {
+            "name": "Adam Milne",
+            "runs": 2,
+            "ballsFaced": 2,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "not out",
+            "strikeRate": 100
+          },
+          {
+            "name": "Brijesh Sharma",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Yash Raj Punja",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          }
+        ],
+        "bowlers": [
+          {
+            "name": "Mitchell Starc",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 40,
+            "wickets": 4,
+            "economy": 10
+          },
+          {
+            "name": "Lungi Ngidi",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 24,
+            "wickets": 2,
+            "economy": 6
+          },
+          {
+            "name": "Tripurana Vijay",
+            "overs": 2,
+            "maidens": 0,
+            "runsConceded": 29,
+            "wickets": 0,
+            "economy": 14.5
+          },
+          {
+            "name": "Mukesh Kumar",
+            "overs": 2,
+            "maidens": 0,
+            "runsConceded": 40,
+            "wickets": 0,
+            "economy": 20
+          },
+          {
+            "name": "Madhav Tiwari",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 27,
+            "wickets": 2,
+            "economy": 6.8
+          },
+          {
+            "name": "Axar Patel",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 31,
+            "wickets": 0,
+            "economy": 7.8
+          }
+        ]
+      },
+      {
+        "inningsId": 2,
+        "batTeamName": "Delhi Capitals",
+        "runs": "197",
+        "wickets": "5",
+        "overs": "19.2",
+        "batsmen": [
+          {
+            "name": "Abishek Porel",
+            "runs": 51,
+            "ballsFaced": 31,
+            "fours": 7,
+            "sixes": 1,
+            "outDec": "c Donovan Ferreira b Brijesh Sharma",
+            "strikeRate": 164.52
+          },
+          {
+            "name": "KL Rahul",
+            "runs": 56,
+            "ballsFaced": 42,
+            "fours": 1,
+            "sixes": 3,
+            "outDec": "b Dasun Shanaka",
+            "strikeRate": 133.33
+          },
+          {
+            "name": "Sahil Parakh",
+            "runs": 9,
+            "ballsFaced": 8,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "c Dhruv Jurel b Jofra Archer",
+            "strikeRate": 112.5
+          },
+          {
+            "name": "Axar Patel",
+            "runs": 34,
+            "ballsFaced": 18,
+            "fours": 2,
+            "sixes": 2,
+            "outDec": "not out",
+            "strikeRate": 188.89
+          },
+          {
+            "name": "Tristan Stubbs",
+            "runs": 4,
+            "ballsFaced": 6,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "c Yashasvi Jaiswal b Jofra Archer",
+            "strikeRate": 66.67
+          },
+          {
+            "name": "David Miller",
+            "runs": 9,
+            "ballsFaced": 6,
+            "fours": 0,
+            "sixes": 1,
+            "outDec": "c Dasun Shanaka b Brijesh Sharma",
+            "strikeRate": 150
+          },
+          {
+            "name": "Ashutosh Sharma",
+            "runs": 18,
+            "ballsFaced": 5,
+            "fours": 1,
+            "sixes": 2,
+            "outDec": "not out",
+            "strikeRate": 360
+          },
+          {
+            "name": "Madhav Tiwari",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Tripurana Vijay",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Lungi Ngidi",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Mitchell Starc",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Mukesh Kumar",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          }
+        ],
+        "bowlers": [
+          {
+            "name": "Jofra Archer",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 35,
+            "wickets": 2,
+            "economy": 8.8
+          },
+          {
+            "name": "Adam Milne",
+            "overs": 3.2,
+            "maidens": 0,
+            "runsConceded": 41,
+            "wickets": 0,
+            "economy": 12.3
+          },
+          {
+            "name": "Brijesh Sharma",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 44,
+            "wickets": 2,
+            "economy": 11
+          },
+          {
+            "name": "Dasun Shanaka",
+            "overs": 3,
+            "maidens": 0,
+            "runsConceded": 29,
+            "wickets": 1,
+            "economy": 9.7
+          },
+          {
+            "name": "Yash Raj Punja",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 29,
+            "wickets": 0,
+            "economy": 7.2
+          },
+          {
+            "name": "Donovan Ferreira",
+            "overs": 1,
+            "maidens": 0,
+            "runsConceded": 16,
+            "wickets": 0,
+            "economy": 16
+          }
+        ]
+      }
+    ],
+    "venueGround": "",
+    "venueCity": "",
+    "venueCountry": "",
+    "timezone": "",
+    "matchType": "",
+    "statusDescription": ""
+  },
+  "152196": {
+    "id": "152196",
+    "seriesName": "Indian Premier League 2026",
+    "teamA": {
+      "id": "58",
+      "name": "Chennai Super Kings",
+      "shortName": "CSK"
+    },
+    "teamB": {
+      "id": "255",
+      "name": "Sunrisers Hyderabad",
+      "shortName": "SRH"
+    },
+    "status": "finished",
+    "date": "2026-05-18T14:00:00.000Z",
+    "venue": "MA Chidambaram Stadium, Chennai",
+    "tossResult": "Sunrisers Hyderabad won by 5 wkts",
+    "runsA": "180",
+    "wicketsA": "7",
+    "oversA": "19.6",
+    "runsB": "181",
+    "wicketsB": "5",
+    "oversB": "18.6",
+    "crr": "9.53",
+    "result": "Sunrisers Hyderabad won by 5 wkts",
+    "isIPL": true,
+    "playingXI_A": [],
+    "playingXI_B": [],
+    "activeBatters": [
+      {
+        "name": "Salil Arora",
+        "runs": 10,
+        "ballsFaced": 5,
+        "strikeRate": 200
+      },
+      {
+        "name": "Smaran Ravichandran",
+        "runs": 5,
+        "ballsFaced": 2,
+        "strikeRate": 250
+      }
+    ],
+    "activeBowlers": [
+      {
+        "name": "Mukesh Choudhary",
+        "overs": 4,
+        "wickets": 2,
+        "economy": 9
+      },
+      {
+        "name": "Anshul Kamboj",
+        "overs": 4,
+        "wickets": 1,
+        "economy": 11.5
+      }
+    ],
+    "partnershipInfo": "6(3)",
+    "timeline": [
+      "...",
+      "W",
+      "Wd",
+      "Wd",
+      "1",
+      "1",
+      "1",
+      "4",
+      "6",
+      "|",
+      "6",
+      "1",
+      "W",
+      "1",
+      "1",
+      "4"
+    ],
+    "scorecard": [
+      {
+        "inningsId": 1,
+        "batTeamName": "Chennai Super Kings",
+        "runs": "180",
+        "wickets": "7",
+        "overs": "20",
+        "batsmen": [
+          {
+            "name": "Sanju Samson",
+            "runs": 27,
+            "ballsFaced": 13,
+            "fours": 5,
+            "sixes": 1,
+            "outDec": "c Ishan Kishan b Pat Cummins",
+            "strikeRate": 207.69
+          },
+          {
+            "name": "Ruturaj Gaikwad",
+            "runs": 15,
+            "ballsFaced": 21,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "c Eshan Malinga b Pat Cummins",
+            "strikeRate": 71.43
+          },
+          {
+            "name": "Urvil Patel",
+            "runs": 13,
+            "ballsFaced": 8,
+            "fours": 0,
+            "sixes": 2,
+            "outDec": "b Sakib Hussain",
+            "strikeRate": 162.5
+          },
+          {
+            "name": "Kartik Sharma",
+            "runs": 32,
+            "ballsFaced": 19,
+            "fours": 3,
+            "sixes": 2,
+            "outDec": "c Nitish Reddy b Pat Cummins",
+            "strikeRate": 168.42
+          },
+          {
+            "name": "Dewald Brevis",
+            "runs": 44,
+            "ballsFaced": 27,
+            "fours": 2,
+            "sixes": 4,
+            "outDec": "b Eshan Malinga",
+            "strikeRate": 162.96
+          },
+          {
+            "name": "Shivam Dube",
+            "runs": 26,
+            "ballsFaced": 23,
+            "fours": 3,
+            "sixes": 1,
+            "outDec": "b Sakib Hussain",
+            "strikeRate": 113.04
+          },
+          {
+            "name": "Prashant Veer",
+            "runs": 11,
+            "ballsFaced": 9,
+            "fours": 2,
+            "sixes": 0,
+            "outDec": "c and b Praful Hinge",
+            "strikeRate": 122.22
+          },
+          {
+            "name": "Akeal Hosein",
+            "runs": 3,
+            "ballsFaced": 1,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "not out",
+            "strikeRate": 300
+          },
+          {
+            "name": "Noor Ahmad",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Anshul Kamboj",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Spencer Johnson",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Mukesh Choudhary",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          }
+        ],
+        "bowlers": [
+          {
+            "name": "Nitish Kumar Reddy",
+            "overs": 2,
+            "maidens": 0,
+            "runsConceded": 35,
+            "wickets": 0,
+            "economy": 17.5
+          },
+          {
+            "name": "Praful Hinge",
+            "overs": 3,
+            "maidens": 0,
+            "runsConceded": 37,
+            "wickets": 1,
+            "economy": 12.3
+          },
+          {
+            "name": "Pat Cummins",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 28,
+            "wickets": 3,
+            "economy": 7
+          },
+          {
+            "name": "Eshan Malinga",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 26,
+            "wickets": 1,
+            "economy": 6.5
+          },
+          {
+            "name": "Sakib Hussain",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 34,
+            "wickets": 2,
+            "economy": 8.5
+          },
+          {
+            "name": "Shivang Kumar",
+            "overs": 3,
+            "maidens": 0,
+            "runsConceded": 20,
+            "wickets": 0,
+            "economy": 6.7
+          }
+        ]
+      },
+      {
+        "inningsId": 2,
+        "batTeamName": "Sunrisers Hyderabad",
+        "runs": "181",
+        "wickets": "5",
+        "overs": "19",
+        "batsmen": [
+          {
+            "name": "Abhishek Sharma",
+            "runs": 26,
+            "ballsFaced": 21,
+            "fours": 3,
+            "sixes": 1,
+            "outDec": "c Spencer Johnson b Akeal Hosein",
+            "strikeRate": 123.81
+          },
+          {
+            "name": "Travis Head",
+            "runs": 6,
+            "ballsFaced": 6,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "c and b Mukesh Choudhary",
+            "strikeRate": 100
+          },
+          {
+            "name": "Ishan Kishan",
+            "runs": 70,
+            "ballsFaced": 47,
+            "fours": 7,
+            "sixes": 3,
+            "outDec": "c Urvil Patel b Anshul Kamboj",
+            "strikeRate": 148.94
+          },
+          {
+            "name": "Heinrich Klaasen",
+            "runs": 47,
+            "ballsFaced": 26,
+            "fours": 6,
+            "sixes": 2,
+            "outDec": "st Sanju Samson b Noor Ahmad",
+            "strikeRate": 180.77
+          },
+          {
+            "name": "Nitish Kumar Reddy",
+            "runs": 11,
+            "ballsFaced": 7,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "c Urvil Patel b Mukesh Choudhary",
+            "strikeRate": 157.14
+          },
+          {
+            "name": "Salil Arora",
+            "runs": 10,
+            "ballsFaced": 5,
+            "fours": 0,
+            "sixes": 1,
+            "outDec": "not out",
+            "strikeRate": 200
+          },
+          {
+            "name": "Smaran Ravichandran",
+            "runs": 5,
+            "ballsFaced": 2,
+            "fours": 1,
+            "sixes": 0,
+            "outDec": "not out",
+            "strikeRate": 250
+          },
+          {
+            "name": "Pat Cummins",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Shivang Kumar",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Eshan Malinga",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Sakib Hussain",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          },
+          {
+            "name": "Praful Hinge",
+            "runs": 0,
+            "ballsFaced": 0,
+            "fours": 0,
+            "sixes": 0,
+            "outDec": "",
+            "strikeRate": 0
+          }
+        ],
+        "bowlers": [
+          {
+            "name": "Mukesh Choudhary",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 36,
+            "wickets": 2,
+            "economy": 9
+          },
+          {
+            "name": "Spencer Johnson",
+            "overs": 3,
+            "maidens": 0,
+            "runsConceded": 26,
+            "wickets": 0,
+            "economy": 8.7
+          },
+          {
+            "name": "Anshul Kamboj",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 46,
+            "wickets": 1,
+            "economy": 11.5
+          },
+          {
+            "name": "Noor Ahmad",
+            "overs": 4,
+            "maidens": 0,
+            "runsConceded": 40,
+            "wickets": 1,
+            "economy": 10
+          },
+          {
+            "name": "Akeal Hosein",
+            "overs": 3,
+            "maidens": 0,
+            "runsConceded": 21,
+            "wickets": 1,
+            "economy": 7
+          },
+          {
+            "name": "Shivam Dube",
+            "overs": 1,
+            "maidens": 0,
+            "runsConceded": 12,
+            "wickets": 0,
+            "economy": 12
+          }
+        ]
+      }
+    ],
+    "venueGround": "",
+    "venueCity": "",
+    "venueCountry": "",
+    "timezone": "",
+    "matchType": "",
+    "statusDescription": ""
+  },
   "152207": {
     "id": "152207",
     "seriesName": "Indian Premier League 2026",
@@ -213,757 +1378,10 @@ export const FALLBACK_MATCH_DETAILS: Record<string, MatchDetail> = {
     "activeBowlers": [],
     "timeline": [],
     "scorecard": [],
-    "matchType": "",
-    "statusDescription": ""
-  },
-  "153791": {
-    "id": "153791",
-    "seriesName": "Pakistan tour of Bangladesh, 2026",
-    "teamA": {
-      "id": "6",
-      "name": "Bangladesh",
-      "shortName": "BAN"
-    },
-    "teamB": {
-      "id": "3",
-      "name": "Pakistan",
-      "shortName": "PAK"
-    },
-    "status": "live",
-    "date": "2026-05-16T04:00:00.000Z",
-    "venue": "Sylhet International Cricket Stadium, Sylhet",
-    "tossResult": "Day 3: Stumps - Pakistan need 437 runs",
-    "result": "Day 3: Stumps - Pakistan need 437 runs",
-    "runsA": "278",
-    "wicketsA": "10",
-    "oversA": "76.6",
-    "runsB": "232",
-    "wicketsB": "10",
-    "oversB": "57.4",
-    "isIPL": false,
-    "playingXI_A": [],
-    "playingXI_B": [],
-    "activeBatters": [
-      {
-        "name": "Azan Awais",
-        "runs": 0,
-        "ballsFaced": 6,
-        "fours": 0,
-        "sixes": 0,
-        "outDec": "batting",
-        "strikeRate": 0
-      },
-      {
-        "name": "Abdullah Fazal",
-        "runs": 0,
-        "ballsFaced": 6,
-        "fours": 0,
-        "sixes": 0,
-        "outDec": "batting",
-        "strikeRate": 0
-      }
-    ],
-    "activeBowlers": [
-      {
-        "name": "Taskin Ahmed",
-        "overs": 1,
-        "wickets": 0,
-        "economy": 0
-      },
-      {
-        "name": "Shoriful Islam",
-        "overs": 1,
-        "wickets": 0,
-        "economy": 0
-      }
-    ],
-    "partnershipInfo": "0(12)",
-    "timeline": [
-      "...",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "|",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0",
-      "0"
-    ],
-    "scorecard": [
-      {
-        "inningsId": 1,
-        "batTeamName": "Bangladesh",
-        "runs": "278",
-        "wickets": "10",
-        "overs": "77",
-        "batsmen": [
-          {
-            "name": "Mahmudul Hasan Joy",
-            "runs": 0,
-            "ballsFaced": 2,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "c Salman Agha b Mohammad Abbas",
-            "strikeRate": 0
-          },
-          {
-            "name": "Tanzid Hasan Tamim",
-            "runs": 26,
-            "ballsFaced": 34,
-            "fours": 3,
-            "sixes": 0,
-            "outDec": "c and b Mohammad Abbas",
-            "strikeRate": 76.47
-          },
-          {
-            "name": "Mominul Haque",
-            "runs": 22,
-            "ballsFaced": 41,
-            "fours": 3,
-            "sixes": 0,
-            "outDec": "b Khurram Shahzad",
-            "strikeRate": 53.66
-          },
-          {
-            "name": "Najmul Hossain Shanto",
-            "runs": 29,
-            "ballsFaced": 74,
-            "fours": 3,
-            "sixes": 0,
-            "outDec": "c Mohammad Rizwan b Mohammad Abbas",
-            "strikeRate": 39.19
-          },
-          {
-            "name": "Mushfiqur Rahim",
-            "runs": 23,
-            "ballsFaced": 64,
-            "fours": 2,
-            "sixes": 0,
-            "outDec": "lbw b Khurram Shahzad",
-            "strikeRate": 35.94
-          },
-          {
-            "name": "Litton Das",
-            "runs": 126,
-            "ballsFaced": 159,
-            "fours": 16,
-            "sixes": 2,
-            "outDec": "c Abdullah Fazal b Hasan Ali",
-            "strikeRate": 79.25
-          },
-          {
-            "name": "Mehidy Hasan Miraz",
-            "runs": 4,
-            "ballsFaced": 6,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "c Hasan Ali b Khurram Shahzad",
-            "strikeRate": 66.67
-          },
-          {
-            "name": "Taijul Islam",
-            "runs": 16,
-            "ballsFaced": 40,
-            "fours": 2,
-            "sixes": 0,
-            "outDec": "b Sajid Khan",
-            "strikeRate": 40
-          },
-          {
-            "name": "Taskin Ahmed",
-            "runs": 7,
-            "ballsFaced": 13,
-            "fours": 1,
-            "sixes": 0,
-            "outDec": "c Salman Agha b Khurram Shahzad",
-            "strikeRate": 53.85
-          },
-          {
-            "name": "Shoriful Islam",
-            "runs": 12,
-            "ballsFaced": 30,
-            "fours": 2,
-            "sixes": 0,
-            "outDec": "not out",
-            "strikeRate": 40
-          },
-          {
-            "name": "Nahid Rana",
-            "runs": 0,
-            "ballsFaced": 4,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "c Mohammad Rizwan b Hasan Ali",
-            "strikeRate": 0
-          }
-        ],
-        "bowlers": [
-          {
-            "name": "Mohammad Abbas",
-            "overs": 16,
-            "maidens": 3,
-            "runsConceded": 45,
-            "wickets": 3,
-            "economy": 2.8
-          },
-          {
-            "name": "Khurram Shahzad",
-            "overs": 17,
-            "maidens": 1,
-            "runsConceded": 81,
-            "wickets": 4,
-            "economy": 4.8
-          },
-          {
-            "name": "Hasan Ali",
-            "overs": 11.5,
-            "maidens": 1,
-            "runsConceded": 49,
-            "wickets": 2,
-            "economy": 4.1
-          },
-          {
-            "name": "Salman Agha",
-            "overs": 1.1,
-            "maidens": 0,
-            "runsConceded": 1,
-            "wickets": 0,
-            "economy": 0.9
-          },
-          {
-            "name": "Sajid Khan",
-            "overs": 31,
-            "maidens": 1,
-            "runsConceded": 96,
-            "wickets": 1,
-            "economy": 3.1
-          }
-        ]
-      },
-      {
-        "inningsId": 2,
-        "batTeamName": "Pakistan",
-        "runs": "232",
-        "wickets": "10",
-        "overs": "57.4",
-        "batsmen": [
-          {
-            "name": "Azan Awais",
-            "runs": 13,
-            "ballsFaced": 34,
-            "fours": 3,
-            "sixes": 0,
-            "outDec": "c Mominul b Taskin Ahmed",
-            "strikeRate": 38.24
-          },
-          {
-            "name": "Abdullah Fazal",
-            "runs": 9,
-            "ballsFaced": 21,
-            "fours": 1,
-            "sixes": 0,
-            "outDec": "c Litton Das b Taskin Ahmed",
-            "strikeRate": 42.86
-          },
-          {
-            "name": "Shan Masood",
-            "runs": 21,
-            "ballsFaced": 26,
-            "fours": 2,
-            "sixes": 0,
-            "outDec": "c (sub)Nayeem Hasan b Mehidy Hasan Miraz",
-            "strikeRate": 80.77
-          },
-          {
-            "name": "Babar Azam",
-            "runs": 68,
-            "ballsFaced": 84,
-            "fours": 10,
-            "sixes": 0,
-            "outDec": "c Mushfiqur Rahim b Nahid Rana",
-            "strikeRate": 80.95
-          },
-          {
-            "name": "Saud Shakeel",
-            "runs": 8,
-            "ballsFaced": 28,
-            "fours": 1,
-            "sixes": 0,
-            "outDec": "c Litton Das b Mehidy Hasan Miraz",
-            "strikeRate": 28.57
-          },
-          {
-            "name": "Salman Agha",
-            "runs": 21,
-            "ballsFaced": 51,
-            "fours": 2,
-            "sixes": 0,
-            "outDec": "c Mominul b Taijul Islam",
-            "strikeRate": 41.18
-          },
-          {
-            "name": "Mohammad Rizwan",
-            "runs": 13,
-            "ballsFaced": 27,
-            "fours": 2,
-            "sixes": 0,
-            "outDec": "b Taijul Islam",
-            "strikeRate": 48.15
-          },
-          {
-            "name": "Hasan Ali",
-            "runs": 18,
-            "ballsFaced": 37,
-            "fours": 3,
-            "sixes": 0,
-            "outDec": "c Nahid Rana b Taijul Islam",
-            "strikeRate": 48.65
-          },
-          {
-            "name": "Sajid Khan",
-            "runs": 38,
-            "ballsFaced": 28,
-            "fours": 2,
-            "sixes": 4,
-            "outDec": "c Tanzid Hasan Tamim b Nahid Rana",
-            "strikeRate": 135.71
-          },
-          {
-            "name": "Khurram Shahzad",
-            "runs": 10,
-            "ballsFaced": 10,
-            "fours": 1,
-            "sixes": 1,
-            "outDec": "c Mahmudul Hasan Joy b Nahid Rana",
-            "strikeRate": 100
-          },
-          {
-            "name": "Mohammad Abbas",
-            "runs": 0,
-            "ballsFaced": 4,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "not out",
-            "strikeRate": 0
-          }
-        ],
-        "bowlers": [
-          {
-            "name": "Taskin Ahmed",
-            "overs": 11,
-            "maidens": 1,
-            "runsConceded": 37,
-            "wickets": 2,
-            "economy": 3.4
-          },
-          {
-            "name": "Shoriful Islam",
-            "overs": 11,
-            "maidens": 3,
-            "runsConceded": 39,
-            "wickets": 0,
-            "economy": 3.5
-          },
-          {
-            "name": "Mehidy Hasan Miraz",
-            "overs": 9,
-            "maidens": 3,
-            "runsConceded": 21,
-            "wickets": 2,
-            "economy": 2.3
-          },
-          {
-            "name": "Nahid Rana",
-            "overs": 12.4,
-            "maidens": 1,
-            "runsConceded": 60,
-            "wickets": 3,
-            "economy": 4.7
-          },
-          {
-            "name": "Taijul Islam",
-            "overs": 14,
-            "maidens": 4,
-            "runsConceded": 67,
-            "wickets": 3,
-            "economy": 4.8
-          }
-        ]
-      },
-      {
-        "inningsId": 3,
-        "batTeamName": "Bangladesh",
-        "runs": "390",
-        "wickets": "10",
-        "overs": "102.2",
-        "batsmen": [
-          {
-            "name": "Mahmudul Hasan Joy",
-            "runs": 52,
-            "ballsFaced": 64,
-            "fours": 10,
-            "sixes": 0,
-            "outDec": "c Abdullah Fazal b Mohammad Abbas",
-            "strikeRate": 81.25
-          },
-          {
-            "name": "Tanzid Hasan Tamim",
-            "runs": 4,
-            "ballsFaced": 7,
-            "fours": 1,
-            "sixes": 0,
-            "outDec": "c Saud Shakeel b Khurram Shahzad",
-            "strikeRate": 57.14
-          },
-          {
-            "name": "Mominul Haque",
-            "runs": 30,
-            "ballsFaced": 60,
-            "fours": 3,
-            "sixes": 0,
-            "outDec": "c Mohammad Rizwan b Khurram Shahzad",
-            "strikeRate": 50
-          },
-          {
-            "name": "Najmul Hossain Shanto",
-            "runs": 15,
-            "ballsFaced": 46,
-            "fours": 1,
-            "sixes": 0,
-            "outDec": "lbw b Khurram Shahzad",
-            "strikeRate": 32.61
-          },
-          {
-            "name": "Mushfiqur Rahim",
-            "runs": 137,
-            "ballsFaced": 233,
-            "fours": 12,
-            "sixes": 1,
-            "outDec": "c Mohammad Abbas b Sajid Khan",
-            "strikeRate": 58.8
-          },
-          {
-            "name": "Litton Das",
-            "runs": 69,
-            "ballsFaced": 92,
-            "fours": 5,
-            "sixes": 0,
-            "outDec": "c Saud Shakeel b Hasan Ali",
-            "strikeRate": 75
-          },
-          {
-            "name": "Mehidy Hasan Miraz",
-            "runs": 19,
-            "ballsFaced": 39,
-            "fours": 1,
-            "sixes": 0,
-            "outDec": "b Khurram Shahzad",
-            "strikeRate": 48.72
-          },
-          {
-            "name": "Taijul Islam",
-            "runs": 22,
-            "ballsFaced": 51,
-            "fours": 2,
-            "sixes": 0,
-            "outDec": "c Mohammad Abbas b Sajid Khan",
-            "strikeRate": 43.14
-          },
-          {
-            "name": "Taskin Ahmed",
-            "runs": 6,
-            "ballsFaced": 13,
-            "fours": 1,
-            "sixes": 0,
-            "outDec": "c Salman Agha b Hasan Ali",
-            "strikeRate": 46.15
-          },
-          {
-            "name": "Shoriful Islam",
-            "runs": 12,
-            "ballsFaced": 15,
-            "fours": 2,
-            "sixes": 0,
-            "outDec": "c Hasan Ali b Sajid Khan",
-            "strikeRate": 80
-          },
-          {
-            "name": "Nahid Rana",
-            "runs": 0,
-            "ballsFaced": 5,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "not out",
-            "strikeRate": 0
-          }
-        ],
-        "bowlers": [
-          {
-            "name": "Mohammad Abbas",
-            "overs": 23,
-            "maidens": 2,
-            "runsConceded": 66,
-            "wickets": 1,
-            "economy": 2.9
-          },
-          {
-            "name": "Khurram Shahzad",
-            "overs": 20,
-            "maidens": 3,
-            "runsConceded": 86,
-            "wickets": 4,
-            "economy": 4.3
-          },
-          {
-            "name": "Hasan Ali",
-            "overs": 23,
-            "maidens": 2,
-            "runsConceded": 83,
-            "wickets": 2,
-            "economy": 3.6
-          },
-          {
-            "name": "Sajid Khan",
-            "overs": 33.2,
-            "maidens": 2,
-            "runsConceded": 126,
-            "wickets": 3,
-            "economy": 3.8
-          },
-          {
-            "name": "Salman Agha",
-            "overs": 1,
-            "maidens": 0,
-            "runsConceded": 5,
-            "wickets": 0,
-            "economy": 5
-          },
-          {
-            "name": "Saud Shakeel",
-            "overs": 2,
-            "maidens": 0,
-            "runsConceded": 13,
-            "wickets": 0,
-            "economy": 6.5
-          }
-        ]
-      },
-      {
-        "inningsId": 4,
-        "batTeamName": "Pakistan",
-        "runs": "0",
-        "wickets": "0",
-        "overs": "2",
-        "batsmen": [
-          {
-            "name": "Azan Awais",
-            "runs": 0,
-            "ballsFaced": 6,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "batting",
-            "strikeRate": 0
-          },
-          {
-            "name": "Abdullah Fazal",
-            "runs": 0,
-            "ballsFaced": 6,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "batting",
-            "strikeRate": 0
-          },
-          {
-            "name": "Shan Masood",
-            "runs": 0,
-            "ballsFaced": 0,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "",
-            "strikeRate": 0
-          },
-          {
-            "name": "Babar Azam",
-            "runs": 0,
-            "ballsFaced": 0,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "",
-            "strikeRate": 0
-          },
-          {
-            "name": "Saud Shakeel",
-            "runs": 0,
-            "ballsFaced": 0,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "",
-            "strikeRate": 0
-          },
-          {
-            "name": "Mohammad Rizwan",
-            "runs": 0,
-            "ballsFaced": 0,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "",
-            "strikeRate": 0
-          },
-          {
-            "name": "Salman Agha",
-            "runs": 0,
-            "ballsFaced": 0,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "",
-            "strikeRate": 0
-          },
-          {
-            "name": "Khurram Shahzad",
-            "runs": 0,
-            "ballsFaced": 0,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "",
-            "strikeRate": 0
-          },
-          {
-            "name": "Sajid Khan",
-            "runs": 0,
-            "ballsFaced": 0,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "",
-            "strikeRate": 0
-          },
-          {
-            "name": "Hasan Ali",
-            "runs": 0,
-            "ballsFaced": 0,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "",
-            "strikeRate": 0
-          },
-          {
-            "name": "Mohammad Abbas",
-            "runs": 0,
-            "ballsFaced": 0,
-            "fours": 0,
-            "sixes": 0,
-            "outDec": "",
-            "strikeRate": 0
-          }
-        ],
-        "bowlers": [
-          {
-            "name": "Taskin Ahmed",
-            "overs": 1,
-            "maidens": 1,
-            "runsConceded": 0,
-            "wickets": 0,
-            "economy": 0
-          },
-          {
-            "name": "Shoriful Islam",
-            "overs": 1,
-            "maidens": 1,
-            "runsConceded": 0,
-            "wickets": 0,
-            "economy": 0
-          }
-        ]
-      }
-    ],
-    "matchType": "",
-    "statusDescription": ""
-  },
-  "154905": {
-    "id": "154905",
-    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
-    "teamA": {
-      "id": "1069",
-      "name": "Slovenia",
-      "shortName": "SLV"
-    },
-    "teamB": {
-      "id": "534",
-      "name": "Sweden",
-      "shortName": "SWE"
-    },
-    "status": "upcoming",
-    "date": "2026-05-19T07:30:00.000Z",
-    "venue": "Happy Valley Ground 2, Episkopi",
-    "tossResult": "Match starts at May 19, 07:30 GMT",
-    "result": "Match starts at May 19, 07:30 GMT",
-    "isIPL": false,
-    "playingXI_A": [],
-    "playingXI_B": [],
-    "activeBatters": [],
-    "activeBowlers": [],
-    "timeline": [],
-    "scorecard": [],
-    "matchType": "",
-    "statusDescription": ""
-  },
-  "154916": {
-    "id": "154916",
-    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
-    "teamA": {
-      "id": "1076",
-      "name": "Croatia",
-      "shortName": "CRT"
-    },
-    "teamB": {
-      "id": "1062",
-      "name": "Switzerland",
-      "shortName": "SUI"
-    },
-    "status": "upcoming",
-    "date": "2026-05-19T12:30:00.000Z",
-    "venue": "Happy Valley Ground, Episkopi",
-    "tossResult": "Match starts at May 19, 12:30 GMT",
-    "result": "Match starts at May 19, 12:30 GMT",
-    "isIPL": false,
-    "playingXI_A": [],
-    "playingXI_B": [],
-    "activeBatters": [],
-    "activeBowlers": [],
-    "timeline": [],
-    "scorecard": [],
-    "matchType": "",
-    "statusDescription": ""
-  },
-  "154927": {
-    "id": "154927",
-    "seriesName": "ICC Men's T20 World Cup Europe Sub Regional Qualifier A 2026",
-    "teamA": {
-      "id": "532",
-      "name": "Austria",
-      "shortName": "AUT"
-    },
-    "teamB": {
-      "id": "533",
-      "name": "Guernsey",
-      "shortName": "GGY"
-    },
-    "status": "upcoming",
-    "date": "2026-05-19T12:30:00.000Z",
-    "venue": "Happy Valley Ground 2, Episkopi",
-    "tossResult": "Match starts at May 19, 12:30 GMT",
-    "result": "Match starts at May 19, 12:30 GMT",
-    "isIPL": false,
-    "playingXI_A": [],
-    "playingXI_B": [],
-    "activeBatters": [],
-    "activeBowlers": [],
-    "timeline": [],
-    "scorecard": [],
+    "venueGround": "",
+    "venueCity": "",
+    "venueCountry": "",
+    "timezone": "",
     "matchType": "",
     "statusDescription": ""
   }
